@@ -1,0 +1,385 @@
+/*LoginPage */
+
+.login-page {
+  display: flex;
+  height: 100vh;
+  justify-content: center; /* Centraliza o conteúdo horizontalmente */
+  align-items: center; /* Centraliza o conteúdo verticalmente */
+}
+
+.left-side {
+  flex: 1; /* O lado esquerdo ocupa metade da tela */
+  background-color: #007bff; /* Fundo azul */
+  color: white; /* Texto branco */
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  height: 100vh;
+}
+
+.left-side h1 {
+  font-size: 80px;
+  margin-bottom: 20px;
+  margin-top: 0;
+}
+
+.left-side h2 {
+  font-size: 30px;
+  font-weight: normal;
+  margin-bottom: 20px;
+}
+
+.left-side img {
+  width: 500px; /* Ajuste conforme o tamanho desejado */
+  height: auto;
+  margin-top: 20px;
+  
+}
+
+.right-side {
+  flex: 1; /* O lado direito ocupa a outra metade da tela */
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-top: 40px;
+}
+
+.right-side h1 {
+  font-size: 50px;
+}
+
+input {
+  width: 50%;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+}
+
+button {
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 14px;
+  margin: 10px 5px;
+  width: 30%; /* Ajusta a largura dos botões */
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+/* Cria um container flexível para os botões "Entrar" e "Criar Conta" ficarem lado a lado */
+.buttons-container {
+  display: flex;
+  justify-content: space-between;
+  width: 80%; /* Ajusta a largura do container */
+  margin-bottom: 10px;
+}
+
+.right-side a {
+  text-decoration: none; /* Remove o sublinhado padrão */
+  color: #007bff; /* Cor do texto do link */
+  font-size: 14px;
+}
+
+.right-side a:hover {
+  text-decoration: underline; /* Sublinha quando o mouse passa em cima */
+  color: #0056b3; /* Altera a cor quando passa o mouse */
+}
+
+/*RecuperacaoSenha*/
+
+.logo-recuperacao {
+  width: 170px;
+  margin-bottom: 0px;
+}
+
+
+.recuperacao-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #e6f0ff; /* Azul claro */
+}
+
+.recuperacao-container {
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 350px;
+  text-align: center;
+}
+
+.recuperacao-container h2 {
+  margin-bottom: 20px;
+  color: #007bff;
+  font-size: 24px;
+}
+
+.recuperacao-container input {
+  width: 100%;
+  padding: 10px;
+  margin: 12px 0;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.recuperacao-container button {
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 15px;
+  transition: background-color 0.3s ease;
+}
+
+.recuperacao-container button:hover {
+  background-color: #0056b3;
+}
+
+.mensagem {
+  margin-top: 15px;
+  font-size: 14px;
+  color: green;
+}
+
+.mensagem.erro {
+  color: red;
+}
+
+/* InicioPage */
+
+.inicio-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #ffffff; /* Cor de fundo suave */
+}
+
+.inicio-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 30px;
+}
+
+.inicio-logo {
+  width: 200px;
+  height: auto;
+  margin-right: 20px;
+}
+
+.inicio-titulo {
+  font-size: 50px;
+  font-weight: bold;
+  color: #333;
+}
+
+.botoes-container {
+  display: flex;
+  justify-content: space-around;
+  width: 80%;
+  max-width: 600px; /* Limita a largura dos botões */
+}
+
+.botao-escolha {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 20px;
+  width: 45%; /* Largura dos botões */
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  text-align: center;
+}
+
+.botao-escolha:hover {
+  background-color: #0056b3;
+}
+
+.botao-img {
+  width: 100px;
+  height: 100px;
+  margin-bottom: 10px;
+}
+
+.botao-escolha span {
+  font-size: 18px;
+  font-weight: bold;
+}
+ 
+
+/*MotoristaPage */
+
+.motorista-page {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.motorista-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #007bff;
+  padding: 10px 20px;
+  color: white;
+}
+
+.logo-nome {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo-header {
+  height: 100px;
+}
+
+.voltar-btn,
+.usuario-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.usuario-btn {
+  background-color: #007bff;
+  color: #f6f7f8;
+  border-radius: 2%;
+  padding: 8px;
+}
+
+.motorista-conteudo {
+  flex: 1;
+  display: flex;
+}
+
+.mapa-container {
+  flex: 1;
+}
+
+.formulario-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  padding: 30px;
+  justify-content: center;
+  
+}
+
+.formulario-container input {
+  padding: 10px;
+  font-size: 1rem;
+}
+
+.enviar-btn {
+  padding: 12px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+/*CadastroPage */
+
+.cadastro-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+}
+
+
+.cabecalho {
+  width: 100%;
+  background-color: #007BFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+  box-sizing: border-box;
+  gap: 10px;
+}
+
+.logo {
+  width: 100px;
+  height: 100px;
+}
+
+.app-nome {
+  color: white;
+  font-size: 50px;
+  margin-left: 10px;
+}
+
+.cadastro-titulo {
+  margin: 20px 0 10px;
+  font-size: 28px;
+  color: #333;
+}
+
+.formulario-cadastro {
+  width: 80%;
+  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.linha-inputs {
+  display: flex;
+  gap: 10px;
+}
+
+.linha-inputs input {
+  flex: 1;
+  padding: 10px;
+  font-size: 16px;
+}
+
+.botoes-cadastro {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.botoes-cadastro button {
+  padding: 10px 20px;
+  font-size: 16px;
+}
+
+.limpar-btn {
+  background-color: #ccc;
+}
