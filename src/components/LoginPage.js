@@ -1,29 +1,27 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // useNavigate no lugar de useHistory
+import { useNavigate } from 'react-router-dom';
 import '../App.css';
 import logo from '../assets/images/Logo.png';
-
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
-  const navigate = useNavigate(); // useNavigate para navegação
+  const navigate = useNavigate();
 
   const handleLogin = () => {
-    // Validação de exemplo, substitua por lógica real de autenticação
     if (email === 'user@fatec.com' && senha === '123') {
-      navigate('/inicio'); // Redireciona para a página inicial após login
+      navigate('/inicio');
     } else {
       alert('Email ou senha inválidos');
     }
   };
 
   const handleRecuperarSenha = () => {
-    navigate('/recuperacao-senha'); // Redireciona para a página de recuperação de senha
+    navigate('/recuperacao-senha');
   };
 
   const handleCadastro = () => {
-    navigate('/cadastro'); // Redireciona para a página de cadastro
+    navigate('/escolha-perfil');
   };
 
   return (
@@ -50,7 +48,6 @@ const LoginPage = () => {
         <button onClick={handleLogin}>Entrar</button>
         <button onClick={handleCadastro}>Criar conta</button>
         <button onClick={handleRecuperarSenha}>Esqueci a senha</button>
-        
       </div>
     </div>
   );
