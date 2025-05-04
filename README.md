@@ -19,11 +19,8 @@ Solicitar Viagem
 Passageiros visualizam viagens disponíveis e solicitam caronas aos motoristas.
 
 Tecnologias Utilizadas
-Frontend: HTML, CSS, JavaScript (React/Vue.js ou vanilla)
+Frontend: HTML, CSS, JavaScript (React.js)
 
-Backend: (Node.js, Python, PHP – ajuste conforme necessário)
-
-Banco de Dados: (MySQL, Firebase, PostgreSQL – se aplicável)
 
 Como Executar o Projeto
 Clone o repositório:
