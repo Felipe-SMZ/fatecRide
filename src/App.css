@@ -383,3 +383,136 @@ button:hover {
 .limpar-btn {
   background-color: #ccc;
 }
+
+/*EscolhaPerfilPage*/
+
+.perfil-options {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  width: 60%;
+  margin-top: 30px;
+}
+
+.perfil-btn {
+  padding: 15px 30px;
+  font-size: 18px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 100%;
+  max-width: 300px;
+  transition: background-color 0.3s ease;
+}
+
+.perfil-btn:hover {
+  background-color: #0056b3;
+}
+
+/* CadastroVeiculoPage */
+
+/* Estilo geral da página */
+.veiculo-page {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f0f4ff;
+  min-height: 100vh;
+}
+
+/* Container principal */
+.veiculo-container {
+  background-color: white;
+  max-width: 500px;
+  margin: 2rem auto;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.veiculo-titulo {
+  text-align: center;
+  color: #004aad;
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+}
+
+/* Formulário */
+.formulario-veiculo .campo-veiculo {
+  margin-bottom: 1.2rem;
+}
+
+.formulario-veiculo label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+.formulario-veiculo input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #bbb;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+/* Upload da foto */
+.foto-container {
+  margin-top: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.upload-foto {
+  display: block;
+  width: 100%;
+  height: 200px;
+  border: 2px dashed #004aad;
+  border-radius: 12px;
+  background-color: #eaf0ff;
+  color: #004aad;
+  font-size: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+/* Botões */
+.botoes-veiculo {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2rem;
+}
+
+.botao-voltar,
+.botao-cadastrar {
+  flex: 1;
+  padding: 10px;
+  margin: 0 5px;
+  font-size: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.3s ease;
+}
+
+.botao-voltar {
+  background-color: #ccc;
+  color: #333;
+}
+
+.botao-voltar:hover {
+  background-color: #bbb;
+}
+
+.botao-cadastrar {
+  background-color: #004aad;
+  color: white;
+}
+
+.botao-cadastrar:hover {
+  background-color: #00347d;
+}

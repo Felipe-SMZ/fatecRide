@@ -40,7 +40,7 @@ const CadastroPage = () => {
 
   const handleAvancar = () => {
     // você pode adicionar validações aqui antes de navegar
-    navigate('/cadastroendereco');
+    navigate('/cadastro-endereco');
   };
 
   return (

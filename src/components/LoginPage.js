@@ -23,7 +23,7 @@ const LoginPage = () => {
   };
 
   const handleCadastro = () => {
-    navigate('/cadastro'); // Redireciona para a página de cadastro
+    navigate('/escolhaperfil'); // Redireciona para a página de cadastro
   };
 
   return (
