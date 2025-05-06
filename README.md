@@ -1,71 +1,59 @@
-HEAD
-# Getting Started with Create React App
+# 🚗 App de Caronas FATEC - Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Este é o frontend do aplicativo de caronas desenvolvido para estudantes da FATEC Cotia.  
+Permite que motoristas e passageiros se conectem para compartilhar caronas com praticidade, utilizando um mapa interativo e rotas calculadas em tempo real.
 
-## Available Scripts
+## 🎯 Objetivo
 
-In the project directory, you can run:
+Facilitar o transporte de alunos da FATEC por meio de um sistema seguro, intuitivo e acessível, reduzindo custos e promovendo a sustentabilidade.
 
-### `npm start`
+## 🧪 Tecnologias utilizadas
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- [React.js](https://reactjs.org/) — Biblioteca JavaScript para construção de interfaces
+- [React Router](https://reactrouter.com/) — Navegação entre páginas
+- [Leaflet.js](https://leafletjs.com/) — Biblioteca de mapas
+- [React-Leaflet](https://react-leaflet.js.org/) — Integração do Leaflet com React
+- [Axios](https://axios-http.com/) — Requisições HTTP
+- [Tailwind CSS](https://tailwindcss.com/) — Estilização responsiva e moderna
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 📸 Funcionalidades
 
-### `npm test`
+- Tela de login
+- Cadastro de usuário (nome, curso, telefone, etc.)
+- Cadastro de veículo e endereço
+- Escolha de perfil (passageiro ou motorista)
+- Mapa interativo com seleção de ponto de partida e destino
+- Envio de carona com número de vagas
+- Interface responsiva com identidade visual azul e branca
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 🛠️ Instalação e execução
 
-### `npm run build`
+### Pré-requisitos
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- Node.js (v16+)
+- npm ou yarn
+- Git
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Passos:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```bash
+# Clone o repositório
+git clone https://github.com/seu-usuario/seu-repo-frontend.git
+cd seu-repo-frontend
 
-### `npm run eject`
+# Instale as dependências
+npm install
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+# Inicie o projeto
+npm start
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+# A aplicação será aberta no navegador em http://localhost:3000
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Estrutura de Pastas
+src/
+├── components/         # Componentes reutilizáveis (ex: botão, cabeçalho)
+├── pages/              # Páginas principais (Login, Cadastro, Motorista, Passageiro)
+├── App.js              # Componente principal
+├── App.css             # Estilos globais
+└── index.js            # Ponto de entrada
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
