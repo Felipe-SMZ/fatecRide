@@ -9,6 +9,7 @@ const CadastroPage = () => {
   const [formData, setFormData] = useState({
     nome: '',
     sobrenome: '',
+    sexo: '',
     curso: '',
     telefone: '',
     email: '',
@@ -29,6 +30,7 @@ const CadastroPage = () => {
     setFormData({
       nome: '',
       sobrenome: '',
+      sexo: '',
       curso: '',
       telefone: '',
       email: '',
@@ -39,7 +41,44 @@ const CadastroPage = () => {
   };
 
   const handleAvancar = () => {
-    // você pode adicionar validações aqui antes de navegar
+    const {
+      nome,
+      sobrenome,
+      sexo,
+      curso,
+      telefone,
+      email,
+      confirmarEmail,
+      senha,
+      confirmarSenha
+    } = formData;
+
+    if (
+      !nome ||
+      !sobrenome ||
+      !sexo ||
+      !curso ||
+      !telefone ||
+      !email ||
+      !confirmarEmail ||
+      !senha ||
+      !confirmarSenha
+    ) {
+      alert('Por favor, preencha todos os campos.');
+      return;
+    }
+
+    if (email !== confirmarEmail) {
+      alert('Os e-mails não coincidem.');
+      return;
+    }
+
+    if (senha !== confirmarSenha) {
+      alert('As senhas não coincidem.');
+      return;
+    }
+
+    // Se tudo estiver válido
     navigate('/cadastro-endereco');
   };
 
@@ -71,13 +110,32 @@ const CadastroPage = () => {
         </div>
 
         <div className="linha-inputs">
-          <input
-            type="text"
+          <select
+            name="sexo"
+            value={formData.sexo}
+            onChange={handleChange}
+          >
+            <option value="">Sexo</option>
+            <option value="M">Masculino</option>
+            <option value="F">Feminino</option>
+          </select>
+
+          <select
             name="curso"
-            placeholder="Curso"
             value={formData.curso}
             onChange={handleChange}
-          />
+          >
+            <option value="">Curso</option>
+            <option value="DSM">DSM</option>
+            <option value="GE">GE</option>
+            <option value="CD">CD</option>
+            <option value="CE">CE</option>
+            <option value="DP">DP</option>
+            <option value="GPI">GPI</option>
+          </select>
+        </div>
+
+        <div className="linha-inputs">
           <input
             type="tel"
             name="telefone"
@@ -122,8 +180,8 @@ const CadastroPage = () => {
         </div>
 
         <div className="botoes-cadastro">
-          <button onClick={handleAvancar}>Avançar</button>
           <button onClick={handleLimpar} className="limpar-btn">Limpar tudo</button>
+          <button onClick={handleAvancar}>Avançar</button>
         </div>
       </div>
     </div>

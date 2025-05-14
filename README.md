@@ -49,6 +49,7 @@ npm start
 
 # A aplicação será aberta no navegador em http://localhost:3000
 
+```
 ## Estrutura de Pastas
 src/
 ├── components/         # Componentes reutilizáveis (ex: botão, cabeçalho)
