@@ -51,10 +51,11 @@ npm start
 
 ```
 ## Estrutura de Pastas
+```bash
 src/
 ├── components/         # Componentes reutilizáveis (ex: botão, cabeçalho)
 ├── pages/              # Páginas principais (Login, Cadastro, Motorista, Passageiro)
 ├── App.js              # Componente principal
 ├── App.css             # Estilos globais
 └── index.js            # Ponto de entrada
-
+```
