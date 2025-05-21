@@ -9,6 +9,7 @@ import PassageiroPage from './pages/PassageiroPage';
 import EscolhaPerfilPage from './pages/EscolhaPerfilPage';
 import CadastroVeiculoPage from './pages/CadastroVeiculoPage';
 import CadastroEnderecoPage from './pages/CadastroEnderecoPage';
+import ConfirmacaoCadastroPage from './pages/ConfirmacaoCadastroPage';
 import './App.css';
 
 
@@ -26,6 +27,7 @@ const App = () => {
         <Route path="/escolhaperfil" element={<EscolhaPerfilPage />} />
         <Route path="/cadastro-veiculo" element={<CadastroVeiculoPage />} />
         <Route path="/cadastro-endereco" element={<CadastroEnderecoPage />} />
+        <Route path="/cadastro-confirmacao" element={<ConfirmacaoCadastroPage/>} />
       </Routes>
     </Router>
   );

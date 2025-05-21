@@ -31,7 +31,7 @@ const EnderecoPage = () => {
     }
 
     console.log('Endereço cadastrado:', endereco);
-    navigate('/inicio'); // ou a próxima página do seu fluxo
+    navigate('/cadastro-confirmacao'); 
   };
 
   return (
