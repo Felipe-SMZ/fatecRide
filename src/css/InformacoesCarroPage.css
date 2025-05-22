@@ -1,0 +1,88 @@
+.info-carro-page {
+    padding: 0px ;
+}
+
+.info-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #007bff;
+    color: white;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.logo-nome {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo-header {
+    width: 100px;
+    height: auto;
+}
+
+.info-conteudo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; /* centraliza verticalmente */
+  height: calc(100vh - 80px); /* tela inteira menos o cabeçalho */
+  background-color: #f9f9f9;
+  padding: 20px;
+  text-align: center;
+  width: 100%;
+}
+
+.info-form {
+  width: 80%;
+  max-width: 400px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.info-conteudo h1 {
+  color: #007bff;
+  margin-bottom: 30px;
+  font-size: 2rem;
+}
+
+.info-form label {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* label e input alinhados à esquerda */
+  margin-bottom: 20px;
+  width: 100%;
+  max-width: 400px;
+  font-weight: bold;
+}
+
+.info-form input {
+  width: 100%; /* 100% do label, que tem 80% e max 400px */
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  box-sizing: border-box; /* evita overflow com padding */
+}
+
+.salvar-btn {
+  margin-top: 30px;
+  padding: 12px 20px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 6px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  width: 80%;
+  max-width: 400px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.salvar-btn:hover {
+  background-color: #0056b3;
+}

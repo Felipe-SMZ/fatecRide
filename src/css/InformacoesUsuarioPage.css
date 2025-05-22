@@ -1,0 +1,139 @@
+.passageiro-header {
+    background-color: #007bff;
+    color: white;
+    display: flex;
+    align-items: center;
+    height: 100px;
+    padding: 0 20px;
+    justify-content: space-between;
+}
+
+.header-section {
+    display: flex;
+    align-items: center;
+}
+
+.logo-nome {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo-header {
+    height: 60px;
+}
+
+.voltar-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    margin-left: 100px;
+}
+
+.usuario-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    margin-right: 100px;
+}
+
+.usuario-menu-container {
+    position: relative;
+}
+
+.menu-suspenso {
+    position: absolute;
+    top: 50px;
+    right: 0;
+    background: white;
+    border-radius: 6px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    min-width: 150px;
+    z-index: 100;
+}
+
+.menu-suspenso button {
+    background: none;
+    border: none;
+    padding: 10px 15px;
+    text-align: left;
+    cursor: pointer;
+    color: #333;
+    font-size: 1rem;
+    transition: background-color 0.2s ease;
+}
+
+.menu-suspenso button:hover {
+    background-color: #007bff;
+    color: white;
+}
+
+.deletar-btn {
+    color: #d9534f;
+}
+
+.deletar-btn:hover {
+    background-color: #c9302c;
+    color: white;
+}
+
+.usuario-conteudo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; /* centraliza verticalmente */
+  height: calc(100vh - 80px); /* tela inteira menos o cabeçalho */
+  background-color: #f9f9f9;
+  padding: 20px;
+  text-align: center;
+}
+
+.usuario-conteudo h2 {
+  color: #007bff;
+  margin-bottom: 30px;
+  font-size: 2rem;
+}
+
+.campo-info {
+  margin-bottom: 20px;
+  width: 80%;
+  max-width: 400px;
+  text-align: left;
+}
+
+.campo-info label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: bold;
+}
+
+.campo-info input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+.botao-principal {
+  margin-top: 30px;
+  padding: 12px 20px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 6px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  width: 80%;
+  max-width: 400px;
+}
+
+.botao-principal:hover {
+  background-color: #0056b3;
+}

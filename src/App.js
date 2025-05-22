@@ -10,9 +10,9 @@ import EscolhaPerfilPage from './pages/EscolhaPerfilPage';
 import CadastroVeiculoPage from './pages/CadastroVeiculoPage';
 import CadastroEnderecoPage from './pages/CadastroEnderecoPage';
 import ConfirmacaoCadastroPage from './pages/ConfirmacaoCadastroPage';
+import InformacoesUsuarioPage from './pages/InformacoesUsuarioPage';
+import InformacoesCarroPage from './pages/InformacoesCarroPage';
 import './App.css';
-
-
 
 const App = () => {
   return (
@@ -27,7 +27,9 @@ const App = () => {
         <Route path="/escolhaperfil" element={<EscolhaPerfilPage />} />
         <Route path="/cadastro-veiculo" element={<CadastroVeiculoPage />} />
         <Route path="/cadastro-endereco" element={<CadastroEnderecoPage />} />
-        <Route path="/cadastro-confirmacao" element={<ConfirmacaoCadastroPage/>} />
+        <Route path="/cadastro-confirmacao" element={<ConfirmacaoCadastroPage />} />
+        <Route path="/info-usuario" element={<InformacoesUsuarioPage />} />
+        <Route path='/info-carro' element={<InformacoesCarroPage />} />
       </Routes>
     </Router>
   );
