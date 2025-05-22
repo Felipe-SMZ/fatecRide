@@ -3,18 +3,35 @@ import { useNavigate } from 'react-router-dom'; // useNavigate no lugar de useHi
 import '../App.css';
 import logo from '../assets/images/Logo.png';
 
-
 const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const navigate = useNavigate(); // useNavigate para navegação
 
-  const handleLogin = () => {
-    // Validação de exemplo, substitua por lógica real de autenticação
-    if (email === 'user@fatec.com' && senha === '123') {
-      navigate('/inicio'); // Redireciona para a página inicial após login
-    } else {
-      alert('Email ou senha inválidos');
+  const handleLogin = async () => {
+    if (!email || !senha) {
+      alert('Preencha todos os campos');
+      return;
+    }
+    try {
+      const response = await fetch('http://localhost:8080/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, senha }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        // Salve o token no localStorage para usar depois
+        localStorage.setItem('token', data.token);
+        // Redirecione para a página inicial
+        navigate('/inicio');
+      } else {
+        alert('Email ou senha inválidos');
+      }
+    } catch (error) {
+      alert('Erro ao conectar com o servidor');
+      console.error(error);
     }
   };
 
@@ -50,7 +67,6 @@ const LoginPage = () => {
         <button onClick={handleLogin}>Entrar</button>
         <button onClick={handleCadastro}>Criar conta</button>
         <button onClick={handleRecuperarSenha}>Esqueci a senha</button>
-        
       </div>
     </div>
   );

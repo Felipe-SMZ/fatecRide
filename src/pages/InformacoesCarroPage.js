@@ -31,7 +31,7 @@ const InformacoesCarroPage = () => {
         setMenuAberto(false);
         if (window.confirm('Tem certeza que deseja deletar sua conta? Essa ação não pode ser desfeita.')) {
             alert('Conta deletada com sucesso!');
-            navigate('/login');
+            navigate('/');
         }
     };
 

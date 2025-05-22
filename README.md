@@ -38,7 +38,7 @@ Facilitar o transporte de alunos da FATEC por meio de um sistema seguro, intuiti
 
 ```bash
 # Clone o repositório
-git clone https://github.com/seu-usuario/seu-repo-frontend.git
+git clone https://github.com/Felipe-SMZ/fatecRide.git
 cd seu-repo-frontend
 
 # Instale as dependências
@@ -55,6 +55,7 @@ npm start
 src/
 ├── components/         # Componentes reutilizáveis (ex: botão, cabeçalho)
 ├── pages/              # Páginas principais (Login, Cadastro, Motorista, Passageiro)
+├──css                  # Estilos por paginas
 ├── App.js              # Componente principal
 ├── App.css             # Estilos globais
 └── index.js            # Ponto de entrada

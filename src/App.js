@@ -12,6 +12,7 @@ import CadastroEnderecoPage from './pages/CadastroEnderecoPage';
 import ConfirmacaoCadastroPage from './pages/ConfirmacaoCadastroPage';
 import InformacoesUsuarioPage from './pages/InformacoesUsuarioPage';
 import InformacoesCarroPage from './pages/InformacoesCarroPage';
+import ConfirmarCaronaMotorista from './pages/ConfirmarCaronaMotorista';
 import './App.css';
 
 const App = () => {
@@ -30,6 +31,7 @@ const App = () => {
         <Route path="/cadastro-confirmacao" element={<ConfirmacaoCadastroPage />} />
         <Route path="/info-usuario" element={<InformacoesUsuarioPage />} />
         <Route path='/info-carro' element={<InformacoesCarroPage />} />
+        <Route path='/confirmarcarona' element={<ConfirmarCaronaMotorista />} />
       </Routes>
     </Router>
   );
