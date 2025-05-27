@@ -1,0 +1,87 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+.endereco-page {
+  background-color: #f2f2f2;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
+
+.cabecalho {
+  background-color: #007bff;
+  color: white;
+  padding: 1rem;
+  width: 100vw;
+  box-sizing: border-box;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  justify-content: center;
+  margin: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  height: 120px; /* para garantir altura fixa */
+}
+
+.logo {
+  height: 100px;
+  width: 100px;
+}
+
+.formulario-endereco {
+  background-color: white;
+  padding: 2rem;
+  margin-top: 120px; /* espaço igual à altura do header fixo */
+  border-radius: 10px;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+.formulario-endereco label {
+  margin-top: 1rem;
+  font-weight: bold;
+  text-align: left;
+  width: 100%;
+}
+
+.formulario-endereco input,
+.formulario-endereco select {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-top: 0.3rem;
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 1rem;
+}
+
+.botao-cadastrar {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 0.8rem;
+  margin-top: 2rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 1.1rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.botao-cadastrar:hover {
+  background-color: #0056b3;
+}

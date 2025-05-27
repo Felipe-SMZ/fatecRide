@@ -1,21 +1,21 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../App.css';
+import '../css/EscolhaPerfilPage.css'
 import logo from '../assets/images/Logo.png';
 
 const EscolhaPerfilPage = () => {
   const navigate = useNavigate();
 
+  const perfilToIdMap = {
+    motorista: 1,
+    passageiro: 2,
+    ambos: 3
+  };
+
   const handleSelecionarPerfil = (perfil) => {
-    localStorage.setItem('tipoPerfil', perfil);
-    
-    if (perfil === 'motorista') {
-      navigate('/cadastro-veiculo');
-    } else if (perfil === 'passageiro') {
-      navigate('/cadastro');
-    } else if (perfil === 'ambos') {
-      navigate('/cadastro-veiculo');
-    }
+    const idTipoUsuario = perfilToIdMap[perfil];
+    localStorage.setItem('idTipoUsuario', idTipoUsuario);
+    navigate('/cadastro');
   };
 
   return (
@@ -28,24 +28,9 @@ const EscolhaPerfilPage = () => {
       <div className="right-side">
         <h1>O que você deseja?</h1>
         <div className="perfil-options">
-          <button 
-            className="perfil-btn" 
-            onClick={() => handleSelecionarPerfil('motorista')}
-          >
-            Dar carona
-          </button>
-          <button 
-            className="perfil-btn" 
-            onClick={() => handleSelecionarPerfil('passageiro')}
-          >
-            Receber carona
-          </button>
-          <button 
-            className="perfil-btn" 
-            onClick={() => handleSelecionarPerfil('ambos')}
-          >
-            Ambos
-          </button>
+          <button className="perfil-btn" onClick={() => handleSelecionarPerfil('motorista')}>Dar carona</button>
+          <button className="perfil-btn" onClick={() => handleSelecionarPerfil('passageiro')}>Receber carona</button>
+          <button className="perfil-btn" onClick={() => handleSelecionarPerfil('ambos')}>Ambos</button>
         </div>
       </div>
     </div>

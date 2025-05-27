@@ -1,0 +1,82 @@
+.cadastro-page {
+  background-color: #f2f2f2;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0; /* remove margem padrão */
+  padding: 0; /* remove padding padrão */
+}
+
+.cabecalho {
+  background-color: #007bff;
+  color: white;
+  padding: 1rem 0; /* só padding vertical */
+  width: 100%;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  justify-content: center;
+  margin: 0; /* remove espaço em cima */
+  position: fixed; /* fixa no topo */
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  box-sizing: border-box;
+}
+
+/* Ajusta altura da logo para caber no header fixo */
+.logo {
+  height: 100px;
+  width: 100px;
+}
+
+/* Como o cabeçalho está fixo, precisamos dar um padding-top no conteúdo para não ficar atrás dele */
+.formulario {
+  background-color: white;
+  padding: 2rem;
+  margin-top: 120px; /* espaço para header fixo */
+  border-radius: 10px;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Garantir que inputs e selects fiquem com largura 100% para terem o mesmo tamanho */
+.formulario input,
+.formulario select {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-top: 0.3rem;
+  width: 100%; /* deixa todas do mesmo tamanho */
+  box-sizing: border-box;
+}
+
+.formulario label {
+  margin-top: 1rem;
+  font-weight: bold;
+  text-align: left;
+  width: 100%;
+}
+
+/* Botão manter */
+.botao-cadastrar {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 0.8rem;
+  margin-top: 2rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  width: 100%; /* para ficar igual ao campo */
+  box-sizing: border-box;
+}
+
+.botao-cadastrar:hover {
+  background-color: #0056b3;
+}

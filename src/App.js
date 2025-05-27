@@ -9,10 +9,10 @@ import PassageiroPage from './pages/PassageiroPage';
 import EscolhaPerfilPage from './pages/EscolhaPerfilPage';
 import CadastroVeiculoPage from './pages/CadastroVeiculoPage';
 import CadastroEnderecoPage from './pages/CadastroEnderecoPage';
-import ConfirmacaoCadastroPage from './pages/ConfirmacaoCadastroPage';
 import InformacoesUsuarioPage from './pages/InformacoesUsuarioPage';
 import InformacoesCarroPage from './pages/InformacoesCarroPage';
 import ConfirmarCaronaMotorista from './pages/ConfirmarCaronaMotorista';
+import CadastroConcluidoPage from './pages/CadastroConcluidoPage';
 import './App.css';
 
 const App = () => {
@@ -25,13 +25,13 @@ const App = () => {
         <Route path="/inicio" element={<InicioPage />} />
         <Route path="/motorista" element={<MotoristaPage />} />
         <Route path="/passageiro" element={<PassageiroPage />} />
-        <Route path="/escolhaperfil" element={<EscolhaPerfilPage />} />
+        <Route path="/escolha-perfil" element={<EscolhaPerfilPage />} />
         <Route path="/cadastro-veiculo" element={<CadastroVeiculoPage />} />
         <Route path="/cadastro-endereco" element={<CadastroEnderecoPage />} />
-        <Route path="/cadastro-confirmacao" element={<ConfirmacaoCadastroPage />} />
         <Route path="/info-usuario" element={<InformacoesUsuarioPage />} />
         <Route path='/info-carro' element={<InformacoesCarroPage />} />
         <Route path='/confirmarcarona' element={<ConfirmarCaronaMotorista />} />
+        <Route path="/cadastro-concluido" element={<CadastroConcluidoPage />} />
       </Routes>
     </Router>
   );

@@ -1,0 +1,111 @@
+.login-page {
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+  width: 100vw;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+.left-side, .right-side {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.left-side {
+  background-color: #0057b7;
+  color: white;
+  text-align: center;
+}
+
+.left-side img {
+  max-width: 180px;
+  margin-bottom: 20px;
+}
+
+.left-side h1 {
+  font-size: 36px;
+  margin-bottom: 10px;
+}
+
+.left-side h2 {
+  font-size: 20px;
+  font-weight: normal;
+}
+
+.right-side {
+  background-color: #f5f5f5;
+  color: #333;
+  text-align: center;
+}
+
+.right-side h1 {
+  font-size: 28px;
+  color: #0057b7;
+  margin-bottom: 20px;
+}
+
+.perfil-options {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%;
+  max-width: 300px;
+}
+
+.perfil-btn {
+  padding: 12px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  color: white;
+  transition: background-color 0.3s ease;
+}
+
+/* Diferenciação de botões por cor */
+.perfil-btn:nth-of-type(1) {
+  background-color: #003f8a; /* Motorista */
+}
+.perfil-btn:nth-of-type(1):hover {
+  background-color: #002f6c;
+}
+
+.perfil-btn:nth-of-type(2) {
+  background-color: #0057b7; /* Passageiro */
+}
+.perfil-btn:nth-of-type(2):hover {
+  background-color: #004099;
+}
+
+.perfil-btn:nth-of-type(3) {
+  background-color: #4d88e8; /* Ambos */
+}
+.perfil-btn:nth-of-type(3):hover {
+  background-color: #3c78d8;
+}
+
+@media (max-width: 768px) {
+  .login-page {
+    flex-direction: column;
+  }
+
+  .left-side, .right-side {
+    width: 100%;
+    flex: none;
+  }
+
+  .left-side {
+    padding: 40px 20px;
+  }
+
+  .right-side {
+    padding: 30px 20px;
+  }
+}

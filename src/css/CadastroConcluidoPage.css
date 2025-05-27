@@ -1,0 +1,63 @@
+.cadastro-concluido-page {
+  background-color: #f2f2f2;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
+
+.cabecalho {
+  background-color: #007bff;
+  color: white;
+  padding: 1rem;
+  width: 100vw;
+  box-sizing: border-box;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  justify-content: center;
+  margin: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  height: 120px;
+}
+
+.logo {
+  height: 100px;
+  width: 100px;
+}
+
+.mensagem-concluido {
+  margin-top: 250px; /* espaço para o header fixo + um pouco */
+  background-color: white;
+  padding: 2rem;
+  border-radius: 10px;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+.botao-voltar {
+  margin-top: 1.5rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.botao-voltar:hover {
+  background-color: #0056b3;
+}
