@@ -22,7 +22,11 @@ const LoginPage = () => {
 
       if (response.ok) {
         const data = await response.json();
+        console.log('Resposta do login:', data);
         localStorage.setItem('token', data.token);
+        localStorage.setItem('idUsuario', data.id);
+        console.log('Token salvo:', localStorage.getItem('token'));
+        console.log('idUsuario salvo:', localStorage.getItem('idUsuario'));
         navigate('/inicio');
       } else {
         alert('Email ou senha inválidos');

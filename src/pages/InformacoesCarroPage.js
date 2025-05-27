@@ -5,117 +5,243 @@ import logo from '../assets/images/Logo.png';
 import '../css/InformacoesCarroPage.css';
 
 const InformacoesCarroPage = () => {
-    const navigate = useNavigate();
-    const [menuAberto, setMenuAberto] = useState(false);
-    const menuRef = useRef(null);
+  const navigate = useNavigate();
+  const [menuAberto, setMenuAberto] = useState(false);
+  const menuRef = useRef(null);
 
-    // Fecha o menu ao clicar fora
-    useEffect(() => {
-        const handleClickFora = (event) => {
-            if (menuRef.current && !menuRef.current.contains(event.target)) {
-                setMenuAberto(false);
-            }
-        };
-        document.addEventListener('mousedown', handleClickFora);
-        return () => {
-            document.removeEventListener('mousedown', handleClickFora);
-        };
-    }, []);
+  const [formData, setFormData] = useState({
+    marca: '',
+    modelo: '',
+    cor: '',
+    placa: '',
+    ano: '',  // Inicial como string para facilitar input controlado
+  });
 
-    const fecharMenuENavegar = (rota) => {
-        setMenuAberto(false);
-        navigate(rota);
-    };
+  const idUsuario = localStorage.getItem('idUsuario');
 
-    const deletarConta = () => {
-        setMenuAberto(false);
-        if (window.confirm('Tem certeza que deseja deletar sua conta? Essa ação não pode ser desfeita.')) {
-            alert('Conta deletada com sucesso!');
-            navigate('/');
+  useEffect(() => {
+    if (!idUsuario) {
+      alert('Você precisa estar logado para acessar essa página.');
+      navigate('/');
+      return;
+    }
+
+    const token = localStorage.getItem('token');
+
+    fetch(`http://localhost:8080/api/veiculos/${idUsuario}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    })
+      .then(response => {
+        if (!response.ok) {
+          // Se não encontrou veículo, limpar formData e não lançar erro
+          if (response.status === 404) return null;
+          throw new Error('Erro ao buscar dados do veículo');
         }
+        return response.json();
+      })
+      .then(data => {
+        if (data) {
+          // Garantir que ano seja string para o input number controlado
+          setFormData({
+            marca: data.marca || '',
+            modelo: data.modelo || '',
+            cor: data.cor || '',
+            placa: data.placa || '',
+            ano: data.ano ? data.ano.toString() : '',
+          });
+        } else {
+          // Sem dados - limpar formulário
+          setFormData({
+            marca: '',
+            modelo: '',
+            cor: '',
+            placa: '',
+            ano: '',
+          });
+        }
+      })
+      .catch(error => {
+        console.log('Veículo não encontrado ou erro na requisição:', error);
+      });
+  }, [idUsuario, navigate]);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const token = localStorage.getItem('token');
+
+    // Preparar dados para enviar, convertendo ano para número se possível
+    const payload = {
+      ...formData,
+      ano: formData.ano ? Number(formData.ano) : null,
     };
 
-    const logout = () => {
+    fetch(`http://localhost:8080/api/veiculos/${idUsuario}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify(payload)
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Erro ao salvar dados do veículo');
+        }
+        return response.text();
+      })
+      .then(msg => {
+        alert(msg || 'Informações salvas com sucesso!');
+      })
+      .catch(error => {
+        console.error('Erro ao salvar informações do veículo:', error);
+        alert('Erro ao salvar informações');
+      });
+  };
+
+  // Fecha o menu ao clicar fora
+  useEffect(() => {
+    const handleClickFora = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
         setMenuAberto(false);
-        alert('Logout efetuado!');
-        navigate('/');
+      }
     };
-
-     const handleSubmit = (event) => {
-        event.preventDefault(); // evita recarregar a página
-        alert('Informações salvas!');
-        // aqui você pode adicionar lógica para salvar dados em backend, localStorage, etc.
+    document.addEventListener('mousedown', handleClickFora);
+    return () => {
+      document.removeEventListener('mousedown', handleClickFora);
     };
+  }, []);
 
-    return (
-        <div className="info-carro-page">
-            <header className="motorista-header">
-                <div className="header-section">
-                    <button className="voltar-btn" onClick={() => navigate(-1)}>
-                        <FaArrowLeft />
-                    </button>
-                </div>
+  const fecharMenuENavegar = (rota) => {
+    setMenuAberto(false);
+    navigate(rota);
+  };
 
-                <div className="header-section logo-nome">
-                    <img src={logo} alt="Logo" className="logo-header" />
-                    <h2>FatecRide</h2>
-                </div>
+  const deletarConta = () => {
+    setMenuAberto(false);
+    if (window.confirm('Tem certeza que deseja deletar sua conta? Essa ação não pode ser desfeita.')) {
+      alert('Conta deletada com sucesso!');
+      navigate('/');
+    }
+  };
 
-                <div className="header-section usuario-menu-container" ref={menuRef}>
-                    <button
-                        className="usuario-btn"
-                        onClick={() => setMenuAberto(!menuAberto)}
-                    >
-                        <FaUser />
-                    </button>
+  const logout = () => {
+    setMenuAberto(false);
+    localStorage.clear();
+    alert('Logout efetuado!');
+    navigate('/');
+  };
 
-                    {menuAberto && (
-                        <div className="menu-suspenso">
-                            <button onClick={() => fecharMenuENavegar('/info-usuario')}>
-                                Informações do usuário
-                            </button>
-                            <button onClick={() => fecharMenuENavegar('/info-carro')}>
-                                Informações do carro
-                            </button>
-                            <button className="deletar-btn" onClick={deletarConta}>
-                                Deletar conta
-                            </button>
-                            <button onClick={logout}>Sair</button>
-                        </div>
-                    )}
-                </div>
-            </header>
-
-            <div className="info-conteudo">
-                <h1>Informações do Carro</h1>
-                <form className="info-form" onSubmit={handleSubmit}>
-                    <label>
-                        Marca:
-                        <input type="text" placeholder="Ex: Toyota" />
-                    </label>
-                    <label>
-                        Modelo:
-                        <input type="text" placeholder="Ex: Corolla" />
-                    </label>
-                    <label>
-                        Cor:
-                        <input type="text" placeholder="Ex: Prata" />
-                    </label>
-                    <label>
-                        Placa:
-                        <input type="text" placeholder="Ex: ABC-1234" />
-                    </label>
-                    <label>
-                        Ano:
-                        <input type="number" placeholder="Ex: 2020" />
-                    </label>
-                    <button type="submit" className="salvar-btn">
-                        Salvar Informações
-                    </button>
-                </form>
-            </div>
+  return (
+    <div className="info-carro-page">
+      <header className="motorista-header">
+        <div className="header-section">
+          <button className="voltar-btn" onClick={() => navigate(-1)}>
+            <FaArrowLeft />
+          </button>
         </div>
-    );
+
+        <div className="header-section logo-nome">
+          <img src={logo} alt="Logo" className="logo-header" />
+          <h2>FatecRide</h2>
+        </div>
+
+        <div className="header-section usuario-menu-container" ref={menuRef}>
+          <button
+            className="usuario-btn"
+            onClick={() => setMenuAberto(!menuAberto)}
+          >
+            <FaUser />
+          </button>
+
+          {menuAberto && (
+            <div className="menu-suspenso">
+              <button onClick={() => fecharMenuENavegar('/info-usuario')}>
+                Informações do usuário
+              </button>
+              <button onClick={() => fecharMenuENavegar('/info-carro')}>
+                Informações do carro
+              </button>
+              <button className="deletar-btn" onClick={deletarConta}>
+                Deletar conta
+              </button>
+              <button onClick={logout}>Sair</button>
+            </div>
+          )}
+        </div>
+      </header>
+
+      <div className="info-conteudo">
+        <h1>Informações do Carro</h1>
+        <form className="info-form" onSubmit={handleSubmit}>
+          <label>
+            Marca:
+            <input
+              type="text"
+              name="marca"
+              value={formData.marca}
+              onChange={handleChange}
+              placeholder="Ex: Toyota"
+            />
+          </label>
+          <label>
+            Modelo:
+            <input
+              type="text"
+              name="modelo"
+              value={formData.modelo}
+              onChange={handleChange}
+              placeholder="Ex: Corolla"
+            />
+          </label>
+          <label>
+            Cor:
+            <input
+              type="text"
+              name="cor"
+              value={formData.cor}
+              onChange={handleChange}
+              placeholder="Ex: Prata"
+            />
+          </label>
+          <label>
+            Placa:
+            <input
+              type="text"
+              name="placa"
+              value={formData.placa}
+              onChange={handleChange}
+              placeholder="Ex: ABC-1234"
+            />
+          </label>
+          <label>
+            Ano:
+            <input
+              type="number"
+              name="ano"
+              value={formData.ano}
+              onChange={handleChange}
+              placeholder="Ex: 2020"
+            />
+          </label>
+          <button type="submit" className="salvar-btn">
+            Salvar Informações
+          </button>
+        </form>
+      </div>
+    </div>
+  );
 };
 
 export default InformacoesCarroPage;
