@@ -1,137 +1,82 @@
+/* Cabeçalho */
 .passageiro-header {
-    background-color: #007bff;
-    color: white;
-    display: flex;
-    align-items: center;
-    height: 100px;
-    padding: 0 20px;
-    justify-content: space-between;
+  background-color: #007bff; /* azul FatecRide */
+  color: white;
+  display: flex;
+  align-items: center;
+  height: 100px;
+  padding: 0 20px;
+  justify-content: space-between;
 }
 
-.header-section {
-    display: flex;
-    align-items: center;
+/* Div central com logo e nome */
+.logo-nome-centered {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 auto;
 }
 
-.logo-nome {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
+/* Tamanho da logo */
 .logo-header {
-    height: 60px;
+  height: 100px;
+  width: 100px;
 }
 
+/* Botão de voltar */
 .voltar-btn {
-    background: none;
-    border: none;
-    color: white;
-    font-size: 1.5rem;
-    cursor: pointer;
-    margin-left: 100px;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.8rem;
+  cursor: pointer;
+  margin-right: 20px;
 }
 
-.usuario-btn {
-    background: none;
-    border: none;
-    color: white;
-    font-size: 1.5rem;
-    cursor: pointer;
-    margin-right: 100px;
-}
-
-.usuario-menu-container {
-    position: relative;
-}
-
-.menu-suspenso {
-    position: absolute;
-    top: 50px;
-    right: 0;
-    background: white;
-    border-radius: 6px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    min-width: 150px;
-    z-index: 100;
-}
-
-.menu-suspenso button {
-    background: none;
-    border: none;
-    padding: 10px 15px;
-    text-align: left;
-    cursor: pointer;
-    color: #333;
-    font-size: 1rem;
-    transition: background-color 0.2s ease;
-}
-
-.menu-suspenso button:hover {
-    background-color: #007bff;
-    color: white;
-}
-
-.deletar-btn {
-    color: #d9534f;
-}
-
-.deletar-btn:hover {
-    background-color: #c9302c;
-    color: white;
-}
-
+/* Conteúdo principal */
 .usuario-conteudo {
+  max-width: 600px;
+  margin: 30px auto;
+  padding: 20px;
+}
+
+/* Título */
+.usuario-conteudo h2 {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+/* Campo de formulário */
+.campo-info {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center; /* centraliza verticalmente */
-  height: calc(100vh - 80px); /* tela inteira menos o cabeçalho */
-  background-color: #f9f9f9;
-  padding: 20px;
-  text-align: center;
-}
-
-.usuario-conteudo h2 {
-  color: #007bff;
-  margin-bottom: 30px;
-  font-size: 2rem;
-}
-
-.campo-info {
   margin-bottom: 20px;
-  width: 80%;
-  max-width: 400px;
-  text-align: left;
 }
 
 .campo-info label {
-  display: block;
-  margin-bottom: 6px;
+  margin-bottom: 5px;
   font-weight: bold;
 }
 
-.campo-info input {
-  width: 100%;
+.campo-info input,
+.campo-info select {
   padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
   font-size: 1rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
 }
 
+/* Botão principal */
 .botao-principal {
-  margin-top: 30px;
-  padding: 12px 20px;
-  font-size: 1rem;
-  border: none;
-  border-radius: 6px;
   background-color: #007bff;
   color: white;
+  border: none;
+  padding: 12px 20px;
+  font-size: 1rem;
+  border-radius: 6px;
   cursor: pointer;
-  width: 80%;
-  max-width: 400px;
+  width: 100%;
+  margin-top: 20px;
 }
 
 .botao-principal:hover {
