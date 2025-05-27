@@ -1,0 +1,59 @@
+.usuario-menu-container {
+  position: relative;
+}
+
+/* Botão do usuário */
+.usuario-btn {
+  background-color: #007bff;
+  border: none;
+  border-radius: 50%;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+/* Menu suspenso */
+
+.menu-suspenso {
+  position: absolute;
+  top: 50px;
+  right: 0;
+  background-color: #f5f5f5;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  min-width: 200px;
+}
+
+.menu-suspenso button {
+  padding: 12px 16px;
+  background: none;
+  border: none;
+  font-weight: bold;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 15px;
+  cursor: pointer;
+  color: #000;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.menu-suspenso button:hover {
+  background-color: #e0e0e0;
+}
+
+.menu-suspenso .deletar-btn {
+  color: red;
+}

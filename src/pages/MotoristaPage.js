@@ -1,114 +1,187 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FaArrowLeft, FaUser } from 'react-icons/fa';
-import { MapContainer, TileLayer } from 'react-leaflet';
+import { FaArrowLeft } from 'react-icons/fa';
+import { MapContainer, TileLayer, useMap, Marker, Popup } from 'react-leaflet';
+import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import logo from '../assets/images/Logo.png';
+import 'leaflet-routing-machine';
 import 'leaflet-routing-machine/dist/leaflet-routing-machine.css';
+
+import logo from '../assets/images/Logo.png';
+import UserMenu from '../components/UserMenu/UserMenu';
+
 import '../App.css';
+import '../components/UserMenu/UserMenu.css';
+import '../css/MotoristaPage.css';
+
+// Corrige o caminho dos ícones padrão do Leaflet
+delete L.Icon.Default.prototype._getIconUrl;
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
+  iconUrl: require('leaflet/dist/images/marker-icon.png'),
+  shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
+});
+
+const RoutingMachine = ({ pontoPartidaCoords, pontoFinalCoords }) => {
+  const map = useMap();
+  const routingRef = useRef(null);
+
+  useEffect(() => {
+    if (pontoPartidaCoords && pontoFinalCoords && map) {
+      if (routingRef.current) {
+        routingRef.current.getPlan().setWaypoints([]);
+        routingRef.current.remove();
+      }
+
+      routingRef.current = L.Routing.control({
+        waypoints: [
+          L.latLng(pontoPartidaCoords.lat, pontoPartidaCoords.lon),
+          L.latLng(pontoFinalCoords.lat, pontoFinalCoords.lon),
+        ],
+        routeWhileDragging: false,
+        show: false,
+      }).addTo(map);
+    }
+  }, [pontoPartidaCoords, pontoFinalCoords, map]);
+
+  return null;
+};
+
+const locaisSalvos = {
+  "fatec cotia": { lat: -23.6009, lon: -46.8805 },
+  "terminal cotia": { lat: -23.5889, lon: -46.8820 },
+  "terminal vargem grande paulista": { lat: -23.6401, lon: -46.9376 },
+  "terminal itapevi": { lat: -23.5447, lon: -46.9047 }
+};
 
 const MotoristaPage = () => {
-    const navigate = useNavigate();
-    const [menuAberto, setMenuAberto] = useState(false);
-    const menuRef = useRef(null);
+  const navigate = useNavigate();
+  const [pontoPartida, setPontoPartida] = useState('');
+  const [pontoFinal, setPontoFinal] = useState('');
+  const [vagas, setVagas] = useState(1);
 
-    // Fecha o menu ao clicar fora
-    useEffect(() => {
-        const handleClickFora = (event) => {
-            if (menuRef.current && !menuRef.current.contains(event.target)) {
-                setMenuAberto(false);
-            }
-        };
-        document.addEventListener('mousedown', handleClickFora);
-        return () => {
-            document.removeEventListener('mousedown', handleClickFora);
-        };
-    }, []);
+  const [pontoPartidaCoords, setPontoPartidaCoords] = useState(null);
+  const [pontoFinalCoords, setPontoFinalCoords] = useState(null);
 
-    const fecharMenuENavegar = (rota) => {
-        setMenuAberto(false);
-        navigate(rota);
-    };
+  const buscarCoordenadasLocaisSalvos = (local) => {
+    const key = local.trim().toLowerCase();
+    if (locaisSalvos[key]) {
+      return locaisSalvos[key];
+    }
+    return null;
+  };
 
-    return (
-        <div className="motorista-page">
-            <header className="motorista-header">
-                <div className="header-section">
-                    <button className="voltar-btn" onClick={() => navigate('/inicio')}>
-                        <FaArrowLeft />
-                    </button>
-                </div>
+  const gerarRota = () => {
+    const partidaCoords = buscarCoordenadasLocaisSalvos(pontoPartida);
+    const finalCoords = buscarCoordenadasLocaisSalvos(pontoFinal);
 
-                <div className="header-section logo-nome">
-                    <img src={logo} alt="Logo" className="logo-header" />
-                    <h2>FatecRide</h2>
-                </div>
+    if (!partidaCoords) {
+      alert('Ponto de partida inválido ou não cadastrado.');
+      return;
+    }
+    if (!finalCoords) {
+      alert('Ponto final inválido ou não cadastrado.');
+      return;
+    }
 
-                <div className="header-section usuario-menu-container" ref={menuRef}>
-                    <button
-                        className="usuario-btn"
-                        onClick={() => setMenuAberto(!menuAberto)}
-                    >
-                        <FaUser />
-                    </button>
+    setPontoPartidaCoords(partidaCoords);
+    setPontoFinalCoords(finalCoords);
+  };
 
-                    {menuAberto && (
-                        <div className="menu-suspenso">
-                            <button onClick={() => fecharMenuENavegar('/info-usuario')}>
-                                Informações do usuário
-                            </button>
-                            <button onClick={() => fecharMenuENavegar('/info-carro')}>
-                                Informações do carro
-                            </button>
-                            <button
-                                className="deletar-btn"
-                                onClick={() => {
-                                    setMenuAberto(false);
-                                    if (
-                                        window.confirm(
-                                            'Tem certeza que deseja deletar sua conta? Essa ação não pode ser desfeita.'
-                                        )
-                                    ) {
-                                        alert('Conta deletada com sucesso!');
-                                        navigate('/');
-                                    }
-                                }}
-                            >
-                                Deletar conta
-                            </button>
-                            <button
-                                onClick={() => {
-                                    setMenuAberto(false);
-                                    alert('Logout efetuado!');
-                                    navigate('/');
-                                }}
-                            >
-                                Sair
-                            </button>
-                        </div>
-                    )}
-                </div>
-            </header>
-
-            <div className="motorista-conteudo">
-                <div className="mapa-container">
-                    <MapContainer center={[-23.5617, -46.625]} zoom={13} style={{ height: '100%', width: '100%' }}>
-                        <TileLayer
-                            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                            attribution="&copy; OpenStreetMap contributors"
-                        />
-                    </MapContainer>
-                </div>
-                <div className="formulario-container">
-                    <h1>Para onde vamos?</h1>
-                    <input type="text" placeholder="Ponto de Partida" />
-                    <input type="text" placeholder="Ponto Final" />
-                    <input type="number" placeholder="Vagas disponíveis" min="0" max="5" />
-                    <button className="enviar-btn" onClick={() => navigate('/confirmarcarona')}>Enviar</button>
-                </div>
-            </div>
+  return (
+    <div className="motorista-page">
+      <header className="motorista-header">
+        <div className="header-section">
+          <button className="voltar-btn" onClick={() => navigate('/inicio')}>
+            <FaArrowLeft />
+          </button>
         </div>
-    );
+        <div className="header-section logo-nome">
+          <img src={logo} alt="Logo" className="logo-header" />
+          <h2>FatecRide</h2>
+        </div>
+        <div className="header-section usuario-menu-container">
+          <UserMenu />
+        </div>
+      </header>
+
+      <div className="motorista-conteudo">
+        <div className="mapa-container">
+          <MapContainer center={[-23.6009, -46.8805]} zoom={13} style={{ height: '100%', width: '100%' }}>
+            <TileLayer
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              attribution="&copy; OpenStreetMap contributors"
+            />
+
+            {pontoPartidaCoords && (
+              <Marker position={[pontoPartidaCoords.lat, pontoPartidaCoords.lon]}>
+                <Popup>Ponto de Partida</Popup>
+              </Marker>
+            )}
+
+            {pontoFinalCoords && (
+              <Marker position={[pontoFinalCoords.lat, pontoFinalCoords.lon]}>
+                <Popup>Ponto Final</Popup>
+              </Marker>
+            )}
+
+            {pontoPartidaCoords && pontoFinalCoords && (
+              <RoutingMachine
+                pontoPartidaCoords={pontoPartidaCoords}
+                pontoFinalCoords={pontoFinalCoords}
+              />
+            )}
+          </MapContainer>
+        </div>
+
+        <div className="formulario-container">
+          <h1>Para onde vamos?</h1>
+          <input
+            type="text"
+            placeholder="Ponto de Partida (ex: Fatec Cotia)"
+            value={pontoPartida}
+            onChange={(e) => setPontoPartida(e.target.value)}
+          />
+          <input
+            type="text"
+            placeholder="Ponto Final (ex: Avenida Paulista)"
+            value={pontoFinal}
+            onChange={(e) => setPontoFinal(e.target.value)}
+          />
+          <div className="form-group">
+            <label htmlFor="vagas">Total de vagas disponíveis:</label>
+            <input
+              id="vagas"
+              type="number"
+              placeholder="Vagas disponíveis"
+              min="1"
+              max="5"
+              value={vagas}
+              onChange={(e) => setVagas(e.target.value)}
+            />
+          </div>
+          <button className="gerar-rota-btn" onClick={gerarRota}>
+            Gerar Rota
+          </button>
+          <button
+            className="enviar-btn"
+            onClick={() =>
+              navigate('/confirmarcarona', {
+                state: {
+                  origem: pontoPartida,
+                  destino: pontoFinal,
+                  vagas: vagas,
+                },
+              })
+            }
+          >
+            Enviar
+          </button>
+
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default MotoristaPage;

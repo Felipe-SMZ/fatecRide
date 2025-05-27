@@ -1,20 +1,19 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FaArrowLeft, FaUser } from 'react-icons/fa';
+import { FaArrowLeft } from 'react-icons/fa';
 import logo from '../assets/images/Logo.png';
 import '../css/InformacoesCarroPage.css';
+import UserMenu from '../components/UserMenu/UserMenu';  
+import '../components/UserMenu/UserMenu.css';
 
 const InformacoesCarroPage = () => {
   const navigate = useNavigate();
-  const [menuAberto, setMenuAberto] = useState(false);
-  const menuRef = useRef(null);
-
   const [formData, setFormData] = useState({
     marca: '',
     modelo: '',
     cor: '',
     placa: '',
-    ano: '',  // Inicial como string para facilitar input controlado
+    ano: '',
   });
 
   const idUsuario = localStorage.getItem('idUsuario');
@@ -37,7 +36,6 @@ const InformacoesCarroPage = () => {
     })
       .then(response => {
         if (!response.ok) {
-          // Se não encontrou veículo, limpar formData e não lançar erro
           if (response.status === 404) return null;
           throw new Error('Erro ao buscar dados do veículo');
         }
@@ -45,7 +43,6 @@ const InformacoesCarroPage = () => {
       })
       .then(data => {
         if (data) {
-          // Garantir que ano seja string para o input number controlado
           setFormData({
             marca: data.marca || '',
             modelo: data.modelo || '',
@@ -54,7 +51,6 @@ const InformacoesCarroPage = () => {
             ano: data.ano ? data.ano.toString() : '',
           });
         } else {
-          // Sem dados - limpar formulário
           setFormData({
             marca: '',
             modelo: '',
@@ -81,7 +77,6 @@ const InformacoesCarroPage = () => {
     event.preventDefault();
     const token = localStorage.getItem('token');
 
-    // Preparar dados para enviar, convertendo ano para número se possível
     const payload = {
       ...formData,
       ano: formData.ano ? Number(formData.ano) : null,
@@ -110,39 +105,6 @@ const InformacoesCarroPage = () => {
       });
   };
 
-  // Fecha o menu ao clicar fora
-  useEffect(() => {
-    const handleClickFora = (event) => {
-      if (menuRef.current && !menuRef.current.contains(event.target)) {
-        setMenuAberto(false);
-      }
-    };
-    document.addEventListener('mousedown', handleClickFora);
-    return () => {
-      document.removeEventListener('mousedown', handleClickFora);
-    };
-  }, []);
-
-  const fecharMenuENavegar = (rota) => {
-    setMenuAberto(false);
-    navigate(rota);
-  };
-
-  const deletarConta = () => {
-    setMenuAberto(false);
-    if (window.confirm('Tem certeza que deseja deletar sua conta? Essa ação não pode ser desfeita.')) {
-      alert('Conta deletada com sucesso!');
-      navigate('/');
-    }
-  };
-
-  const logout = () => {
-    setMenuAberto(false);
-    localStorage.clear();
-    alert('Logout efetuado!');
-    navigate('/');
-  };
-
   return (
     <div className="info-carro-page">
       <header className="motorista-header">
@@ -157,28 +119,8 @@ const InformacoesCarroPage = () => {
           <h2>FatecRide</h2>
         </div>
 
-        <div className="header-section usuario-menu-container" ref={menuRef}>
-          <button
-            className="usuario-btn"
-            onClick={() => setMenuAberto(!menuAberto)}
-          >
-            <FaUser />
-          </button>
-
-          {menuAberto && (
-            <div className="menu-suspenso">
-              <button onClick={() => fecharMenuENavegar('/info-usuario')}>
-                Informações do usuário
-              </button>
-              <button onClick={() => fecharMenuENavegar('/info-carro')}>
-                Informações do carro
-              </button>
-              <button className="deletar-btn" onClick={deletarConta}>
-                Deletar conta
-              </button>
-              <button onClick={logout}>Sair</button>
-            </div>
-          )}
+        <div className="header-section usuario-menu-container">
+          <UserMenu />
         </div>
       </header>
 

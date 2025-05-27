@@ -13,7 +13,12 @@ import InformacoesUsuarioPage from './pages/InformacoesUsuarioPage';
 import InformacoesCarroPage from './pages/InformacoesCarroPage';
 import ConfirmarCaronaMotorista from './pages/ConfirmarCaronaMotorista';
 import CadastroConcluidoPage from './pages/CadastroConcluidoPage';
+import UserMenu from './components/UserMenu/UserMenu';
+import ConfirmarCaronaPassageiro from './pages/ConfirmarCaronaPassageiro';
+import './components/UserMenu/UserMenu.css';
 import './App.css';
+import 'leaflet/dist/leaflet.css';
+
 
 const App = () => {
   return (
@@ -32,6 +37,8 @@ const App = () => {
         <Route path='/info-carro' element={<InformacoesCarroPage />} />
         <Route path='/confirmarcarona' element={<ConfirmarCaronaMotorista />} />
         <Route path="/cadastro-concluido" element={<CadastroConcluidoPage />} />
+        <Route path='/useermenu' element={<UserMenu />} />
+        <Route path='/confirmarcaronapassageiro' element={<ConfirmarCaronaPassageiro />} />
       </Routes>
     </Router>
   );

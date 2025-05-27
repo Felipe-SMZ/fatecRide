@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import logo from '../assets/images/Logo.png';
 import '../css/CadastroPage.css';
 
-
 const CadastroPage = () => {
   const navigate = useNavigate();
   const [form, setForm] = useState({
@@ -15,7 +14,7 @@ const CadastroPage = () => {
     idGenero: 1 // padrão masculino
   });
 
-  const idTipoUsuario = localStorage.getItem('idTipoUsuario');
+  const idTipoUsuario = Number(localStorage.getItem('idTipoUsuario') || 1);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -32,12 +31,12 @@ const CadastroPage = () => {
 
     const dadosEnvio = {
       ...form,
-      idTipoUsuario: Number(idTipoUsuario),
-      idGenero: Number(form.idGenero) // garantir que seja número
+      idTipoUsuario: idTipoUsuario,
+      idGenero: Number(form.idGenero)
     };
 
     try {
-      const res = await fetch('http://localhost:8080/cadastrar', {
+      const res = await fetch('http://localhost:8080/usuario', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(dadosEnvio)
@@ -48,10 +47,10 @@ const CadastroPage = () => {
       const data = await res.json();
       console.log('Resposta backend:', data);
 
-      // Armazena idUsuario retornado pelo backend
-      localStorage.setItem('id_usuario', data.id);
+      // Salva id do usuário retornado no localStorage
+      localStorage.setItem('id_usuario', data.idUsuario || data.id); // conforme o backend
 
-      if (idTipoUsuario === '1' || idTipoUsuario === '3') {
+      if (idTipoUsuario === 1 || idTipoUsuario === 3) {
         navigate('/cadastro-veiculo');
       } else {
         navigate('/cadastro-endereco');

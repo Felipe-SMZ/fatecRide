@@ -1,0 +1,165 @@
+/* MotoristaPage.css */
+
+.motorista-page {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f0f4ff;
+    color: #003366;
+}
+
+.motorista-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: 007bff;
+    color: white;
+    padding: 10px 20px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+.header-section {
+    display: flex;
+    align-items: center;
+}
+
+.voltar-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 5px;
+    transition: background-color 0.2s ease;
+}
+
+.voltar-btn:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+}
+
+.logo-nome img.logo-header {
+    height: 100px;
+    margin-right: 10px;
+}
+
+.logo-nome h2 {
+    margin: 0;
+    font-weight: 700;
+    font-size: 1.8rem;
+}
+
+.usuario-menu-container {
+    /* estilo do menu do usuário se quiser */
+}
+
+.motorista-conteudo {
+    flex: 1;
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+}
+
+.mapa-container {
+    flex: 2;
+    height: 770px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Popup */
+.leaflet-popup-content-wrapper {
+  background-color: #0047ab;
+  color: white;
+  font-weight: bold;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 1rem;
+}
+
+.leaflet-popup-tip {
+  background-color: #0047ab;
+}
+
+.formulario-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 0 15px rgba(0, 74, 173, 0.3);
+    /* sombra azul padrão */
+}
+
+.formulario-container h1 {
+    margin-bottom: 20px;
+    font-size: 1.7rem;
+    color: #004aad;
+    /* azul padrão */
+}
+
+.formulario-container input {
+    margin-bottom: 15px;
+    padding: 12px 15px;
+    border: 2px solid #004aad;
+    /* azul padrão */
+    border-radius: 5px;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.form-group {
+    margin: 10px 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    width: 328px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+
+.formulario-container input:focus {
+    border-color: #002f6c;
+    /* tom mais escuro do azul padrão */
+}
+
+.gerar-rota-btn,
+.enviar-btn {
+    padding: 12px;
+    font-size: 1.1rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.3s ease;
+    font-weight: 600;
+}
+
+.gerar-rota-btn {
+    background-color: #004aad;
+    /* azul padrão */
+    color: white;
+}
+
+.gerar-rota-btn:hover {
+    background-color: #002f6c;
+    /* tom mais escuro */
+}
+
+.enviar-btn {
+    background-color: #004aad;
+    /* azul padrão */
+    color: white;
+}
+
+.enviar-btn:hover {
+    background-color: #002f6c;
+    /* tom mais escuro */
+}

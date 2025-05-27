@@ -1,0 +1,164 @@
+.passageiro-page {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f0f4ff;
+    color: #003366;
+}
+
+.passageiro-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+.header-section {
+    display: flex;
+    align-items: center;
+}
+
+.voltar-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 5px;
+    transition: background-color 0.2s ease;
+}
+
+.voltar-btn:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+}
+
+.logo-nome img.logo-header {
+    height: 100px;
+    margin-right: 10px;
+}
+
+.logo-nome h2 {
+    margin: 0;
+    font-weight: 700;
+    font-size: 1.8rem;
+}
+
+.usuario-menu-container {
+    /* estilo do menu do usuário se quiser */
+}
+
+.passageiro-conteudo {
+    flex: 1;
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+}
+
+.mapa-container {
+    flex: 2;
+    height: 770px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Popup */
+.leaflet-popup-content-wrapper {
+  background-color: #0047ab;
+  color: white;
+  font-weight: bold;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 1rem;
+}
+
+.leaflet-popup-tip {
+  background-color: #0047ab;
+}
+
+.formulario-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 0 15px rgba(0, 74, 173, 0.3);
+}
+
+.passageiro-page .formulario-container h1 {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #004aad;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.passageiro-page .formulario-container input {
+    margin-bottom: 15px;
+    padding: 12px 15px;
+    border: 2px solid #004aad;
+    border-radius: 5px;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.passageiro-page .formulario-container input:focus {
+    border-color: #002f6c;
+}
+
+.botoes-formulario {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.btn-rota,
+.btn-enviar {
+    padding: 12px;
+    font-size: 1.1rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.btn-rota {
+    background-color: #004aad;
+    color: white;
+}
+
+.btn-rota:hover {
+    background-color: #002f6c;
+}
+
+.btn-enviar {
+    background-color: #004aad;
+    color: white;
+}
+
+.btn-enviar:hover {
+    background-color: #002f6c;
+}
+
+.rotas-salvas {
+    margin-top: 20px;
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 74, 173, 0.2);
+}
+
+.card-rota {
+    padding: 10px;
+    margin-top: 10px;
+    border-left: 5px solid #004aad;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+}

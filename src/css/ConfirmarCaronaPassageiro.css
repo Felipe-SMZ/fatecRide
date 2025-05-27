@@ -1,0 +1,111 @@
+.confirmar-passageiro-page {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f9f9f9;
+}
+
+/* Header separado e fixo */
+.confirmar-passageiro-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #007bff;
+  color: white;
+  height: 100px;
+  padding: 0 16px;
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+
+.confirmar-passageiro-header .header-section {
+  display: flex;
+  align-items: center;
+}
+
+.voltar-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 22px;
+  cursor: pointer;
+  margin-right: 12px;
+  transition: color 0.3s;
+}
+.voltar-btn:hover {
+  color: #a8c0ff;
+}
+
+.logo-nome {
+  flex-grow: 1;
+  justify-content: center;
+  gap: 8px;
+}
+.logo-header {
+  height: 40px;
+  width: auto;
+}
+
+.usuario-menu-container {
+  /* seu estilo UserMenu */
+}
+
+/* Conteúdo da página abaixo do header */
+.confirmar-passageiro-conteudo {
+  padding: 24px;
+  overflow-y: auto;
+  flex-grow: 1;
+  background-color: white;
+  margin: 16px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 0.1);
+}
+
+.confirmar-passageiro-conteudo h1,
+.confirmar-passageiro-conteudo h2 {
+  color: #0052cc;
+  margin-bottom: 16px;
+}
+
+.lista-carona {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.card-carona {
+  background-color: #f0f4ff;
+  border: 1px solid #c1c7d0;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 1px 4px rgb(0 0 0 / 0.05);
+}
+
+.card-carona p {
+  margin: 6px 0;
+  color: #333;
+}
+
+.solicitar-btn {
+  margin-top: 12px;
+  padding: 10px 18px;
+  background-color: #0052cc;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.solicitar-btn:hover:not(:disabled) {
+  background-color: #003d99;
+}
+
+.solicitar-btn:disabled,
+.solicitar-btn.aguardando {
+  background-color: #808080;
+  cursor: default;
+  color: #ddd;
+}

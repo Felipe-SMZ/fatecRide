@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from "react";
 import "../css/InformacoesUsuarioPage.css";
 import logo from "../assets/images/Logo.png";
+import { FaArrowLeft } from 'react-icons/fa';
+
+// Novo import do menu reutilizável
+import UserMenu from "../components/UserMenu/UserMenu";
+import "../components/UserMenu/UserMenu.css";
 
 const tiposUsuario = [
   { id: 1, nome: "Passageiro" },
@@ -112,13 +117,19 @@ const InformacoesUsuarioPage = () => {
       <header className="passageiro-header">
         <div className="header-section">
           <button className="voltar-btn" onClick={() => window.history.back()}>
-            &#8592;
+            <FaArrowLeft />
           </button>
+        </div>
 
-          <div className="logo-nome-centered">
+        <div className="header-section">
+          <div className="logo-nome">
             <img src={logo} alt="Logo" className="logo-header" />
-            <h1>FatecRide</h1>
+            <h2>FatecRide</h2>
           </div>
+        </div>
+
+        <div className="header-section usuario-menu-container">
+          <UserMenu />
         </div>
       </header>
 
