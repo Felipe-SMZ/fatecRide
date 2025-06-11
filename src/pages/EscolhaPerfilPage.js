@@ -7,8 +7,8 @@ const EscolhaPerfilPage = () => {
   const navigate = useNavigate();
 
   const perfilToIdMap = {
-    motorista: 1,
-    passageiro: 2,
+    motorista: 2,
+    passageiro: 1,
     ambos: 3
   };
 

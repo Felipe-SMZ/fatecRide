@@ -14,7 +14,7 @@ const LoginPage = () => {
       return;
     }
     try {
-      const response = await fetch('http://localhost:8080/login', {
+      const response = await fetch('http://localhost:8080/users/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, senha }),
@@ -23,10 +23,8 @@ const LoginPage = () => {
       if (response.ok) {
         const data = await response.json();
         console.log('Resposta do login:', data);
-        localStorage.setItem('token', data.token);
-        localStorage.setItem('idUsuario', data.id);
-        console.log('Token salvo:', localStorage.getItem('token'));
-        console.log('idUsuario salvo:', localStorage.getItem('idUsuario'));
+        localStorage.setItem('token', data.token); 
+        localStorage.setItem('nomeUsuario', data.nome); 
         navigate('/inicio');
       } else {
         alert('Email ou senha inválidos');
