@@ -1,111 +1,87 @@
-.login-page {
-  display: flex;
-  flex-direction: row;
-  height: 100vh;
-  width: 100vw;
+/* Estilo da página de escolha de perfil */
+
+body {
   margin: 0;
-  padding: 0;
-  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #dfefff, #f9fbff);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.left-side, .right-side {
-  flex: 1;
+.escolha-perfil-page {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 20px;
-  box-sizing: border-box;
+  height: 100vh;
+  padding: 0 20px;
+  text-align: center;
+  animation: fadeIn 0.7s ease-in-out;
 }
 
-.left-side {
-  background-color: #0057b7;
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.escolha-perfil-page h2 {
+  font-size: 32px;
+  font-weight: 600;
+  color: #004aad;
+  margin-bottom: 50px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.escolha-perfil-page button {
+  width: 240px;
+  padding: 14px 20px;
+  margin: 12px 0;
+  font-size: 18px;
+  font-weight: 600;
   color: white;
-  text-align: center;
-}
-
-.left-side img {
-  max-width: 180px;
-  margin-bottom: 20px;
-}
-
-.left-side h1 {
-  font-size: 36px;
-  margin-bottom: 10px;
-}
-
-.left-side h2 {
-  font-size: 20px;
-  font-weight: normal;
-}
-
-.right-side {
-  background-color: #f5f5f5;
-  color: #333;
-  text-align: center;
-}
-
-.right-side h1 {
-  font-size: 28px;
-  color: #0057b7;
-  margin-bottom: 20px;
-}
-
-.perfil-options {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  width: 100%;
-  max-width: 300px;
-}
-
-.perfil-btn {
-  padding: 12px;
-  font-size: 16px;
   border: none;
-  border-radius: 5px;
+  border-radius: 12px;
   cursor: pointer;
-  color: white;
-  transition: background-color 0.3s ease;
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 20px rgba(0, 87, 183, 0.2);
+  background-size: 200% auto;
+  display: block;
 }
 
-/* Diferenciação de botões por cor */
-.perfil-btn:nth-of-type(1) {
-  background-color: #003f8a; /* Motorista */
+/* Botão passageiro */
+.escolha-perfil-page button:nth-of-type(1) {
+  background-image: linear-gradient(to right, #003f8a, #0057b7);
 }
-.perfil-btn:nth-of-type(1):hover {
-  background-color: #002f6c;
-}
-
-.perfil-btn:nth-of-type(2) {
-  background-color: #0057b7; /* Passageiro */
-}
-.perfil-btn:nth-of-type(2):hover {
-  background-color: #004099;
+.escolha-perfil-page button:nth-of-type(1):hover {
+  background-position: right center;
+  transform: translateY(-2px);
 }
 
-.perfil-btn:nth-of-type(3) {
-  background-color: #4d88e8; /* Ambos */
+/* Botão motorista */
+.escolha-perfil-page button:nth-of-type(2) {
+  background-image: linear-gradient(to right, #0057b7, #007bff);
 }
-.perfil-btn:nth-of-type(3):hover {
-  background-color: #3c78d8;
+.escolha-perfil-page button:nth-of-type(2):hover {
+  background-position: right center;
+  transform: translateY(-2px);
 }
 
-@media (max-width: 768px) {
-  .login-page {
-    flex-direction: column;
+/* Botão ambos */
+.escolha-perfil-page button:nth-of-type(3) {
+  background-image: linear-gradient(to right, #4d88e8, #3c78d8);
+}
+.escolha-perfil-page button:nth-of-type(3):hover {
+  background-position: right center;
+  transform: translateY(-2px);
+}
+
+@media (max-width: 600px) {
+  .escolha-perfil-page h2 {
+    font-size: 24px;
   }
 
-  .left-side, .right-side {
+  .escolha-perfil-page button {
     width: 100%;
-    flex: none;
-  }
-
-  .left-side {
-    padding: 40px 20px;
-  }
-
-  .right-side {
-    padding: 30px 20px;
+    max-width: 300px;
+    font-size: 16px;
+    padding: 12px;
   }
 }

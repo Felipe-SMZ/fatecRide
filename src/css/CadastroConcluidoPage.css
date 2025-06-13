@@ -1,63 +1,53 @@
+/* CadastroConcluidoPage.css */
+
 .cadastro-concluido-page {
-  background-color: #f2f2f2;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 0;
-  padding: 0;
-}
-
-.cabecalho {
-  background-color: #007bff;
-  color: white;
-  padding: 1rem;
-  width: 100vw;
-  box-sizing: border-box;
+  max-width: 480px;
+  margin: 80px auto;
+  padding: 40px 30px;
+  background-color: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
   text-align: center;
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  justify-content: center;
-  margin: 0;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 1000;
-  height: 120px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #004aad;
 }
 
-.logo {
-  height: 100px;
-  width: 100px;
+.cadastro-concluido-page h2 {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 30px;
+  color: #0057b7;
 }
 
-.mensagem-concluido {
-  margin-top: 250px; /* espaço para o header fixo + um pouco */
-  background-color: white;
-  padding: 2rem;
-  border-radius: 10px;
-  max-width: 400px;
-  width: 90%;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  text-align: center;
-  font-size: 1.2rem;
-  font-weight: 500;
-}
-
-.botao-voltar {
-  margin-top: 1.5rem;
-  background-color: #007bff;
+.cadastro-concluido-page button {
+  background-color: #0057b7;
   color: white;
   border: none;
-  padding: 0.8rem 1.5rem;
-  border-radius: 5px;
+  padding: 14px 40px;
+  border-radius: 10px;
+  font-size: 18px;
+  font-weight: 600;
   cursor: pointer;
-  font-weight: bold;
-  font-size: 1rem;
   transition: background-color 0.3s ease;
+  user-select: none;
 }
 
-.botao-voltar:hover {
-  background-color: #0056b3;
+.cadastro-concluido-page button:hover {
+  background-color: #003f8a;
+}
+
+@media (max-width: 520px) {
+  .cadastro-concluido-page {
+    margin: 40px 20px;
+    padding: 30px 20px;
+  }
+
+  .cadastro-concluido-page h2 {
+    font-size: 22px;
+  }
+
+  .cadastro-concluido-page button {
+    font-size: 16px;
+    padding: 12px 30px;
+  }
 }

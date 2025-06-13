@@ -1,0 +1,26 @@
+.app-header {
+  background-color: #0057b7;
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.header-logo {
+  height: 100px;
+  width: auto;
+}
+
+.app-title {
+  color: white;
+  font-size: 50px;
+  font-weight: bold;
+  margin: 0;
+}

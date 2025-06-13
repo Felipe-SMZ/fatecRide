@@ -1,96 +1,129 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import logo from '../assets/images/Logo.png';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import '../css/CadastroPage.css';
+import Header from '../components/Header/Header.jsx';
 
 const CadastroPage = () => {
   const navigate = useNavigate();
-  const [form, setForm] = useState({
+  const location = useLocation();
+
+  const incomingUserTypeId = location.state?.userTypeId;
+  const userTypeIdNumber = typeof incomingUserTypeId === 'string'
+    ? parseInt(incomingUserTypeId, 10)
+    : incomingUserTypeId;
+
+  const validUserTypeId = Number.isInteger(userTypeIdNumber) ? userTypeIdNumber : undefined;
+
+  const [userTypeId, setUserTypeId] = useState(validUserTypeId);
+  const [cursos, setCursos] = useState([]);
+  const [genders, setGenders] = useState([]);
+
+  const [usuarioData, setUsuarioData] = useState({
     nome: '',
     sobrenome: '',
     email: '',
+    emailConfirmacao: '',
     senha: '',
+    senhaConfirmacao: '',
     telefone: '',
-    idGenero: 1 // padrão masculino
+    courseId: '',
+    genderId: '',
+    foto: 'https://example.com/foto'
   });
 
-  const idTipoUsuario = Number(localStorage.getItem('idTipoUsuario') || 1);
+  useEffect(() => {
+    if (validUserTypeId !== undefined && validUserTypeId !== userTypeId) {
+      setUserTypeId(validUserTypeId);
+    }
+  }, [validUserTypeId]);
+
+  useEffect(() => {
+    if (!userTypeId && location.state !== undefined) {
+      console.warn('userTypeId inválido, redirecionando');
+      navigate('/escolha-perfil');
+    }
+  }, [userTypeId, navigate, location.state]);
+
+  useEffect(() => {
+    fetch('http://localhost:8080/courses')
+      .then(res => res.json())
+      .then(data => setCursos(data))
+      .catch(err => console.error('Erro ao buscar cursos:', err));
+  }, []);
+
+  useEffect(() => {
+    fetch('http://localhost:8080/genders')
+      .then(res => res.json())
+      .then(data => setGenders(data))
+      .catch(err => console.error('Erro ao buscar gêneros:', err));
+  }, []);
+
+  if (!userTypeId) return null;
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setForm(prev => ({ ...prev, [name]: value }));
+    setUsuarioData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!form.nome || !form.sobrenome || !form.email || !form.senha) {
-      alert('Preencha todos os campos obrigatórios.');
+    if (usuarioData.email !== usuarioData.emailConfirmacao) {
+      alert('Os e-mails não coincidem!');
       return;
     }
 
-    const dadosEnvio = {
-      ...form,
-      idTipoUsuario: idTipoUsuario,
-      idGenero: Number(form.idGenero)
+    if (usuarioData.senha !== usuarioData.senhaConfirmacao) {
+      alert('As senhas não coincidem!');
+      return;
+    }
+
+    if (!usuarioData.courseId || !usuarioData.genderId) {
+      alert('Por favor, selecione o curso e o gênero.');
+      return;
+    }
+
+    const dataToSend = {
+      ...usuarioData,
+      userTypeId,
     };
 
-    try {
-      const res = await fetch('http://localhost:8080/usuario', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(dadosEnvio)
-      });
-
-      if (!res.ok) throw new Error('Erro ao cadastrar');
-
-      const data = await res.json();
-      console.log('Resposta backend:', data);
-
-      // Salva id do usuário retornado no localStorage
-      localStorage.setItem('id_usuario', data.idUsuario || data.id); // conforme o backend
-
-      if (idTipoUsuario === 1 || idTipoUsuario === 3) {
-        navigate('/cadastro-veiculo');
-      } else {
-        navigate('/cadastro-endereco');
-      }
-    } catch (error) {
-      alert('Erro no cadastro: ' + error.message);
-    }
+    navigate('/cadastro-endereco', {
+      state: { usuarioData: dataToSend },
+    });
   };
 
   return (
-    <div className="cadastro-page">
-      <header className="cabecalho">
-        <img src={logo} alt="Logo FatecRide" className="logo" />
-        <h1>Cadastro de Usuário</h1>
-      </header>
+    <div>
+      <Header />
+      <div className="cadastro-page">
+        <h2>Cadastro de Usuário</h2>
+        <form onSubmit={handleSubmit}>
+          <input name="nome" placeholder="Nome" value={usuarioData.nome} onChange={handleChange} required />
+          <input name="sobrenome" placeholder="Sobrenome" value={usuarioData.sobrenome} onChange={handleChange} required />
+          
+          <select name="courseId" value={usuarioData.courseId} onChange={handleChange} required>
+            <option value="">Selecione o curso</option>
+            {cursos.map(curso => (
+              <option key={curso.id} value={curso.id}>{curso.name}</option>
+            ))}
+          </select>
 
-      <form className="formulario" onSubmit={handleSubmit}>
-        <label>Nome*</label>
-        <input type="text" name="nome" value={form.nome} onChange={handleChange} required />
+          <select name="genderId" value={usuarioData.genderId} onChange={handleChange} required>
+            <option value="">Selecione o gênero</option>
+            {genders.map(gender => (
+              <option key={gender.id} value={gender.id}>{gender.name}</option>
+            ))}
+          </select>
 
-        <label>Sobrenome*</label>
-        <input type="text" name="sobrenome" value={form.sobrenome} onChange={handleChange} required />
-
-        <label>Email*</label>
-        <input type="email" name="email" value={form.email} onChange={handleChange} required />
-
-        <label>Senha*</label>
-        <input type="password" name="senha" value={form.senha} onChange={handleChange} required />
-
-        <label>Telefone</label>
-        <input type="text" name="telefone" value={form.telefone} onChange={handleChange} />
-
-        <label>Gênero</label>
-        <select name="idGenero" value={form.idGenero} onChange={handleChange}>
-          <option value={1}>Masculino</option>
-          <option value={2}>Feminino</option>
-        </select>
-
-        <button type="submit" className="botao-cadastrar">Cadastrar</button>
-      </form>
+          <input name="telefone" placeholder="Telefone" value={usuarioData.telefone} onChange={handleChange} required />
+          <input name="email" placeholder="E-mail" type="email" value={usuarioData.email} onChange={handleChange} required />
+          <input name="emailConfirmacao" placeholder="Confirmar E-mail" type="email" value={usuarioData.emailConfirmacao} onChange={handleChange} required />
+          <input name="senha" placeholder="Senha" type="password" value={usuarioData.senha} onChange={handleChange} required />
+          <input name="senhaConfirmacao" placeholder="Confirmar Senha" type="password" value={usuarioData.senhaConfirmacao} onChange={handleChange} required />
+          <button type="submit">Avançar</button>
+        </form>
+      </div>
     </div>
   );
 };

@@ -1,88 +1,103 @@
 /* CadastroVeiculoPage.css */
 
-html, body {
-  margin: 0;
-  padding: 0;
-  height: 100%;
+.cadastro-veiculo-page {
+  max-width: 480px;
+  margin: 40px auto 60px;
+  background-color: #fff;
+  padding: 30px 25px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
 }
 
-.veiculo-page {
-  background-color: #f2f2f2;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 0;
-  padding: 0;
-}
-
-.cabecalho {
-  background-color: #007bff;
-  color: white;
-  padding: 1rem;
-  width: 100vw;
-  box-sizing: border-box;
+.cadastro-veiculo-page h2 {
+  color: #0057b7;
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 30px;
   text-align: center;
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  justify-content: center;
-  margin: 0;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 1000;
-  height: 120px;
 }
 
-.logo {
-  height: 100px;
-  width: 100px;
-}
-
-.formulario-veiculo {
-  background-color: white;
-  padding: 2rem;
-  margin-top: 120px; /* espaço para o header fixo */
-  border-radius: 10px;
-  width: 90%;
-  max-width: 500px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+.cadastro-veiculo-page form {
   display: flex;
   flex-direction: column;
+  gap: 1px;
 }
 
-.formulario-veiculo label {
-  margin-top: 1rem;
-  font-weight: bold;
-  text-align: left;
-  width: 100%;
+.cadastro-veiculo-page label {
+  display: flex;
+  flex-direction: column;
+  font-weight: 600;
+  font-size: 16px;
+  color: #444;
 }
 
-.formulario-veiculo input {
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  margin-top: 0.3rem;
-  width: 100%;
-  box-sizing: border-box;
-  font-size: 1rem;
+.cadastro-veiculo-page input {
+  margin-top: 6px;
+  padding: 12px 16px;
+  font-size: 16px;
+  border: 2px solid #cbd5e1;
+  border-radius: 8px;
+  outline-offset: 2px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  font-family: inherit;
+  color: #222;
 }
 
-.botao-cadastrar {
-  background-color: #007bff;
+.cadastro-veiculo-page input::placeholder {
+  color: #a0a0a0;
+}
+
+.cadastro-veiculo-page input:focus {
+  border-color: #0057b7;
+  box-shadow: 0 0 8px rgba(0, 87, 183, 0.4);
+}
+
+.cadastro-veiculo-page button {
+  margin-top: 10px;
+  background-color: #0057b7;
   color: white;
+  font-size: 18px;
+  padding: 14px 0;
   border: none;
-  padding: 0.8rem;
-  margin-top: 2rem;
-  border-radius: 5px;
+  border-radius: 10px;
   cursor: pointer;
-  font-weight: bold;
-  font-size: 1.1rem;
-  width: 100%;
-  box-sizing: border-box;
+  font-weight: 700;
+  transition: background-color 0.3s ease;
+  user-select: none;
 }
 
-.botao-cadastrar:hover {
-  background-color: #0056b3;
+.cadastro-veiculo-page button:disabled {
+  background-color: #9bb6df;
+  cursor: not-allowed;
+}
+
+.cadastro-veiculo-page button:hover:not(:disabled) {
+  background-color: #003f8a;
+}
+
+@media (max-width: 520px) {
+  .cadastro-veiculo-page {
+    margin: 20px 10px 40px;
+    padding: 25px 20px;
+  }
+
+  .cadastro-veiculo-page h2 {
+    font-size: 24px;
+  }
+
+  .cadastro-veiculo-page label {
+    font-size: 14px;
+  }
+
+  .cadastro-veiculo-page input {
+    font-size: 14px;
+    padding: 10px 14px;
+  }
+
+  .cadastro-veiculo-page button {
+    font-size: 16px;
+    padding: 12px 0;
+  }
 }

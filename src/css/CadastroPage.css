@@ -1,82 +1,89 @@
+/* CadastroPage.css */
+
 .cadastro-page {
-  background-color: #f2f2f2;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 0; /* remove margem padrão */
-  padding: 0; /* remove padding padrão */
+  max-width: 480px;
+  margin: 40px auto 60px;
+  background-color: #ffffff;
+  padding: 30px 25px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
 }
 
-.cabecalho {
-  background-color: #007bff;
-  color: white;
-  padding: 1rem 0; /* só padding vertical */
-  width: 100%;
+.cadastro-page h2 {
+  color: #0057b7;
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 30px;
   text-align: center;
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  justify-content: center;
-  margin: 0; /* remove espaço em cima */
-  position: fixed; /* fixa no topo */
-  top: 0;
-  left: 0;
-  z-index: 1000;
-  box-sizing: border-box;
 }
 
-/* Ajusta altura da logo para caber no header fixo */
-.logo {
-  height: 100px;
-  width: 100px;
-}
-
-/* Como o cabeçalho está fixo, precisamos dar um padding-top no conteúdo para não ficar atrás dele */
-.formulario {
-  background-color: white;
-  padding: 2rem;
-  margin-top: 120px; /* espaço para header fixo */
-  border-radius: 10px;
-  width: 90%;
-  max-width: 500px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+.cadastro-page form {
   display: flex;
   flex-direction: column;
+  gap: 18px;
 }
 
-/* Garantir que inputs e selects fiquem com largura 100% para terem o mesmo tamanho */
-.formulario input,
-.formulario select {
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  margin-top: 0.3rem;
-  width: 100%; /* deixa todas do mesmo tamanho */
-  box-sizing: border-box;
+.cadastro-page input,
+.cadastro-page select {
+  padding: 12px 16px;
+  font-size: 16px;
+  border: 2px solid #cbd5e1;
+  border-radius: 8px;
+  outline-offset: 2px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  font-family: inherit;
+  color: #222;
 }
 
-.formulario label {
-  margin-top: 1rem;
-  font-weight: bold;
-  text-align: left;
-  width: 100%;
+.cadastro-page input::placeholder,
+.cadastro-page select option {
+  color: #a0a0a0;
 }
 
-/* Botão manter */
-.botao-cadastrar {
-  background-color: #007bff;
+.cadastro-page input:focus,
+.cadastro-page select:focus {
+  border-color: #0057b7;
+  box-shadow: 0 0 8px rgba(0, 87, 183, 0.4);
+}
+
+.cadastro-page button {
+  margin-top: 10px;
+  background-color: #0057b7;
   color: white;
+  font-size: 18px;
+  padding: 14px 0;
   border: none;
-  padding: 0.8rem;
-  margin-top: 2rem;
-  border-radius: 5px;
+  border-radius: 10px;
   cursor: pointer;
-  font-weight: bold;
-  width: 100%; /* para ficar igual ao campo */
-  box-sizing: border-box;
+  font-weight: 700;
+  transition: background-color 0.3s ease;
+  user-select: none;
 }
 
-.botao-cadastrar:hover {
-  background-color: #0056b3;
+.cadastro-page button:hover {
+  background-color: #003f8a;
+}
+
+@media (max-width: 520px) {
+  .cadastro-page {
+    margin: 20px 10px 40px;
+    padding: 25px 20px;
+  }
+
+  .cadastro-page h2 {
+    font-size: 24px;
+  }
+
+  .cadastro-page input,
+  .cadastro-page select {
+    font-size: 14px;
+    padding: 10px 14px;
+  }
+
+  .cadastro-page button {
+    font-size: 16px;
+    padding: 12px 0;
+  }
 }
