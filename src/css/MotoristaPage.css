@@ -19,41 +19,6 @@
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
 }
 
-.header-section {
-    display: flex;
-    align-items: center;
-}
-
-.voltar-btn {
-    background: none;
-    border: none;
-    color: white;
-    font-size: 1.5rem;
-    cursor: pointer;
-    padding: 5px;
-    transition: background-color 0.2s ease;
-}
-
-.voltar-btn:hover {
-    background-color: rgba(255, 255, 255, 0.2);
-    border-radius: 5px;
-}
-
-.logo-nome img.logo-header {
-    height: 100px;
-    margin-right: 10px;
-}
-
-.logo-nome h2 {
-    margin: 0;
-    font-weight: 700;
-    font-size: 1.8rem;
-}
-
-.usuario-menu-container {
-    /* estilo do menu do usuário se quiser */
-}
-
 .motorista-conteudo {
     flex: 1;
     display: flex;

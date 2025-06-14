@@ -1,0 +1,87 @@
+.app-header {
+  background-color: #0057b7;
+  padding: 12px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 10;
+}
+
+.header-content {
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  position: relative;
+}
+
+.header-logo {
+  height: 100px;
+  width: auto;
+}
+
+.app-title {
+  color: white;
+  font-size: 50px;
+  font-weight: bold;
+  margin: 0;
+}
+
+.menu-icon {
+  position: absolute;
+  right: 0;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+/* Sobreposição */
+.menu-overlay {
+  position: fixed;
+  top: 80px; /* abaixo do header */
+  right: 20px;
+  z-index: 100;
+}
+
+/* Menu suspenso */
+.dropdown-menu {
+  background-color: white;
+  box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 200px;
+  z-index: 1000;
+}
+
+.dropdown-menu button {
+  background-color: white;
+  color: #0057b7;
+  border: 1px solid #0057b7;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.dropdown-menu button:hover {
+  background-color: #f0f0f0;
+}
+
+.dropdown-menu .sair {
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+}
+
+.dropdown-menu .sair:hover {
+  background-color: #cc0000;
+}

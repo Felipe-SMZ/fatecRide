@@ -1,11 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../css/InformacoesUsuarioPage.css";
-import logo from "../assets/images/Logo.png";
-import { FaArrowLeft } from 'react-icons/fa';
-
-// Novo import do menu reutilizável
-import UserMenu from "../components/UserMenu/UserMenu";
-import "../components/UserMenu/UserMenu.css";
+import HeaderMenu from "../components/Header/HeaderMenu";
 
 const tiposUsuario = [
   { id: 1, nome: "Passageiro" },
@@ -15,7 +10,7 @@ const tiposUsuario = [
 
 const generos = [
   { id: 1, nome: "Masculino" },
-  { id: 2, nome: "Feminino" }
+  { id: 2, nome: "Feminino" },
 ];
 
 const InformacoesUsuarioPage = () => {
@@ -30,22 +25,23 @@ const InformacoesUsuarioPage = () => {
   const [foto, setFoto] = useState("");
   const [idTipoUsuario, setIdTipoUsuario] = useState("");
   const [idGenero, setIdGenero] = useState("");
+  const [idCurso, setIdCurso] = useState("");
+  const [cursos, setCursos] = useState([]);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-
     if (!token) {
       setError("Token não encontrado, faça login");
       setLoading(false);
       return;
     }
 
-    fetch("http://localhost:8080/usuario/logado", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+    // Busca dados do usuário
+    fetch("http://localhost:8080/users", {
+      headers: { Authorization: `Bearer ${token}` },
     })
       .then((res) => {
+        if (res.status === 401) throw new Error("Sessão expirada. Faça login novamente.");
         if (!res.ok) throw new Error("Erro ao buscar usuário");
         return res.json();
       })
@@ -53,24 +49,33 @@ const InformacoesUsuarioPage = () => {
         setNome(data.nome || "");
         setSobrenome(data.sobrenome || "");
         setEmail(data.email || "");
-        setSenha(""); // senha não deve ser preenchida
         setTelefone(data.telefone || "");
         setFoto(data.foto || "");
-        setIdTipoUsuario(
-          data.idTipoUsuario !== undefined && data.idTipoUsuario !== null
-            ? data.idTipoUsuario.toString()
-            : ""
-        );
-        setIdGenero(
-          data.idGenero !== undefined && data.idGenero !== null
-            ? data.idGenero.toString()
-            : ""
-        );
+
+        setIdTipoUsuario(data.userTypeId?.toString() || "");
+        setIdGenero(data.genderId?.toString() || "");
+        setIdCurso(data.courseId?.toString() || "");
+
         setLoading(false);
       })
       .catch((err) => {
         setError(err.message);
         setLoading(false);
+      });
+
+    // Busca cursos
+    fetch("http://localhost:8080/courses", {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error("Erro ao buscar cursos");
+        return res.json();
+      })
+      .then((data) => {
+        setCursos(data);
+      })
+      .catch((err) => {
+        console.error("Erro ao carregar cursos:", err);
       });
   }, []);
 
@@ -81,58 +86,45 @@ const InformacoesUsuarioPage = () => {
       return;
     }
 
-    const userDTO = {
+    // Validação senha obrigatória
+    if (senha.trim() === "") {
+      alert("Por favor, preencha a senha atual ou uma nova.");
+      return;
+    }
+
+    const userBaseDTO = {
       nome,
       sobrenome,
       email,
-      senha: senha.trim() === "" ? null : senha,
+      senha,  // inclui senha obrigatoriamente
       telefone,
       foto,
-      idTipoUsuario: idTipoUsuario === "" ? null : Number(idTipoUsuario),
-      idGenero: idGenero === "" ? null : Number(idGenero),
-      vehicle: null,
+      userTypeId: idTipoUsuario === "" ? null : Number(idTipoUsuario),
+      genderId: idGenero === "" ? null : Number(idGenero),
+      courseId: idCurso === "" ? null : Number(idCurso),
     };
 
-    fetch("http://localhost:8080/usuario/logado", {
+    console.log("🔄 Enviando dados para atualização:", userBaseDTO);
+
+    fetch("http://localhost:8080/users", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(userDTO),
+      body: JSON.stringify(userBaseDTO),
     })
       .then((res) => {
         if (!res.ok) throw new Error("Erro ao atualizar usuário");
-        return res.text();
+        return res.json();
       })
-      .then((msg) => alert(msg || "Atualizado com sucesso!"))
+      .then(() => alert("Usuário atualizado com sucesso!"))
       .catch((err) => alert(err.message));
   };
 
-  if (loading) return <p>Carregando dados...</p>;
-  if (error) return <p>Erro: {error}</p>;
-
   return (
     <>
-      <header className="passageiro-header">
-        <div className="header-section">
-          <button className="voltar-btn" onClick={() => window.history.back()}>
-            <FaArrowLeft />
-          </button>
-        </div>
-
-        <div className="header-section">
-          <div className="logo-nome">
-            <img src={logo} alt="Logo" className="logo-header" />
-            <h2>FatecRide</h2>
-          </div>
-        </div>
-
-        <div className="header-section usuario-menu-container">
-          <UserMenu />
-        </div>
-      </header>
-
+      <HeaderMenu />
       <div className="usuario-conteudo">
         <h2>Informações do Usuário</h2>
 
@@ -143,11 +135,7 @@ const InformacoesUsuarioPage = () => {
 
         <div className="campo-info">
           <label>Sobrenome:</label>
-          <input
-            type="text"
-            value={sobrenome}
-            onChange={(e) => setSobrenome(e.target.value)}
-          />
+          <input type="text" value={sobrenome} onChange={(e) => setSobrenome(e.target.value)} />
         </div>
 
         <div className="campo-info">
@@ -156,35 +144,36 @@ const InformacoesUsuarioPage = () => {
         </div>
 
         <div className="campo-info">
-          <label>Senha (deixe em branco para não alterar):</label>
+          <label>Senha:</label>
           <input
             type="password"
             value={senha}
             onChange={(e) => setSenha(e.target.value)}
-            placeholder="********"
+            placeholder="Digite a senha"
+            required
           />
         </div>
 
         <div className="campo-info">
           <label>Telefone:</label>
-          <input
-            type="tel"
-            value={telefone}
-            onChange={(e) => setTelefone(e.target.value)}
-          />
+          <input type="tel" value={telefone} onChange={(e) => setTelefone(e.target.value)} />
         </div>
 
         <div className="campo-info">
           <label>Foto (URL):</label>
           <input type="text" value={foto} onChange={(e) => setFoto(e.target.value)} />
+          {foto && (
+            <img
+              src={foto}
+              alt="Foto do usuário"
+              style={{ width: 100, height: 100, marginTop: 10, borderRadius: "50%" }}
+            />
+          )}
         </div>
 
         <div className="campo-info">
           <label>Tipo Usuário:</label>
-          <select
-            value={idTipoUsuario}
-            onChange={(e) => setIdTipoUsuario(e.target.value)}
-          >
+          <select value={idTipoUsuario} onChange={(e) => setIdTipoUsuario(e.target.value)}>
             <option value="">Selecione</option>
             {tiposUsuario.map((tipo) => (
               <option key={tipo.id} value={tipo.id}>
@@ -201,6 +190,18 @@ const InformacoesUsuarioPage = () => {
             {generos.map((genero) => (
               <option key={genero.id} value={genero.id}>
                 {genero.nome}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div className="campo-info">
+          <label>Curso:</label>
+          <select value={idCurso} onChange={(e) => setIdCurso(e.target.value)}>
+            <option value="">Selecione</option>
+            {cursos.map((curso) => (
+              <option key={curso.id} value={curso.id}>
+                {curso.nome || curso.name}
               </option>
             ))}
           </select>

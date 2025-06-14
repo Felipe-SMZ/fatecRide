@@ -7,12 +7,8 @@ import 'leaflet/dist/leaflet.css';
 import 'leaflet-routing-machine';
 import 'leaflet-routing-machine/dist/leaflet-routing-machine.css';
 
-import logo from '../assets/images/Logo.png';
-import UserMenu from '../components/UserMenu/UserMenu';
-
-import '../App.css';
-import '../components/UserMenu/UserMenu.css';
 import '../css/MotoristaPage.css'; // pode usar o mesmo CSS do MotoristaPage para manter identidade visual
+import HeaderMenu from '../components/Header/HeaderMenu';
 
 // Corrige o caminho dos ícones padrão do Leaflet
 delete L.Icon.Default.prototype._getIconUrl;
@@ -86,21 +82,7 @@ const PassageiroPage = () => {
 
   return (
     <div className="motorista-page">
-      <header className="motorista-header">
-        <div className="header-section">
-          <button className="voltar-btn" onClick={() => navigate('/inicio')}>
-            <FaArrowLeft />
-          </button>
-        </div>
-        <div className="header-section logo-nome">
-          <img src={logo} alt="Logo" className="logo-header" />
-          <h2>FatecRide</h2>
-        </div>
-        <div className="header-section usuario-menu-container">
-          <UserMenu />
-        </div>
-      </header>
-
+      <HeaderMenu/>
       <div className="motorista-conteudo">
         <div className="mapa-container">
           <MapContainer center={[-23.6009, -46.8805]} zoom={13} style={{ height: '100%', width: '100%' }}>

@@ -1,38 +1,35 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import logo from '../assets/images/Logo.png';
+import Header from '../components/Header/HeaderMenu.jsx'; 
 import carroImg from '../assets/images/carro.png';
 import pessoaImg from '../assets/images/pessoa.png';
-import '../App.css'; 
+import '../css/InicioPage.css'; 
 
 const InicioPage = () => {
   const navigate = useNavigate();
 
-  const handleMotoristaClick = () => {
-    navigate('/motorista');
-  };
-
-  const handlePassageiroClick = () => {
-    navigate('/passageiro');
-  };
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      navigate('/login');
+    }
+  }, [navigate]);
 
   return (
-    <div className="inicio-page">
-      <header className="inicio-header">
-        <img src={logo} alt="Logo" className="inicio-logo" />
-        <h1 className="inicio-titulo">O que você deseja?</h1>
-      </header>
-
-      <div className="botoes-container">
-        <button className="botao-escolha" onClick={handleMotoristaClick}>
-          <img src={carroImg} alt="Motorista" className="botao-img" />
-          <span>Motorista</span>
-        </button>
-
-        <button className="botao-escolha" onClick={handlePassageiroClick}>
-          <img src={pessoaImg} alt="Passageiro" className="botao-img" />
-          <span>Passageiro</span>
-        </button>
+    <div className="inicio-container">
+      <Header />
+      <div className="inicio-content">
+        <h2 className="inicio-title">O que você deseja?</h2>
+        <div className="botoes-container">
+          <button className="botao-escolha" onClick={() => navigate('/motorista')}>
+            <img src={carroImg} alt="Motorista" />
+            <span>Motorista</span>
+          </button>
+          <button className="botao-escolha" onClick={() => navigate('/passageiro')}>
+            <img src={pessoaImg} alt="Passageiro" />
+            <span>Passageiro</span>
+          </button>
+        </div>
       </div>
     </div>
   );

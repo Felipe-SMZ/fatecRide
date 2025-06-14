@@ -1,88 +1,165 @@
+/* Reset básico */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f9fafb;
+  color: #333;
+  line-height: 1.5;
+}
+
+/* Container principal: duas colunas lado a lado */
 .info-carro-page {
-    padding: 0px ;
-}
-
-.info-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #007bff;
-    color: white;
-    padding: 10px;
-    border-radius: 8px;
-}
-
-.logo-nome {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.logo-header {
-    width: 100px;
-    height: auto;
-}
-
-.info-conteudo {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center; /* centraliza verticalmente */
-  height: calc(100vh - 80px); /* tela inteira menos o cabeçalho */
-  background-color: #f9f9f9;
-  padding: 20px;
-  text-align: center;
-  width: 100%;
+  gap: 30px;
+  padding: 30px;
+  max-width: 1100px;
+  margin: 0 auto;
 }
 
-.info-form {
-  width: 80%;
-  max-width: 400px;
-  margin: 0 auto;
-  text-align: left;
+/* Coluna do formulário */
+.info-conteudo {
+  flex: 1;
+  background: white;
+  padding: 25px 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .info-conteudo h1 {
-  color: #007bff;
-  margin-bottom: 30px;
-  font-size: 2rem;
+  margin-bottom: 25px;
+  color: #222;
+  font-weight: 700;
+  font-size: 1.8rem;
 }
 
+/* Formulário */
 .info-form label {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start; /* label e input alinhados à esquerda */
-  margin-bottom: 20px;
-  width: 100%;
-  max-width: 400px;
-  font-weight: bold;
+  display: block;
+  margin-bottom: 15px;
+  font-weight: 600;
+  color: #444;
+  font-size: 1rem;
 }
 
 .info-form input {
-  width: 100%; /* 100% do label, que tem 80% e max 400px */
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
+  width: 100%;
+  padding: 10px 12px;
+  border: 1.8px solid #ccc;
+  border-radius: 8px;
   font-size: 1rem;
-  box-sizing: border-box; /* evita overflow com padding */
+  transition: border-color 0.3s;
 }
 
+.info-form input:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+/* Botão salvar/atualizar */
 .salvar-btn {
-  margin-top: 30px;
-  padding: 12px 20px;
-  font-size: 1rem;
-  border: none;
-  border-radius: 6px;
+  width: 100%;
+  padding: 14px 0;
   background-color: #007bff;
+  border: none;
+  border-radius: 10px;
   color: white;
+  font-size: 1.2rem;
+  font-weight: 700;
   cursor: pointer;
-  width: 80%;
-  max-width: 400px;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
+  margin-top: 15px;
+  transition: background-color 0.25s ease-in-out;
 }
 
 .salvar-btn:hover {
   background-color: #0056b3;
+}
+
+/* Coluna da lista de veículos */
+.veiculos-list {
+  flex: 1;
+  background: white;
+  padding: 25px 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+.veiculos-list h2 {
+  margin-bottom: 25px;
+  font-weight: 700;
+  font-size: 1.6rem;
+  color: #222;
+}
+
+/* Lista */
+.veiculos-list ul {
+  list-style: none;
+}
+
+.veiculos-list li {
+  background: #f0f4ff;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  padding: 12px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1rem;
+  color: #222;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+/* Botões dentro da lista */
+.veiculos-list button {
+  background-color: #dc3545;
+  border: none;
+  color: white;
+  padding: 7px 14px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.25s;
+  margin-left: 10px;
+}
+
+.veiculos-list button:hover {
+  background-color: #b02a37;
+}
+
+.veiculos-list li button:first-of-type {
+  background-color: #007bff;
+}
+
+.veiculos-list li button:first-of-type:hover {
+  background-color: #0056b3;
+}
+
+/* Scroll personalizado para lista (opcional) */
+.veiculos-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.veiculos-list::-webkit-scrollbar-thumb {
+  background-color: #a9c1ff;
+  border-radius: 8px;
+}
+
+/* Responsividade para telas pequenas */
+@media (max-width: 768px) {
+  .info-carro-page {
+    flex-direction: column;
+    padding: 15px;
+  }
+  .veiculos-list {
+    max-height: none;
+    margin-top: 25px;
+  }
 }

@@ -7,12 +7,9 @@ import 'leaflet/dist/leaflet.css';
 import 'leaflet-routing-machine';
 import 'leaflet-routing-machine/dist/leaflet-routing-machine.css';
 
-import logo from '../assets/images/Logo.png';
-import UserMenu from '../components/UserMenu/UserMenu';
-
-import '../App.css';
 import '../components/UserMenu/UserMenu.css';
 import '../css/MotoristaPage.css';
+import HeaderMenu from '../components/Header/HeaderMenu';
 
 // Corrige o caminho dos ícones padrão do Leaflet
 delete L.Icon.Default.prototype._getIconUrl;
@@ -47,13 +44,6 @@ const RoutingMachine = ({ pontoPartidaCoords, pontoFinalCoords }) => {
   return null;
 };
 
-const locaisSalvos = {
-  "fatec cotia": { lat: -23.6009, lon: -46.8805 },
-  "terminal cotia": { lat: -23.5889, lon: -46.8820 },
-  "terminal vargem grande paulista": { lat: -23.6401, lon: -46.9376 },
-  "terminal itapevi": { lat: -23.5447, lon: -46.9047 }
-};
-
 const MotoristaPage = () => {
   const navigate = useNavigate();
   const [pontoPartida, setPontoPartida] = useState('');
@@ -63,24 +53,38 @@ const MotoristaPage = () => {
   const [pontoPartidaCoords, setPontoPartidaCoords] = useState(null);
   const [pontoFinalCoords, setPontoFinalCoords] = useState(null);
 
-  const buscarCoordenadasLocaisSalvos = (local) => {
-    const key = local.trim().toLowerCase();
-    if (locaisSalvos[key]) {
-      return locaisSalvos[key];
+  // Função para buscar coordenadas do backend
+  const buscarCoordenadasNoBackend = async (endereco) => {
+    if (!endereco.trim()) return null;
+
+    try {
+      const response = await fetch(`http://localhost:8080/local?local=${encodeURIComponent(endereco)}`);
+      if (!response.ok) throw new Error('Erro ao buscar localização');
+      const data = await response.json();
+      
+      // Se o backend retornar null ou vazio, trata aqui
+      if (!data || !data.lat || !data.lon) return null;
+
+      return {
+        lat: parseFloat(data.lat),
+        lon: parseFloat(data.lon)
+      };
+    } catch (error) {
+      console.error('Erro na busca do backend:', error);
+      return null;
     }
-    return null;
   };
 
-  const gerarRota = () => {
-    const partidaCoords = buscarCoordenadasLocaisSalvos(pontoPartida);
-    const finalCoords = buscarCoordenadasLocaisSalvos(pontoFinal);
+  const gerarRota = async () => {
+    const partidaCoords = await buscarCoordenadasNoBackend(pontoPartida);
+    const finalCoords = await buscarCoordenadasNoBackend(pontoFinal);
 
     if (!partidaCoords) {
-      alert('Ponto de partida inválido ou não cadastrado.');
+      alert('Ponto de partida inválido ou não encontrado.');
       return;
     }
     if (!finalCoords) {
-      alert('Ponto final inválido ou não cadastrado.');
+      alert('Ponto final inválido ou não encontrado.');
       return;
     }
 
@@ -89,95 +93,91 @@ const MotoristaPage = () => {
   };
 
   return (
-    <div className="motorista-page">
-      <header className="motorista-header">
-        <div className="header-section">
-          <button className="voltar-btn" onClick={() => navigate('/inicio')}>
-            <FaArrowLeft />
-          </button>
-        </div>
-        <div className="header-section logo-nome">
-          <img src={logo} alt="Logo" className="logo-header" />
-          <h2>FatecRide</h2>
-        </div>
-        <div className="header-section usuario-menu-container">
-          <UserMenu />
-        </div>
-      </header>
+    <div>
+      <HeaderMenu />
 
-      <div className="motorista-conteudo">
-        <div className="mapa-container">
-          <MapContainer center={[-23.6009, -46.8805]} zoom={13} style={{ height: '100%', width: '100%' }}>
-            <TileLayer
-              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-              attribution="&copy; OpenStreetMap contributors"
-            />
+      <div className="motorista-page">
+        <button
+          className="voltar-btn"
+          onClick={() => navigate('/inicio')}
+          style={{ margin: '10px', padding: '8px 12px', fontSize: '16px' }}
+        >
+          <FaArrowLeft /> Voltar
+        </button>
 
-            {pontoPartidaCoords && (
-              <Marker position={[pontoPartidaCoords.lat, pontoPartidaCoords.lon]}>
-                <Popup>Ponto de Partida</Popup>
-              </Marker>
-            )}
-
-            {pontoFinalCoords && (
-              <Marker position={[pontoFinalCoords.lat, pontoFinalCoords.lon]}>
-                <Popup>Ponto Final</Popup>
-              </Marker>
-            )}
-
-            {pontoPartidaCoords && pontoFinalCoords && (
-              <RoutingMachine
-                pontoPartidaCoords={pontoPartidaCoords}
-                pontoFinalCoords={pontoFinalCoords}
+        <div className="motorista-conteudo">
+          <div className="mapa-container" style={{ height: '400px', width: '100%' }}>
+            <MapContainer center={[-23.6009, -46.8805]} zoom={13} style={{ height: '100%', width: '100%' }}>
+              <TileLayer
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                attribution="&copy; OpenStreetMap contributors"
               />
-            )}
-          </MapContainer>
-        </div>
 
-        <div className="formulario-container">
-          <h1>Para onde vamos?</h1>
-          <input
-            type="text"
-            placeholder="Ponto de Partida (ex: Fatec Cotia)"
-            value={pontoPartida}
-            onChange={(e) => setPontoPartida(e.target.value)}
-          />
-          <input
-            type="text"
-            placeholder="Ponto Final (ex: Avenida Paulista)"
-            value={pontoFinal}
-            onChange={(e) => setPontoFinal(e.target.value)}
-          />
-          <div className="form-group">
-            <label htmlFor="vagas">Total de vagas disponíveis:</label>
-            <input
-              id="vagas"
-              type="number"
-              placeholder="Vagas disponíveis"
-              min="1"
-              max="5"
-              value={vagas}
-              onChange={(e) => setVagas(e.target.value)}
-            />
+              {pontoPartidaCoords && (
+                <Marker position={[pontoPartidaCoords.lat, pontoPartidaCoords.lon]}>
+                  <Popup>Ponto de Partida</Popup>
+                </Marker>
+              )}
+
+              {pontoFinalCoords && (
+                <Marker position={[pontoFinalCoords.lat, pontoFinalCoords.lon]}>
+                  <Popup>Ponto Final</Popup>
+                </Marker>
+              )}
+
+              {pontoPartidaCoords && pontoFinalCoords && (
+                <RoutingMachine
+                  pontoPartidaCoords={pontoPartidaCoords}
+                  pontoFinalCoords={pontoFinalCoords}
+                />
+              )}
+            </MapContainer>
           </div>
-          <button className="gerar-rota-btn" onClick={gerarRota}>
-            Gerar Rota
-          </button>
-          <button
-            className="enviar-btn"
-            onClick={() =>
-              navigate('/confirmarcarona', {
-                state: {
-                  origem: pontoPartida,
-                  destino: pontoFinal,
-                  vagas: vagas,
-                },
-              })
-            }
-          >
-            Enviar
-          </button>
 
+          <div className="formulario-container">
+            <h1>Para onde vamos?</h1>
+            <input
+              type="text"
+              placeholder="Ponto de Partida (ex: Fatec Cotia)"
+              value={pontoPartida}
+              onChange={(e) => setPontoPartida(e.target.value)}
+            />
+            <input
+              type="text"
+              placeholder="Ponto Final (ex: Avenida Paulista)"
+              value={pontoFinal}
+              onChange={(e) => setPontoFinal(e.target.value)}
+            />
+            <div className="form-group">
+              <label htmlFor="vagas">Total de vagas disponíveis:</label>
+              <input
+                id="vagas"
+                type="number"
+                placeholder="Vagas disponíveis"
+                min="1"
+                max="5"
+                value={vagas}
+                onChange={(e) => setVagas(e.target.value)}
+              />
+            </div>
+            <button className="gerar-rota-btn" onClick={gerarRota}>
+              Gerar Rota
+            </button>
+            <button
+              className="enviar-btn"
+              onClick={() =>
+                navigate('/confirmarcarona', {
+                  state: {
+                    origem: pontoPartida,
+                    destino: pontoFinal,
+                    vagas: vagas,
+                  },
+                })
+              }
+            >
+              Enviar
+            </button>
+          </div>
         </div>
       </div>
     </div>

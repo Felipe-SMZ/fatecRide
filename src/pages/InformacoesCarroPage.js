@@ -1,186 +1,200 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FaArrowLeft } from 'react-icons/fa';
-import logo from '../assets/images/Logo.png';
+import HeaderMenu from '../components/Header/HeaderMenu';
 import '../css/InformacoesCarroPage.css';
-import UserMenu from '../components/UserMenu/UserMenu';  
-import '../components/UserMenu/UserMenu.css';
 
 const InformacoesCarroPage = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
+    id: '',
     marca: '',
     modelo: '',
     cor: '',
     placa: '',
     ano: '',
   });
-
-  const idUsuario = localStorage.getItem('idUsuario');
+  const [veiculos, setVeiculos] = useState([]);
+  const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
-    if (!idUsuario) {
+    const token = localStorage.getItem('token');
+    if (!token) {
       alert('Você precisa estar logado para acessar essa página.');
       navigate('/');
       return;
     }
 
-    const token = localStorage.getItem('token');
-
-    fetch(`http://localhost:8080/api/veiculos/${idUsuario}`, {
+    fetch('http://localhost:8080/veiculos', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
-      }
+        'Authorization': `Bearer ${token}`,
+      },
     })
-      .then(response => {
-        if (!response.ok) {
-          if (response.status === 404) return null;
-          throw new Error('Erro ao buscar dados do veículo');
-        }
-        return response.json();
+      .then((response) => response.json())
+      .then((data) => {
+        console.log('🚗 Dados dos veículos recebidos:', data);
+        setVeiculos(data);
       })
-      .then(data => {
-        if (data) {
-          setFormData({
-            marca: data.marca || '',
-            modelo: data.modelo || '',
-            cor: data.cor || '',
-            placa: data.placa || '',
-            ano: data.ano ? data.ano.toString() : '',
-          });
-        } else {
-          setFormData({
-            marca: '',
-            modelo: '',
-            cor: '',
-            placa: '',
-            ano: '',
-          });
-        }
-      })
-      .catch(error => {
-        console.log('Veículo não encontrado ou erro na requisição:', error);
-      });
-  }, [idUsuario, navigate]);
+      .catch((error) => console.error('Erro ao buscar veículos:', error));
+  }, [navigate]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const token = localStorage.getItem('token');
+    const method = isEditing ? 'PUT' : 'POST';
+    const url = isEditing
+      ? `http://localhost:8080/veiculos/${formData.id}`
+      : 'http://localhost:8080/veiculos';
 
-    const payload = {
-      ...formData,
-      ano: formData.ano ? Number(formData.ano) : null,
-    };
-
-    fetch(`http://localhost:8080/api/veiculos/${idUsuario}`, {
-      method: 'POST',
+    fetch(url, {
+      method,
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
+        'Authorization': `Bearer ${token}`,
       },
-      body: JSON.stringify(payload)
+      body: JSON.stringify(formData),
     })
-      .then(response => {
+      .then((response) => {
         if (!response.ok) {
           throw new Error('Erro ao salvar dados do veículo');
         }
-        return response.text();
+        return response.json();
       })
-      .then(msg => {
-        alert(msg || 'Informações salvas com sucesso!');
+      .then((data) => {
+        alert('Informações salvas com sucesso!');
+        setVeiculos((prev) =>
+          isEditing
+            ? prev.map((v) => (v.id === data.id ? data : v))
+            : [...prev, data]
+        );
+        setFormData({
+          id: '',
+          marca: '',
+          modelo: '',
+          cor: '',
+          placa: '',
+          ano: '',
+        });
+        setIsEditing(false);
       })
-      .catch(error => {
+      .catch((error) => {
         console.error('Erro ao salvar informações do veículo:', error);
         alert('Erro ao salvar informações');
       });
   };
 
+  const handleEdit = (veiculo) => {
+    setFormData(veiculo);
+    setIsEditing(true);
+  };
+
+  const handleDelete = (id) => {
+    const token = localStorage.getItem('token');
+    console.log('🗑️ Tentando deletar veículo com ID:', id);
+
+    fetch(`http://localhost:8080/veiculos/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Erro ao deletar veículo');
+        }
+        setVeiculos((prev) => prev.filter((veiculo) => veiculo.id !== id));
+        alert('Veículo deletado com sucesso!');
+      })
+      .catch((error) => {
+        console.error('Erro ao deletar veículo:', error);
+        alert('Erro ao deletar veículo');
+      });
+  };
+
   return (
-    <div className="info-carro-page">
-      <header className="motorista-header">
-        <div className="header-section">
-          <button className="voltar-btn" onClick={() => navigate(-1)}>
-            <FaArrowLeft />
-          </button>
+    <div>
+      <HeaderMenu />
+      <div className="info-carro-page">
+        <div className="info-conteudo">
+          <h1>{isEditing ? 'Editar Veículo' : 'Adicionar Novo Veículo'}</h1>
+          <form className="info-form" onSubmit={handleSubmit}>
+            <label>
+              Marca:
+              <input
+                type="text"
+                name="marca"
+                value={formData.marca}
+                onChange={handleChange}
+                placeholder="Ex: Toyota"
+              />
+            </label>
+            <label>
+              Modelo:
+              <input
+                type="text"
+                name="modelo"
+                value={formData.modelo}
+                onChange={handleChange}
+                placeholder="Ex: Corolla"
+              />
+            </label>
+            <label>
+              Cor:
+              <input
+                type="text"
+                name="cor"
+                value={formData.cor}
+                onChange={handleChange}
+                placeholder="Ex: Prata"
+              />
+            </label>
+            <label>
+              Placa:
+              <input
+                type="text"
+                name="placa"
+                value={formData.placa}
+                onChange={handleChange}
+                placeholder="Ex: ABC-1234"
+              />
+            </label>
+            <label>
+              Ano:
+              <input
+                type="number"
+                name="ano"
+                value={formData.ano}
+                onChange={handleChange}
+                placeholder="Ex: 2020"
+              />
+            </label>
+            <button type="submit" className="salvar-btn">
+              {isEditing ? 'Atualizar Veículo' : 'Salvar Informações'}
+            </button>
+          </form>
         </div>
-
-        <div className="header-section logo-nome">
-          <img src={logo} alt="Logo" className="logo-header" />
-          <h2>FatecRide</h2>
+        <div className="veiculos-list">
+          <h2>Meus Veículos</h2>
+          <ul>
+            {veiculos.map((veiculo) => (
+              <li key={veiculo.id}>
+                {veiculo.marca} {veiculo.modelo} ({veiculo.ano})
+                <button onClick={() => handleEdit(veiculo)}>Editar</button>
+                <button onClick={() => handleDelete(veiculo.id)}>Deletar</button>
+              </li>
+            ))}
+          </ul>
         </div>
-
-        <div className="header-section usuario-menu-container">
-          <UserMenu />
-        </div>
-      </header>
-
-      <div className="info-conteudo">
-        <h1>Informações do Carro</h1>
-        <form className="info-form" onSubmit={handleSubmit}>
-          <label>
-            Marca:
-            <input
-              type="text"
-              name="marca"
-              value={formData.marca}
-              onChange={handleChange}
-              placeholder="Ex: Toyota"
-            />
-          </label>
-          <label>
-            Modelo:
-            <input
-              type="text"
-              name="modelo"
-              value={formData.modelo}
-              onChange={handleChange}
-              placeholder="Ex: Corolla"
-            />
-          </label>
-          <label>
-            Cor:
-            <input
-              type="text"
-              name="cor"
-              value={formData.cor}
-              onChange={handleChange}
-              placeholder="Ex: Prata"
-            />
-          </label>
-          <label>
-            Placa:
-            <input
-              type="text"
-              name="placa"
-              value={formData.placa}
-              onChange={handleChange}
-              placeholder="Ex: ABC-1234"
-            />
-          </label>
-          <label>
-            Ano:
-            <input
-              type="number"
-              name="ano"
-              value={formData.ano}
-              onChange={handleChange}
-              placeholder="Ex: 2020"
-            />
-          </label>
-          <button type="submit" className="salvar-btn">
-            Salvar Informações
-          </button>
-        </form>
       </div>
     </div>
   );
