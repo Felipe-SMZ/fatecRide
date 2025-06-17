@@ -1,130 +1,246 @@
-/* MotoristaPage.css */
-
+/* Container geral da página */
 .motorista-page {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f0f4ff;
-    color: #003366;
+  max-width: 1200px;
+  margin: 30px auto;
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #222;
+  background: #f9fbff;
+  border-radius: 15px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  padding: 20px;
 }
 
-.motorista-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: 007bff;
-    color: white;
-    padding: 10px 20px;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
-}
-
+/* Conteúdo com mapa e formulário lado a lado */
 .motorista-conteudo {
-    flex: 1;
-    display: flex;
-    gap: 20px;
-    padding: 20px;
+  display: flex;
+  gap: 30px;
+  flex: 1;
+  align-items: stretch;
+  justify-content: center;
 }
 
+/* Container do mapa */
 .mapa-container {
-    flex: 2;
-    height: 770px;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  flex: 1 1 70%;
+  min-width: 400px;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: white;
+  transition: box-shadow 0.3s ease;
+}
+.mapa-container:hover {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
 }
 
-/* Popup */
-.leaflet-popup-content-wrapper {
-  background-color: #0047ab;
-  color: white;
-  font-weight: bold;
-  border-radius: 8px;
-  padding: 8px 12px;
-  font-size: 1rem;
+/* O mapa do Leaflet deve ocupar 100% do container */
+.mapa-container .leaflet-container {
+  flex-grow: 1;
+  width: 100% !important;
+  height: 100% !important;
+  border-radius: 15px;
 }
 
-.leaflet-popup-tip {
-  background-color: #0047ab;
-}
-
+/* Container do formulário */
 .formulario-container {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    background-color: white;
-    border-radius: 10px;
-    padding: 30px;
-    box-shadow: 0 0 15px rgba(0, 74, 173, 0.3);
-    /* sombra azul padrão */
+  flex: 1 1 28%;
+  min-width: 320px;
+  background-color: #e7f0ff;
+  padding: 30px 25px;
+  border-radius: 15px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  box-sizing: border-box;
+  overflow-y: auto;
+  transition: background-color 0.3s ease;
+}
+.formulario-container:hover {
+  background-color: #d2e4ff;
 }
 
+/* Título do formulário */
 .formulario-container h1 {
-    margin-bottom: 20px;
-    font-size: 1.7rem;
-    color: #004aad;
-    /* azul padrão */
+  margin-bottom: 30px;
+  color: #004aad;
+  font-weight: 800;
+  font-size: 2rem;
+  text-align: center;
+  letter-spacing: 1px;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
 }
 
-.formulario-container input {
-    margin-bottom: 15px;
-    padding: 12px 15px;
-    border: 2px solid #004aad;
-    /* azul padrão */
-    border-radius: 5px;
-    font-size: 1rem;
-    outline: none;
-    transition: border-color 0.3s ease;
+/* Inputs de texto e número */
+.input-text,
+.input-number {
+  width: 100%;
+  padding: 14px 16px;
+  margin-bottom: 20px;
+  border: 2px solid #aac9ff;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  box-sizing: border-box;
+  background-color: #f5faff;
+  color: #222;
+  font-weight: 500;
 }
 
-.form-group {
-    margin: 10px 0;
-    display: flex;
-    flex-direction: column;
+.input-text::placeholder,
+.input-number::placeholder {
+  color: #7a8ba6;
 }
 
+.input-text:focus,
+.input-number:focus {
+  border-color: #005bbb;
+  box-shadow: 0 0 8px #005bbb88;
+  outline: none;
+  background-color: white;
+}
+
+/* Label dos campos */
 .form-group label {
-    width: 328px;
-    font-weight: bold;
-    margin-bottom: 5px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  display: block;
+  color: #004aad;
+  font-size: 1.05rem;
+  user-select: none;
 }
 
-
-.formulario-container input:focus {
-    border-color: #002f6c;
-    /* tom mais escuro do azul padrão */
-}
-
+/* Botões com estilo moderno */
 .gerar-rota-btn,
 .enviar-btn {
-    padding: 12px;
-    font-size: 1.1rem;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    margin-top: 10px;
-    transition: background-color 0.3s ease;
-    font-weight: 600;
+  width: 100%;
+  padding: 16px 0;
+  font-weight: 700;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.15s ease;
+  font-size: 1.1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  user-select: none;
+  margin-top: 12px;
+  color: white;
 }
 
 .gerar-rota-btn {
-    background-color: #004aad;
-    /* azul padrão */
-    color: white;
+  background: linear-gradient(135deg, #1e90ff, #005bbb);
+  box-shadow: 0 6px 15px #1e90ffaa;
 }
 
 .gerar-rota-btn:hover {
-    background-color: #002f6c;
-    /* tom mais escuro */
+  background: linear-gradient(135deg, #005bbb, #003f7f);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px #003f7faa;
 }
 
 .enviar-btn {
-    background-color: #004aad;
-    /* azul padrão */
-    color: white;
+  background: linear-gradient(135deg, #28a745, #1e7e34);
+  box-shadow: 0 6px 15px #28a745aa;
 }
 
 .enviar-btn:hover {
-    background-color: #002f6c;
-    /* tom mais escuro */
+  background: linear-gradient(135deg, #1e7e34, #145214);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px #145214aa;
+}
+
+/* Scrollbar customizada no formulário */
+.formulario-container::-webkit-scrollbar {
+  width: 8px;
+}
+.formulario-container::-webkit-scrollbar-track {
+  background: #dbe9ff;
+  border-radius: 10px;
+}
+.formulario-container::-webkit-scrollbar-thumb {
+  background: #005bbb;
+  border-radius: 10px;
+}
+
+/* Responsividade simples */
+@media (max-width: 900px) {
+  .motorista-conteudo {
+    flex-direction: column;
+  }
+  .mapa-container, .formulario-container {
+    min-width: 100%;
+    height: 50vh;
+  }
+  .formulario-container {
+    padding: 20px 15px;
+  }
+}
+
+.input-select {
+  width: 100%;
+  height: 40px; /* igual altura dos inputs de texto */
+  padding: 8px 60px;
+  margin-bottom: 20px;
+  border: 2px solid #aac9ff;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  box-sizing: border-box;
+  background-color: #f5faff;
+  color: #222;
+  font-weight: 500;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+
+}
+.form-group {
+  text-align: center;
+}
+
+
+.input-select:focus {
+  border-color: #005bbb;
+  box-shadow: 0 0 8px #005bbb88;
+  outline: none;
+  background-color: white;
+}
+
+.card-enderecos {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.card-endereco {
+  background-color: #f5faff;
+  border: 1px solid #cce4f6;
+  border-radius: 12px;
+  padding: 1rem;
+  width: 250px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.card-endereco h3 {
+  margin-bottom: 0.5rem;
+  color: #004b8d;
+}
+
+.card-endereco p {
+  margin: 0.25rem 0;
+}
+
+.enviar-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.enviar-btn.loading::after {
+  content: " ⏳";
 }

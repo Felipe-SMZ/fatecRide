@@ -12,6 +12,7 @@ const InformacoesCarroPage = () => {
     cor: '',
     placa: '',
     ano: '',
+    vagas_disponiveis: 0,
   });
   const [veiculos, setVeiculos] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
@@ -23,33 +24,53 @@ const InformacoesCarroPage = () => {
       navigate('/');
       return;
     }
+    fetchVeiculos(token);
+  }, [navigate]);
 
+  const fetchVeiculos = (token) => {
     fetch('http://localhost:8080/veiculos', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
       },
     })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log('🚗 Dados dos veículos recebidos:', data);
-        setVeiculos(data);
+      .then((response) => {
+        if (!response.ok) throw new Error('Erro ao buscar veículos');
+        return response.json();
       })
-      .catch((error) => console.error('Erro ao buscar veículos:', error));
-  }, [navigate]);
+      .then((data) => {
+        setVeiculos(Array.isArray(data) ? data : []);
+      })
+      .catch((error) => {
+        console.error('Erro ao buscar veículos:', error);
+        setVeiculos([]);
+      });
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
+
     const token = localStorage.getItem('token');
+    if (!token) {
+      alert('Usuário não autenticado');
+      return;
+    }
+
+    const payload = {
+      modelo: formData.modelo,
+      marca: formData.marca,
+      placa: formData.placa,
+      cor: formData.cor,
+      ano: Number(formData.ano),
+      vagas_disponiveis: formData.vagas_disponiveis ? Number(formData.vagas_disponiveis) : 0,
+    };
+
     const method = isEditing ? 'PUT' : 'POST';
     const url = isEditing
       ? `http://localhost:8080/veiculos/${formData.id}`
@@ -59,23 +80,25 @@ const InformacoesCarroPage = () => {
       method,
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(formData),
+      body: JSON.stringify(payload),
     })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('Erro ao salvar dados do veículo');
-        }
-        return response.json();
+      .then((res) => {
+        if (!res.ok) throw new Error(`Erro ao ${isEditing ? 'atualizar' : 'cadastrar'} veículo`);
+        return res.json();
       })
       .then((data) => {
-        alert('Informações salvas com sucesso!');
-        setVeiculos((prev) =>
-          isEditing
-            ? prev.map((v) => (v.id === data.id ? data : v))
-            : [...prev, data]
-        );
+        alert(`Veículo ${isEditing ? 'atualizado' : 'cadastrado'} com sucesso!`);
+
+        if (isEditing) {
+          setVeiculos((prev) =>
+            prev.map((v) => (v.id === data.id ? data : v))
+          );
+        } else {
+          setVeiculos((prev) => [...prev, data]);
+        }
+
         setFormData({
           id: '',
           marca: '',
@@ -83,41 +106,52 @@ const InformacoesCarroPage = () => {
           cor: '',
           placa: '',
           ano: '',
+          vagas_disponiveis: 0,
         });
         setIsEditing(false);
       })
       .catch((error) => {
-        console.error('Erro ao salvar informações do veículo:', error);
-        alert('Erro ao salvar informações');
+        console.error(error);
+        alert(error.message);
       });
   };
 
   const handleEdit = (veiculo) => {
-    setFormData(veiculo);
+    setFormData({
+      id: veiculo.id,
+      marca: veiculo.marca,
+      modelo: veiculo.modelo,
+      cor: veiculo.cor,
+      placa: veiculo.placa,
+      ano: veiculo.ano,
+      vagas_disponiveis: veiculo.vagas_disponiveis || 0,
+    });
     setIsEditing(true);
   };
 
   const handleDelete = (id) => {
+    if (!window.confirm('Deseja realmente deletar este veículo?')) return;
+
     const token = localStorage.getItem('token');
-    console.log('🗑️ Tentando deletar veículo com ID:', id);
+    if (!token) {
+      alert('Usuário não autenticado');
+      return;
+    }
 
     fetch(`http://localhost:8080/veiculos/${id}`, {
       method: 'DELETE',
       headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
       },
     })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('Erro ao deletar veículo');
-        }
-        setVeiculos((prev) => prev.filter((veiculo) => veiculo.id !== id));
+      .then((res) => {
+        if (!res.ok) throw new Error('Erro ao deletar veículo');
         alert('Veículo deletado com sucesso!');
+        setVeiculos((prev) => prev.filter((v) => v.id !== id));
       })
       .catch((error) => {
-        console.error('Erro ao deletar veículo:', error);
-        alert('Erro ao deletar veículo');
+        console.error(error);
+        alert(error.message);
       });
   };
 
@@ -136,6 +170,7 @@ const InformacoesCarroPage = () => {
                 value={formData.marca}
                 onChange={handleChange}
                 placeholder="Ex: Toyota"
+                required
               />
             </label>
             <label>
@@ -146,6 +181,7 @@ const InformacoesCarroPage = () => {
                 value={formData.modelo}
                 onChange={handleChange}
                 placeholder="Ex: Corolla"
+                required
               />
             </label>
             <label>
@@ -156,6 +192,7 @@ const InformacoesCarroPage = () => {
                 value={formData.cor}
                 onChange={handleChange}
                 placeholder="Ex: Prata"
+                required
               />
             </label>
             <label>
@@ -166,6 +203,7 @@ const InformacoesCarroPage = () => {
                 value={formData.placa}
                 onChange={handleChange}
                 placeholder="Ex: ABC-1234"
+                required
               />
             </label>
             <label>
@@ -176,6 +214,20 @@ const InformacoesCarroPage = () => {
                 value={formData.ano}
                 onChange={handleChange}
                 placeholder="Ex: 2020"
+                required
+                min="1900"
+                max={new Date().getFullYear()}
+              />
+            </label>
+            <label>
+              Vagas Disponíveis:
+              <input
+                type="number"
+                name="vagas_disponiveis"
+                value={formData.vagas_disponiveis}
+                onChange={handleChange}
+                min="0"
+                max="10"
               />
             </label>
             <button type="submit" className="salvar-btn">
@@ -183,17 +235,22 @@ const InformacoesCarroPage = () => {
             </button>
           </form>
         </div>
+
         <div className="veiculos-list">
           <h2>Meus Veículos</h2>
-          <ul>
-            {veiculos.map((veiculo) => (
-              <li key={veiculo.id}>
-                {veiculo.marca} {veiculo.modelo} ({veiculo.ano})
-                <button onClick={() => handleEdit(veiculo)}>Editar</button>
-                <button onClick={() => handleDelete(veiculo.id)}>Deletar</button>
-              </li>
-            ))}
-          </ul>
+          {veiculos.length === 0 ? (
+            <p>Nenhum veículo cadastrado.</p>
+          ) : (
+            <ul>
+              {veiculos.map((veiculo) => (
+                <li key={veiculo.id}>
+                  {veiculo.marca} {veiculo.modelo} ({veiculo.ano}) - Vagas: {veiculo.vagas_disponiveis || 0}
+                  <button onClick={() => handleEdit(veiculo)}>Editar</button>{' '}
+                  <button onClick={() => handleDelete(veiculo.id)}>Deletar</button>
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
       </div>
     </div>

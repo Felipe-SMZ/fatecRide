@@ -18,6 +18,8 @@ import ConfirmarCaronaPassageiro from './pages/ConfirmarCaronaPassageiro';
 import './components/UserMenu/UserMenu.css';
 import './App.css';
 import 'leaflet/dist/leaflet.css';
+import HistoricoCaronasPage from './pages/HistoricoCaronasPage';
+
 
 
 const App = () => {
@@ -39,6 +41,8 @@ const App = () => {
         <Route path="/cadastro-concluido" element={<CadastroConcluidoPage />} />
         <Route path='/useermenu' element={<UserMenu />} />
         <Route path='/confirmarcaronapassageiro' element={<ConfirmarCaronaPassageiro />} />
+        <Route path="/historico" element={<HistoricoCaronasPage />} />
+
       </Routes>
     </Router>
   );
