@@ -7,7 +7,6 @@ function HistoricoCaronasPage() {
   const [pagina, setPagina] = useState(0);
   const [totalPaginas, setTotalPaginas] = useState(1);
   const [tipo, setTipo] = useState('motorista'); // 'motorista' ou 'passageiro'
-  const [respostaBruta, setRespostaBruta] = useState(null);
   const [erro, setErro] = useState(null);
 
   useEffect(() => {
@@ -28,25 +27,37 @@ function HistoricoCaronasPage() {
       const textoBruto = await response.text();
       console.log('Resposta bruta do backend:', textoBruto);
 
+      // Tenta parsear JSON se possível
+      let dadosJson = null;
       try {
-        const dadosJson = JSON.parse(textoBruto);
-        setRespostaBruta(dadosJson);
-
-        if (dadosJson.content) {
-          setCaronas(dadosJson.content);
-        } else {
-          setCaronas([]);
-        }
-
-        setTotalPaginas(dadosJson.totalPages ?? 1);
-        setErro(null);
-
-      } catch (errParse) {
-        console.error('Erro ao parsear JSON:', errParse);
-        setErro('Erro ao interpretar resposta JSON');
-        setCaronas([]);
+        dadosJson = JSON.parse(textoBruto);
+      } catch {
+        // Não conseguiu parsear, textoBruto não é JSON
       }
 
+      // Tratar erros de status
+      if (!response.ok) {
+        // Se recebeu JSON com mensagem, mostra mensagem
+        if (dadosJson && dadosJson.message) {
+          setErro(dadosJson.message);
+        } else {
+          // Mensagem genérica caso não seja JSON
+          setErro(`Erro ${response.status}: ${textoBruto}`);
+        }
+        setCaronas([]);
+        return;
+      }
+
+      // Caso sucesso (status 200)
+      if (dadosJson && dadosJson.content) {
+        setCaronas(dadosJson.content);
+        setErro(null);
+        setTotalPaginas(dadosJson.totalPages ?? 1);
+      } else {
+        // Se não há content, lista vazia
+        setCaronas([]);
+        setErro('Sem histórico de caronas.');
+      }
     } catch (erro) {
       console.error('❌ Erro durante a requisição:', erro);
       setErro('Erro na requisição');
@@ -80,17 +91,18 @@ function HistoricoCaronasPage() {
         <div className="cards-container">
           {caronas.length === 0 && !erro && <p>Nenhuma solicitação encontrada.</p>}
           {caronas.map((carona, index) => {
+        
             let origem, destino, dataHora, status;
 
             if (tipo === 'motorista') {
               origem = carona.origin;
               destino = carona.destination;
-              dataHora = carona.data_hora;
+              dataHora = carona.dataHora ?? carona.data_hora;
               status = carona.status;
             } else {
               origem = carona.originDTO;
               destino = carona.destinationDTO;
-              dataHora = carona.data_hora || carona.dataSolicitacao || null;
+              dataHora = carona.dataHora || carona.dataSolicitacao || null;
               status = 'Concluída'; // Valor fixo já que o DTO não envia
             }
 
@@ -116,19 +128,6 @@ function HistoricoCaronasPage() {
             </button>
           ))}
         </div>
-
-        <hr />
-        <h3>Resposta bruta JSON do backend (para debug):</h3>
-        <pre style={{
-          whiteSpace: 'pre-wrap',
-          wordWrap: 'break-word',
-          maxHeight: '300px',
-          overflowY: 'auto',
-          backgroundColor: '#f0f0f0',
-          padding: '10px'
-        }}>
-          {JSON.stringify(respostaBruta, null, 2)}
-        </pre>
       </div>
     </div>
   );
