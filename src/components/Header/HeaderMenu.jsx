@@ -67,6 +67,14 @@ const HeaderMenu = () => {
           <button onClick={() => { setMenuAberto(false); navigate('/info-carro'); }}>Informações do Veículo</button>
           <button onClick={() => { setMenuAberto(false); navigate('/historico'); }}>Histórico de Caronas</button>
           <button
+            onClick={() => {
+              setMenuAberto(false);
+              navigate('/confirmarcaronapassageiro');
+            }}
+          >
+            Verificar Solicitação
+          </button>
+          <button
             className="deletar"
             onClick={async () => {
               const confirmDelete = window.confirm("Tem certeza que deseja deletar sua conta? Essa ação é irreversível.");

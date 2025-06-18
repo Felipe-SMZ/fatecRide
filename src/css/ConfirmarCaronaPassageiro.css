@@ -1,111 +1,89 @@
-.confirmar-passageiro-page {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
+/* Container geral */
+.confirmar-carona-container {
+  max-width: 600px;
+  margin: 2rem auto;
+  background: #f9faff;
+  border-radius: 12px;
+  padding: 2rem 2.5rem;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f9f9f9;
-}
-
-/* Header separado e fixo */
-.confirmar-passageiro-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background-color: #007bff;
-  color: white;
-  height: 100px;
-  padding: 0 16px;
-  box-sizing: border-box;
-  flex-shrink: 0;
-}
-
-.confirmar-passageiro-header .header-section {
-  display: flex;
-  align-items: center;
-}
-
-.voltar-btn {
-  background: none;
-  border: none;
-  color: white;
-  font-size: 22px;
-  cursor: pointer;
-  margin-right: 12px;
-  transition: color 0.3s;
-}
-.voltar-btn:hover {
-  color: #a8c0ff;
-}
-
-.logo-nome {
-  flex-grow: 1;
-  justify-content: center;
-  gap: 8px;
-}
-.logo-header {
-  height: 40px;
-  width: auto;
-}
-
-.usuario-menu-container {
-  /* seu estilo UserMenu */
-}
-
-/* Conteúdo da página abaixo do header */
-.confirmar-passageiro-conteudo {
-  padding: 24px;
-  overflow-y: auto;
-  flex-grow: 1;
-  background-color: white;
-  margin: 16px;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgb(0 0 0 / 0.1);
-}
-
-.confirmar-passageiro-conteudo h1,
-.confirmar-passageiro-conteudo h2 {
-  color: #0052cc;
-  margin-bottom: 16px;
-}
-
-.lista-carona {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.card-carona {
-  background-color: #f0f4ff;
-  border: 1px solid #c1c7d0;
-  border-radius: 8px;
-  padding: 16px;
-  box-shadow: 0 1px 4px rgb(0 0 0 / 0.05);
-}
-
-.card-carona p {
-  margin: 6px 0;
   color: #333;
+  text-align: center;
 }
 
-.solicitar-btn {
-  margin-top: 12px;
-  padding: 10px 18px;
-  background-color: #0052cc;
-  color: white;
-  border: none;
-  border-radius: 6px;
+/* Título */
+.confirmar-carona-container h2 {
+  color: #2c3e50;
+  margin-bottom: 1rem;
+  font-weight: 700;
+  font-size: 1.8rem;
+}
+
+/* Status */
+.status {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
   font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+/* Status pendente - cor laranja */
+.status.pendente {
+  color: #e67e22;
+}
+
+/* Status confirmado - cor verde */
+.status.confirmado {
+  color: #27ae60;
+}
+
+/* Detalhes da carona */
+.carona-detalhes {
+  text-align: left;
+  margin-bottom: 2rem;
+  background: #fff;
+  padding: 1.5rem 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.07);
+}
+
+.carona-detalhes p {
+  margin: 0.5rem 0;
+  font-size: 1.05rem;
+}
+
+.carona-detalhes strong {
+  color: #34495e;
+}
+
+/* Botões */
+button {
   cursor: pointer;
-  transition: background-color 0.3s;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  padding: 0.65rem 1.5rem;
+  margin: 0.3rem 0.5rem;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.solicitar-btn:hover:not(:disabled) {
-  background-color: #003d99;
+/* Botão voltar */
+.btn-voltar {
+  background-color: #3498db;
+  color: white;
 }
 
-.solicitar-btn:disabled,
-.solicitar-btn.aguardando {
-  background-color: #808080;
-  cursor: default;
-  color: #ddd;
+.btn-voltar:hover {
+  background-color: #2980b9;
+}
+
+/* Botão toggle status */
+.btn-toggle-status {
+  background-color: #e67e22;
+  color: white;
+}
+
+.btn-toggle-status:hover {
+  background-color: #d35400;
 }

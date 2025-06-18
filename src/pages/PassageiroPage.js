@@ -5,7 +5,8 @@ import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import 'leaflet-routing-machine';
 import 'leaflet-routing-machine/dist/leaflet-routing-machine.css';
-
+import '../css/PassageiroPage.css';
+import CaronaCard from '../components/CaronaCard/CaronaCard.jsx';
 import HeaderMenu from '../components/Header/HeaderMenu';
 import EnderecoCard from '../components/EnderecoCard';
 
@@ -50,21 +51,23 @@ const PassageiroPage = () => {
   const [enderecoPartidaDados, setEnderecoPartidaDados] = useState(null);
   const [enderecoFinalDados, setEnderecoFinalDados] = useState(null);
   const [caronasDisponiveis, setCaronasDisponiveis] = useState([]);
+  const [buscando, setBuscando] = useState(false);
+
+  const token = localStorage.getItem('token');
 
   const buscarCoordenadasNoBackend = async (endereco) => {
     if (!endereco.trim()) return null;
 
-    const token = localStorage.getItem('token');
-
     try {
       const response = await fetch(`http://localhost:8080/local?local=${encodeURIComponent(endereco)}`, {
         headers: {
+          method: "GET",
           Authorization: `Bearer ${token}`,
         },
       });
-      if (!response.ok) throw new Error('Erro ao buscar localização');
+      if (!response.ok) throw new Error('linha 68 Erro ao buscar localização');
       const data = await response.json();
-
+      console.log(data + "depois do 68")
       if (!data || !data.lat || !data.lon) return null;
 
       return {
@@ -79,15 +82,18 @@ const PassageiroPage = () => {
   };
 
   const gerarRota = async () => {
+    setBuscando(true);
     const partidaDados = await buscarCoordenadasNoBackend(pontoPartida);
     const finalDados = await buscarCoordenadasNoBackend(pontoFinal);
 
     if (!partidaDados) {
       alert('Ponto de partida inválido ou não encontrado.');
+      setBuscando(false);
       return;
     }
     if (!finalDados) {
       alert('Ponto final inválido ou não encontrado.');
+      setBuscando(false);
       return;
     }
 
@@ -97,12 +103,11 @@ const PassageiroPage = () => {
     setEnderecoPartidaDados(partidaDados);
     setEnderecoFinalDados(finalDados);
 
-    // Após gerar rota, buscar caronas disponíveis
-    buscarCaronasDisponiveis(partidaDados, finalDados);
+    await buscarCaronasDisponiveis(partidaDados, finalDados);
+    setBuscando(false);
   };
 
   const buscarCaronasDisponiveis = async (partidaDados, finalDados) => {
-    const token = localStorage.getItem('token');
     if (!token) {
       alert('Você precisa estar logado para buscar caronas.');
       return;
@@ -112,10 +117,10 @@ const PassageiroPage = () => {
       const url = `http://localhost:8080/solicitacao/proximos`;
 
       const passengerSearchRequest = {
-        origemLatitude: partidaDados.lat,
-        origemLongitude: partidaDados.lon,
-        destinoLatitude: finalDados.lat,
-        destinoLongitude: finalDados.lon,
+        latitudeOrigem: partidaDados.lat,
+        longitudeOrigem: partidaDados.lon,
+        latitudeDestino: finalDados.lat,
+        longitudeDestino: finalDados.lon,
       };
 
       const response = await fetch(url, {
@@ -140,17 +145,63 @@ const PassageiroPage = () => {
     }
   };
 
+  const solicitarCarona = async (carona) => {
+  if (!enderecoPartidaDados || !enderecoFinalDados) {
+    alert('Endereços de partida e destino não encontrados.');
+    return;
+  }
 
-  const solicitarCarona = (carona) => {
-    // Navega para a página de confirmação passando a carona
-    navigate('/confirmarcaronapassageiro', { state: { caronaSelecionada: carona, enderecoPartidaDados, enderecoFinalDados } });
-  };
+  try {
+    const response = await fetch('http://localhost:8080/solicitacao', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        id_carona: carona.idCarona,
+        originDTO: {
+          cidade: enderecoPartidaDados.address.city || '',
+          logradouro: enderecoPartidaDados.address.road || '',
+          numero: enderecoPartidaDados.address.house_number || '',
+          bairro: enderecoPartidaDados.address.suburb || '',
+          cep: enderecoPartidaDados.address.postcode || '',
+        },
+        destinationDTO: {
+          cidade: enderecoFinalDados.address.city || '',
+          logradouro: enderecoFinalDados.address.road || '',
+          numero: enderecoFinalDados.address.house_number || '',
+          bairro: enderecoFinalDados.address.suburb || '',
+          cep: enderecoFinalDados.address.postcode || '',
+        }
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error('Erro ao criar solicitação');
+    }
+
+    const data = await response.json();
+
+    navigate('/confirmarcaronapassageiro', {
+      state: {
+        caronaSelecionada: carona,
+        solicitacao: data,
+      }
+    });
+  } catch (error) {
+    console.error('Erro ao solicitar carona:', error);
+    alert('Erro ao solicitar carona');
+  }
+};
+
 
   return (
     <div>
       <HeaderMenu />
       <div className="passageiro-page">
-        <div className="mapa-container" style={{ height: '400px', width: '100%' }}>
+        {/* Lado esquerdo: mapa */}
+        <div className="mapa-container">
           <MapContainer center={[-23.6009, -46.8805]} zoom={13} style={{ height: '100%', width: '100%' }}>
             <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" attribution="&copy; OpenStreetMap contributors" />
             {pontoPartidaCoords && (
@@ -167,6 +218,7 @@ const PassageiroPage = () => {
           </MapContainer>
         </div>
 
+        {/* Lado direito: formulário + cards */}
         <div className="formulario-container">
           <h2>Informe o ponto de partida e destino</h2>
           <input
@@ -183,26 +235,28 @@ const PassageiroPage = () => {
             onChange={(e) => setPontoFinal(e.target.value)}
             className="input-text"
           />
-          <button onClick={gerarRota} className="gerar-rota-btn">
-            Gerar Rota e Buscar Caronas
+          <button onClick={gerarRota} className="gerar-rota-btn" disabled={buscando}>
+            {buscando ? 'Buscando...' : 'Gerar Rota e Buscar Caronas'}
           </button>
 
-          {enderecoPartidaDados && <EnderecoCard enderecoDados={enderecoPartidaDados} titulo="Endereço de Partida" />}
-          {enderecoFinalDados && <EnderecoCard enderecoDados={enderecoFinalDados} titulo="Endereço Final" />}
-
           <h3>Caronas disponíveis:</h3>
-          {caronasDisponiveis.length === 0 && <p>Nenhuma carona disponível para a rota informada.</p>}
-          <ul>
-            {caronasDisponiveis.map((carona) => (
-              <li key={carona.id} style={{ marginBottom: '15px', border: '1px solid #ccc', padding: '10px' }}>
-                <p><b>Motorista:</b> {carona.motoristaNome}</p>
-                <p><b>Origem:</b> {carona.origemLogradouro}, {carona.origemCidade}</p>
-                <p><b>Destino:</b> {carona.destinoLogradouro}, {carona.destinoCidade}</p>
-                <p><b>Vagas disponíveis:</b> {carona.vagasDisponiveis}</p>
-                <button onClick={() => solicitarCarona(carona)}>Solicitar esta Carona</button>
-              </li>
-            ))}
-          </ul>
+
+          {caronasDisponiveis.length === 0 ? (
+            <div className="sem-caronas-container">
+              <p className="sem-caronas-texto">Nenhuma carona disponível para a rota informada.</p>
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/4076/4076549.png"
+                alt="Nenhuma carona"
+                className="sem-caronas-imagem"
+              />
+            </div>
+          ) : (
+            <div className="caronas-grid">
+              {caronasDisponiveis.map((carona) => (
+                <CaronaCard key={carona.id} carona={carona} onSelecionar={solicitarCarona} />
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </div>

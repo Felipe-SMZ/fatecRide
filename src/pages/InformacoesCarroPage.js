@@ -128,6 +128,7 @@ const InformacoesCarroPage = () => {
     });
     setIsEditing(true);
   };
+ 
 
   const handleDelete = (id) => {
     if (!window.confirm('Deseja realmente deletar este veículo?')) return;
@@ -145,6 +146,7 @@ const InformacoesCarroPage = () => {
       },
     })
       .then((res) => {
+        console.log(id);
         if (!res.ok) throw new Error('Erro ao deletar veículo');
         alert('Veículo deletado com sucesso!');
         setVeiculos((prev) => prev.filter((v) => v.id !== id));

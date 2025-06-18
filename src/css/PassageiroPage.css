@@ -1,83 +1,122 @@
+/* PassageiroPage.css */
+
 .passageiro-page {
   display: flex;
-  flex-direction: column;
-  height: 100vh;
-}
-
-.passageiro-conteudo {
-  display: flex;
-  height: calc(100vh - 60px); /* considera a altura do Header */
+  gap: 24px;
+  padding: 20px;
+  height: calc(100vh - 60px); /* Ajuste para ocupar quase toda a altura */
+  box-sizing: border-box;
+  background-color: #f7f9fc;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .mapa-container {
   flex: 2;
-  height: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+  min-height: 500px;
 }
 
 .formulario-container {
   flex: 1;
-  background-color: #f5f7fb;
-  padding: 30px;
-  box-shadow: -2px 0 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  padding: 20px 24px;
+  border-radius: 12px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.12);
+  height: 100%;
 }
 
-.formulario-container h1 {
+.formulario-container h2 {
   margin-bottom: 20px;
-  color: #1e3a8a;
-  font-size: 24px;
-  font-weight: bold;
+  color: #2c3e50;
+  font-weight: 700;
+  font-size: 1.5rem;
 }
 
 .input-text {
-  width: 100%;
-  padding: 10px;
+  padding: 12px 14px;
   margin-bottom: 15px;
-  border-radius: 10px;
-  border: 1px solid #ccc;
-  font-size: 16px;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: 1.5px solid #ccc;
+  transition: border-color 0.3s ease;
+  box-sizing: border-box;
+}
+
+.input-text:focus {
+  border-color: #3498db;
+  outline: none;
+  box-shadow: 0 0 8px rgba(52, 152, 219, 0.4);
 }
 
 .gerar-rota-btn {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 10px;
-  background-color: #6b7280; /* cinza */
-  color: white;
+  background-color: #3498db;
   border: none;
+  color: white;
+  padding: 14px;
+  font-weight: 600;
   border-radius: 10px;
-  font-size: 16px;
   cursor: pointer;
+  margin-bottom: 20px;
   transition: background-color 0.3s ease;
+  box-shadow: 0 3px 8px rgba(52, 152, 219, 0.5);
+  font-size: 1rem;
 }
 
-.gerar-rota-btn:hover {
-  background-color: #4b5563;
+.gerar-rota-btn:disabled {
+  background-color: #a0c4f4;
+  cursor: not-allowed;
+  box-shadow: none;
 }
 
-.enviar-btn {
-  width: 100%;
-  padding: 10px;
-  background-color: #2563eb; /* azul vivo */
-  color: white;
-  border: none;
-  border-radius: 10px;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.1s ease;
+.gerar-rota-btn:hover:not(:disabled) {
+  background-color: #217dbb;
 }
 
-.enviar-btn:hover {
-  background-color: #1e40af;
-  transform: scale(1.02);
+h3 {
+  margin-bottom: 15px;
+  color: #34495e;
+  font-weight: 700;
+  font-size: 1.3rem;
 }
 
-@media (max-width: 768px) {
-  .passageiro-conteudo {
-    flex-direction: column;
-  }
+.caronas-grid {
+  overflow-y: auto;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-right: 6px;
+}
 
-  .mapa-container {
-    height: 300px;
-  }
+/* Scrollbar estilizado para a lista de caronas */
+.caronas-grid::-webkit-scrollbar {
+  width: 6px;
+}
+
+.caronas-grid::-webkit-scrollbar-thumb {
+  background-color: #3498db;
+  border-radius: 3px;
+}
+
+.caronas-grid::-webkit-scrollbar-track {
+  background-color: #e6ecf3;
+}
+
+
+/* Mensagem quando não tem caronas */
+.sem-caronas-container {
+  text-align: center;
+  margin-top: 40px;
+  color: #7f8c8d;
+  font-style: italic;
+}
+
+.sem-caronas-container img {
+  margin-top: 15px;
+  width: 120px;
+  opacity: 0.6;
 }
