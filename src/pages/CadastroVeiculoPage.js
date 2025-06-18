@@ -3,14 +3,12 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import '../css/CadastroVeiculoPage.css';
 import Header from '../components/Header/Header';
 
-
 const CadastroVeiculoPage = () => {
   const navigate = useNavigate();
   const { state } = useLocation();
 
   const usuarioData = state?.usuarioData;
   const enderecoData = state?.enderecoData;
-
 
   useEffect(() => {
     if (
@@ -22,13 +20,13 @@ const CadastroVeiculoPage = () => {
     }
   }, [usuarioData, enderecoData, navigate]);
 
-
   const [veiculoData, setVeiculoData] = useState({
     marca: '',
     modelo: '',
     placa: '',
     cor: '',
     ano: '',
+    vagas_disponiveis: ''
   });
 
   const [loading, setLoading] = useState(false);
@@ -39,13 +37,12 @@ const CadastroVeiculoPage = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setVeiculoData(prev => ({ ...prev, [name]: value.trim() }));
+    setVeiculoData((prev) => ({ ...prev, [name]: value }));
   };
 
-  // Validação simples da placa: 7 caracteres, letras e números, formato brasileiro (pode adaptar)
   const validarPlaca = (placa) => {
     const placaLimpa = placa.replace(/\s+/g, '').toUpperCase();
-    const regexPlaca = /^[A-Z]{3}[0-9][0-9A-Z][0-9]{2}$/; // padrão Mercosul
+    const regexPlaca = /^[A-Z]{3}[0-9][0-9A-Z][0-9]{2}$/;
     return regexPlaca.test(placaLimpa);
   };
 
@@ -63,6 +60,11 @@ const CadastroVeiculoPage = () => {
       return;
     }
 
+    if (!veiculoData.vagas_disponiveis || parseInt(veiculoData.vagas_disponiveis) <= 0) {
+      alert('Informe um número válido de vagas disponíveis.');
+      return;
+    }
+
     setLoading(true);
 
     const dataToSend = {
@@ -70,8 +72,9 @@ const CadastroVeiculoPage = () => {
       userAddressesDTO: enderecoData,
       vehicleDTO: {
         ...veiculoData,
-        placa: veiculoData.placa.toUpperCase().replace(/\s+/g, ''), // formata placa
-      },
+        placa: veiculoData.placa.toUpperCase().replace(/\s+/g, ''),
+        vagas_disponiveis: parseInt(veiculoData.vagas_disponiveis, 10)
+      }
     };
 
     try {
@@ -80,7 +83,7 @@ const CadastroVeiculoPage = () => {
       const response = await fetch('http://localhost:8080/users/criarMotorista', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(dataToSend),
+        body: JSON.stringify(dataToSend)
       });
 
       if (!response.ok) {
@@ -164,6 +167,20 @@ const CadastroVeiculoPage = () => {
               required
               min="1900"
               max={new Date().getFullYear()}
+            />
+          </label>
+          <br />
+
+          <label>
+            <input
+              type="number"
+              name="vagas_disponiveis"
+              placeholder="Vagas disponíveis"
+              value={veiculoData.vagas_disponiveis}
+              onChange={handleChange}
+              required
+              min="1"
+              max="10"
             />
           </label>
           <br />

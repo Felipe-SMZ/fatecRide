@@ -109,12 +109,22 @@ const PassageiroPage = () => {
     }
 
     try {
-      // Exemplo de endpoint - ajuste conforme seu backend
-      const url = `http://localhost:8080/caronas/proximas?latOrigem=${partidaDados.lat}&lonOrigem=${partidaDados.lon}&latDestino=${finalDados.lat}&lonDestino=${finalDados.lon}`;
+      const url = `http://localhost:8080/solicitacao/proximos`;
+
+      const passengerSearchRequest = {
+        origemLatitude: partidaDados.lat,
+        origemLongitude: partidaDados.lon,
+        destinoLatitude: finalDados.lat,
+        destinoLongitude: finalDados.lon,
+      };
+
       const response = await fetch(url, {
+        method: 'POST',
         headers: {
+          'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
+        body: JSON.stringify(passengerSearchRequest),
       });
 
       if (!response.ok) {
@@ -129,6 +139,7 @@ const PassageiroPage = () => {
       alert('Erro na busca das caronas.');
     }
   };
+
 
   const solicitarCarona = (carona) => {
     // Navega para a página de confirmação passando a carona
