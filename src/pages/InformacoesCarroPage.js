@@ -91,13 +91,7 @@ const InformacoesCarroPage = () => {
       .then((data) => {
         alert(`Veículo ${isEditing ? 'atualizado' : 'cadastrado'} com sucesso!`);
 
-        if (isEditing) {
-          setVeiculos((prev) =>
-            prev.map((v) => (v.id === data.id ? data : v))
-          );
-        } else {
-          setVeiculos((prev) => [...prev, data]);
-        }
+        fetchVeiculos(token);
 
         setFormData({
           id: '',
