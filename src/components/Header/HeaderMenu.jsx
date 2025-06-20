@@ -75,6 +75,14 @@ const HeaderMenu = () => {
             Verificar Solicitação
           </button>
           <button
+            onClick={() => {
+              setMenuAberto(false);
+              navigate('/confirmarcarona');
+            }}
+          >
+            Confirmar Carona
+          </button>
+          <button
             className="deletar"
             onClick={async () => {
               const confirmDelete = window.confirm("Tem certeza que deseja deletar sua conta? Essa ação é irreversível.");

@@ -1,192 +1,144 @@
-/* Container principal da página */
+/* Reset básico */
+* {
+  box-sizing: border-box;
+}
+
+body, html, #root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #f0f2f5;
+  color: #333;
+}
+
 .confirmar-carona-page {
   display: flex;
   flex-direction: column;
-  height: 100vh;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f9fafe;
-  color: #222;
+  min-height: 100vh;
+  background-color: #f0f2f5;
 }
 
-/* Header */
-.confirmar-carona-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #007bff;
-  color: white;
-  padding: 0.5rem 1rem;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+.confirmar-carona-conteudo {
+  max-width: 500px;
+  width: 90%;
+  margin: 3rem auto 4rem;
+  background: #fff;
+  padding: 2.5rem 2rem 3rem;
+  border-radius: 12px;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+  transition: box-shadow 0.3s ease;
 }
 
-.confirmar-carona-header .header-section {
-  display: flex;
-  align-items: center;
+.confirmar-carona-conteudo:hover {
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.16);
 }
 
-.confirmar-carona-header .voltar-btn {
-  font-size: 1.7rem;
+.voltar-btn {
   background: none;
   border: none;
-  color: white;
+  color: #4a90e2;
+  font-size: 1.1rem;
+  font-weight: 600;
   cursor: pointer;
-  padding: 0.3rem 0.6rem;
-  transition: background-color 0.3s ease;
-  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1.8rem;
+  padding: 0;
+  transition: color 0.3s ease;
 }
 
-.confirmar-carona-header .voltar-btn:hover {
-  background-color: rgba(255, 255, 255, 0.2);
-}
-
-.confirmar-carona-header .logo-header {
-  height: 40px;
-  margin-right: 10px;
-}
-
-.confirmar-carona-header .logo-nome h2 {
-  font-weight: 700;
-  font-size: 1.5rem;
-}
-
-/* Conteúdo principal */
-.confirmar-carona-conteudo {
-  flex: 1;
-  overflow-y: auto;
-  padding: 20px 30px;
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
-}
-
-/* Detalhes da carona */
-.detalhes-carona {
-  background-color: #e6f0ff;
-  border-radius: 12px;
-  padding: 20px 30px;
-  box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+.voltar-btn:hover {
+  color: #357ABD;
+  text-decoration: underline;
 }
 
 .detalhes-carona h1 {
-  margin-bottom: 15px;
-  color: #004080;
+  font-size: 2rem;
+  margin-bottom: 1.4rem;
+  color: #222;
   font-weight: 700;
+  text-align: center;
 }
 
 .detalhes-info p {
-  font-size: 1.1rem;
-  margin: 6px 0;
+  font-size: 1.15rem;
+  margin: 0.7rem 0;
+  line-height: 1.5;
+  color: #555;
+  border-bottom: 1px solid #eaeaea;
+  padding-bottom: 0.5rem;
 }
 
-/* Solicitações container */
-.solicitacoes-container {
-  flex-grow: 1;
-  background-color: #fff;
-  border-radius: 12px;
-  padding: 20px 30px;
-  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-  max-height: 400px;
-  overflow-y: auto;
+.detalhes-info p:last-child {
+  border-bottom: none;
 }
 
-.solicitacoes-container h2 {
-  margin-bottom: 20px;
-  color: #004080;
+.btn-cancelar {
+  display: block;
+  width: 100%;
+  margin-top: 2.5rem;
+  padding: 0.85rem 0;
+  background: #e94e4e;
+  color: #fff;
   font-weight: 700;
-}
-
-/* Mensagem quando não há solicitações */
-.sem-solicitacoes {
-  font-style: italic;
-  color: #666;
-  text-align: center;
-  padding: 20px 0;
-}
-
-/* Cartões das solicitações */
-.solicitacao-card {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 18px 25px;
-  border-radius: 10px;
-  margin-bottom: 15px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
   font-size: 1.1rem;
-}
-
-.pendente-card {
-  background-color: #fff9e6; /* amarelo claro */
-}
-
-.confirmado-card {
-  background-color: #d9f7d9; /* verde claro */
-}
-
-/* Informação dentro do cartão */
-.solicitacao-info {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-}
-
-/* Badge de status */
-.status-badge {
-  padding: 5px 12px;
-  border-radius: 18px;
-  font-weight: 700;
-  text-transform: capitalize;
-  font-size: 0.9rem;
-  color: white;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  box-shadow: 0 6px 14px rgba(233, 78, 78, 0.5);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
   user-select: none;
 }
 
-.status-badge.pendente {
-  background-color: #ffa500; /* laranja */
+.btn-cancelar:hover:not(:disabled) {
+  background: #d13c3c;
+  box-shadow: 0 8px 18px rgba(209, 60, 60, 0.65);
 }
 
-.status-badge.confirmado {
-  background-color: #008000; /* verde escuro */
+.btn-cancelar:disabled {
+  background: #aaa;
+  cursor: not-allowed;
+  box-shadow: none;
 }
 
-/* Botões */
-.btn-confirmar,
-.btn-confirmado {
+.info-msg,
+.erro-msg {
+  text-align: center;
   font-size: 1.2rem;
-  padding: 10px 24px;
-  border-radius: 25px;
-  border: none;
-  cursor: pointer;
-  min-width: 140px;
-  font-weight: 700;
-  transition: background-color 0.3s ease;
+  margin-top: 3rem;
+  font-weight: 600;
+  user-select: none;
 }
 
-.btn-confirmar {
-  background-color: #004080;
-  color: white;
+.info-msg {
+  color: #666;
 }
 
-.btn-confirmar:hover {
-  background-color: #003366;
+.erro-msg {
+  color: #e94e4e;
 }
 
-.btn-confirmado {
-  background-color: #888;
-  color: #ddd;
-  cursor: default;
-}
+/* Responsividade */
 
-/* Scrollbar estilizada para Chrome, Edge e Safari */
-.solicitacoes-container::-webkit-scrollbar {
-  width: 8px;
-}
+@media (max-width: 600px) {
+  .confirmar-carona-conteudo {
+    width: 95%;
+    margin: 2rem auto 3rem;
+    padding: 2rem 1.5rem 2.5rem;
+  }
 
-.solicitacoes-container::-webkit-scrollbar-thumb {
-  background-color: rgba(0, 64, 128, 0.5);
-  border-radius: 10px;
-}
+  .detalhes-carona h1 {
+    font-size: 1.7rem;
+  }
 
-.solicitacoes-container::-webkit-scrollbar-track {
-  background-color: #f1f1f1;
+  .detalhes-info p {
+    font-size: 1rem;
+  }
+
+  .btn-cancelar {
+    font-size: 1rem;
+    padding: 0.75rem 0;
+  }
 }

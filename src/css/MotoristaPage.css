@@ -1,246 +1,173 @@
-/* Container geral da página */
 .motorista-page {
-  max-width: 1200px;
-  margin: 30px auto;
-  height: 80vh;
   display: flex;
-  flex-direction: column;
+  justify-content: center; /* centraliza container na tela */
+  margin: 15px auto;       /* auto nas laterais para centralizar */
+  max-width: 1400px;       /* limita largura do container */
+  height: 85vh;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  color: #222;
-  background: #f9fbff;
+  background: #f7faff;
   border-radius: 15px;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-  padding: 20px;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  padding: 15px 20px;     /* padding interno pra evitar colar nas bordas */
+  box-sizing: border-box;
 }
 
-/* Conteúdo com mapa e formulário lado a lado */
 .motorista-conteudo {
   display: flex;
-  gap: 30px;
-  flex: 1;
-  align-items: stretch;
-  justify-content: center;
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
+  gap: 20px;
 }
 
-/* Container do mapa */
 .mapa-container {
-  flex: 1 1 70%;
-  min-width: 400px;
+  flex: 0 0 65%; /* ocupa 65% da largura */
+  height: 100%;
   border-radius: 15px;
   overflow: hidden;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  background-color: white;
-  transition: box-shadow 0.3s ease;
-}
-.mapa-container:hover {
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
 
-/* O mapa do Leaflet deve ocupar 100% do container */
-.mapa-container .leaflet-container {
-  flex-grow: 1;
-  width: 100% !important;
-  height: 100% !important;
-  border-radius: 15px;
-}
-
-/* Container do formulário */
 .formulario-container {
-  flex: 1 1 28%;
-  min-width: 320px;
-  background-color: #e7f0ff;
-  padding: 30px 25px;
-  border-radius: 15px;
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  flex: 0 0 35%; /* ocupa 35% da largura */
   display: flex;
   flex-direction: column;
-  height: 100%;
-  box-sizing: border-box;
+  background: white;
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
   overflow-y: auto;
-  transition: background-color 0.3s ease;
-}
-.formulario-container:hover {
-  background-color: #d2e4ff;
 }
 
-/* Título do formulário */
-.formulario-container h1 {
-  margin-bottom: 30px;
-  color: #004aad;
-  font-weight: 800;
-  font-size: 2rem;
-  text-align: center;
-  letter-spacing: 1px;
-  text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+.card-endereco {
+  background: #f1f8ff;
+  border-radius: 10px;
+  padding: 15px;
+  margin-top: 20px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.07);
 }
 
-/* Inputs de texto e número */
+/* inputs, selects e botões podem manter estilo atual, só ajuste se quiser */
+
+
+.card-endereco:hover {
+  box-shadow: 0 12px 30px rgba(37, 99, 235, 0.38);
+}
+
+/* Inputs e selects estilizados */
 .input-text,
+.input-select,
 .input-number {
   width: 100%;
-  padding: 14px 16px;
-  margin-bottom: 20px;
-  border: 2px solid #aac9ff;
-  border-radius: 10px;
-  font-size: 1.1rem;
+  padding: 12px 16px;
+  border-radius: 12px;
+  border: 2px solid #a3bffa;
+  font-size: 17px;
+  outline-offset: 3px;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
-  box-sizing: border-box;
-  background-color: #f5faff;
-  color: #222;
+  background: #ffffff;
   font-weight: 500;
+  color: #1e293b;
 }
 
 .input-text::placeholder,
 .input-number::placeholder {
-  color: #7a8ba6;
+  color: #94a3b8;
+  font-weight: 400;
 }
 
 .input-text:focus,
+.input-select:focus,
 .input-number:focus {
-  border-color: #005bbb;
-  box-shadow: 0 0 8px #005bbb88;
-  outline: none;
-  background-color: white;
+  border-color: #2563eb;
+  box-shadow: 0 0 10px rgba(37, 99, 235, 0.4);
 }
 
-/* Label dos campos */
-.form-group label {
-  font-weight: 700;
-  margin-bottom: 8px;
-  display: block;
-  color: #004aad;
-  font-size: 1.05rem;
-  user-select: none;
+/* Labels com estilo moderno */
+label {
+  font-weight: 600;
+  font-size: 15px;
+  color: #1e293b;
+  margin-bottom: 6px;
+  display: inline-block;
 }
 
-/* Botões com estilo moderno */
-.gerar-rota-btn,
-.enviar-btn {
-  width: 100%;
-  padding: 16px 0;
-  font-weight: 700;
-  border: none;
-  border-radius: 12px;
+/* Botões estilos */
+button.gerar-rota-btn,
+button.enviar-btn {
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.15s ease;
-  font-size: 1.1rem;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  user-select: none;
-  margin-top: 12px;
+  padding: 14px 25px;
+  font-size: 18px;
+  border-radius: 14px;
+  border: none;
+  font-weight: 700;
   color: white;
+  background: linear-gradient(90deg, #2563eb, #3b82f6);
+  box-shadow: 0 7px 18px rgba(37, 99, 235, 0.65);
+  transition: background 0.35s ease, box-shadow 0.35s ease;
+  margin-top: 8px;
 }
 
-.gerar-rota-btn {
-  background: linear-gradient(135deg, #1e90ff, #005bbb);
-  box-shadow: 0 6px 15px #1e90ffaa;
+button.gerar-rota-btn:hover,
+button.enviar-btn:hover {
+  background: linear-gradient(90deg, #3b82f6, #2563eb);
+  box-shadow: 0 10px 25px rgba(37, 99, 235, 0.85);
 }
 
-.gerar-rota-btn:hover {
-  background: linear-gradient(135deg, #005bbb, #003f7f);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px #003f7faa;
+button:disabled {
+  cursor: not-allowed;
+  background: #a5b4fc;
+  box-shadow: none;
+  opacity: 0.7;
 }
 
-.enviar-btn {
-  background: linear-gradient(135deg, #28a745, #1e7e34);
-  box-shadow: 0 6px 15px #28a745aa;
+/* Scrollbar customizada para Firefox e Webkit */
+.formulario-container::-webkit-scrollbar,
+.cards-container::-webkit-scrollbar {
+  width: 7px;
 }
 
-.enviar-btn:hover {
-  background: linear-gradient(135deg, #1e7e34, #145214);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px #145214aa;
-}
-
-/* Scrollbar customizada no formulário */
-.formulario-container::-webkit-scrollbar {
-  width: 8px;
-}
-.formulario-container::-webkit-scrollbar-track {
-  background: #dbe9ff;
-  border-radius: 10px;
-}
-.formulario-container::-webkit-scrollbar-thumb {
-  background: #005bbb;
+.formulario-container::-webkit-scrollbar-thumb,
+.cards-container::-webkit-scrollbar-thumb {
+  background: #2563eb;
   border-radius: 10px;
 }
 
-/* Responsividade simples */
-@media (max-width: 900px) {
+.formulario-container::-webkit-scrollbar-track,
+.cards-container::-webkit-scrollbar-track {
+  background: #dbeafe;
+  border-radius: 10px;
+}
+
+/* Responsividade */
+@media (max-width: 1000px) {
+  .motorista-page {
+    height: auto;
+    flex-direction: column;
+    margin: 15px 10px;
+  }
+
   .motorista-conteudo {
     flex-direction: column;
   }
-  .mapa-container, .formulario-container {
-    min-width: 100%;
-    height: 50vh;
+
+  .mapa-container,
+  .formulario-container,
+  .cards-container {
+    flex: none;
+    width: 100%;
+    height: 350px;
+    margin-bottom: 20px;
   }
-  .formulario-container {
-    padding: 20px 15px;
+
+  .formulario-container,
+  .cards-container {
+    height: auto;
+    overflow-y: visible;
   }
-}
 
-.input-select {
-  width: 100%;
-  height: 40px; /* igual altura dos inputs de texto */
-  padding: 8px 60px;
-  margin-bottom: 20px;
-  border: 2px solid #aac9ff;
-  border-radius: 10px;
-  font-size: 1.1rem;
-  box-sizing: border-box;
-  background-color: #f5faff;
-  color: #222;
-  font-weight: 500;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
-  cursor: pointer;
-
-}
-.form-group {
-  text-align: center;
-}
-
-
-.input-select:focus {
-  border-color: #005bbb;
-  box-shadow: 0 0 8px #005bbb88;
-  outline: none;
-  background-color: white;
-}
-
-.card-enderecos {
-  display: flex;
-  gap: 1rem;
-  margin-top: 1.5rem;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-.card-endereco {
-  background-color: #f5faff;
-  border: 1px solid #cce4f6;
-  border-radius: 12px;
-  padding: 1rem;
-  width: 250px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-}
-
-.card-endereco h3 {
-  margin-bottom: 0.5rem;
-  color: #004b8d;
-}
-
-.card-endereco p {
-  margin: 0.25rem 0;
-}
-
-.enviar-btn:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
-.enviar-btn.loading::after {
-  content: " ⏳";
+  .cards-container {
+    display: none; /* Esconde os cards para telas pequenas */
+  }
 }

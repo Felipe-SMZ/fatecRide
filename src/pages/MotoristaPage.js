@@ -5,10 +5,8 @@ import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import 'leaflet-routing-machine';
 import 'leaflet-routing-machine/dist/leaflet-routing-machine.css';
-import Cards from "../components/EnderecoCard.jsx";
-import '../components/UserMenu/UserMenu.css';
-import '../css/MotoristaPage.css';
 import HeaderMenu from '../components/Header/HeaderMenu';
+import '../css/MotoristaPage.css';
 
 // Corrige o caminho dos ícones padrão do Leaflet
 delete L.Icon.Default.prototype._getIconUrl;
@@ -45,6 +43,7 @@ const RoutingMachine = ({ pontoPartidaCoords, pontoFinalCoords }) => {
 
 const MotoristaPage = () => {
   const navigate = useNavigate();
+
   const [pontoPartida, setPontoPartida] = useState('');
   const [pontoFinal, setPontoFinal] = useState('');
   const [vagas, setVagas] = useState(1);
@@ -54,11 +53,11 @@ const MotoristaPage = () => {
   const [pontoPartidaCoords, setPontoPartidaCoords] = useState(null);
   const [pontoFinalCoords, setPontoFinalCoords] = useState(null);
 
-  const [loading, setLoading] = useState(false);
   const [enderecoPartidaDados, setEnderecoPartidaDados] = useState(null);
   const [enderecoFinalDados, setEnderecoFinalDados] = useState(null);
 
-  // Buscar lista de veículos do backend
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     const buscarVeiculos = async () => {
       try {
@@ -68,13 +67,11 @@ const MotoristaPage = () => {
             Authorization: `Bearer ${token}`,
           },
         });
-
         const data = await response.json();
-        console.log("🚗 [DEBUG] Lista de veículos:", data);
-
         if (data.length > 0) {
           setVeiculos(data);
-          setIdVeiculo(data[0].id_veiculo || data[0].idVeiculo || data[0].id);
+          const primeiroVeiculoId = data[0].id_veiculo || data[0].idVeiculo || data[0].id;
+          setIdVeiculo(primeiroVeiculoId);
         } else {
           alert('Nenhum veículo encontrado. Cadastre um veículo primeiro.');
         }
@@ -86,26 +83,13 @@ const MotoristaPage = () => {
     buscarVeiculos();
   }, []);
 
-  // Debug: acompanhar quando endereço de partida muda
-  useEffect(() => {
-    if (enderecoPartidaDados) {
-      console.log('🟢 [DEBUG] enderecoPartidaDados atualizado:', enderecoPartidaDados);
-    }
-  }, [enderecoPartidaDados]);
-
-  // Debug: acompanhar quando endereço final muda
-  useEffect(() => {
-    if (enderecoFinalDados) {
-      console.log('🟢 [DEBUG] enderecoFinalDados atualizado:', enderecoFinalDados);
-    }
-  }, [enderecoFinalDados]);
-
   const buscarCoordenadasNoBackend = async (endereco) => {
     if (!endereco.trim()) return null;
 
     try {
       setLoading(true);
       const token = localStorage.getItem('token');
+
       const response = await fetch(`http://localhost:8080/local?local=${encodeURIComponent(endereco)}`, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -115,15 +99,23 @@ const MotoristaPage = () => {
       if (!response.ok) throw new Error('Erro ao buscar localização');
 
       const data = await response.json();
-      console.log('📍 [DEBUG] Resposta do backend para o endereço:', data);
 
-      if (!data || !data.lat || !data.lon) return null;
+      const cidade = data.cidade || data.address?.city || data.address?.town || data.address?.village || '';
+      const logradouro = data.logradouro || data.address?.road || '';
+      const numero = data.numero || '';
+      const bairro = data.bairro || data.address?.suburb || '';
+      const cep = data.cep || data.address?.postcode || '';
 
       return {
         lat: parseFloat(data.lat),
         lon: parseFloat(data.lon),
-        ...data,
+        cidade,
+        logradouro,
+        numero,
+        bairro,
+        cep,
       };
+
     } catch (error) {
       console.error('❌ Erro na busca do backend:', error);
       return null;
@@ -135,6 +127,8 @@ const MotoristaPage = () => {
   const gerarRota = async () => {
     setEnderecoPartidaDados(null);
     setEnderecoFinalDados(null);
+    setPontoPartidaCoords(null);
+    setPontoFinalCoords(null);
 
     const partida = await buscarCoordenadasNoBackend(pontoPartida);
     if (!partida) {
@@ -148,31 +142,55 @@ const MotoristaPage = () => {
       return;
     }
 
-    setPontoPartidaCoords({ lat: partida.lat, lon: partida.lon });
-    setPontoFinalCoords({ lat: destino.lat, lon: destino.lon });
-
     setEnderecoPartidaDados(partida);
     setEnderecoFinalDados(destino);
 
-    console.log('🛣️ [DEBUG] Dados do endereço de partida:', partida);
-    console.log('🛣️ [DEBUG] Dados do endereço de destino:', destino);
+    setPontoPartidaCoords({ lat: partida.lat, lon: partida.lon });
+    setPontoFinalCoords({ lat: destino.lat, lon: destino.lon });
+
+    console.log('🛣️ [DEBUG] Endereço partida:', partida);
+    console.log('🛣️ [DEBUG] Endereço destino:', destino);
   };
 
   const criarCarona = async () => {
-    console.log("📝 [DEBUG] Criando carona com os seguintes dados:");
-    console.log("🔹 pontoPartida:", pontoPartida);
-    console.log("🔹 pontoFinal:", pontoFinal);
-    console.log("🔹 vagas:", vagas);
-    console.log("🔹 idVeiculo:", idVeiculo);
+    console.log("🔷 [DEBUG] Corpo da requisição para criar carona:", {
+      originDTO: {
+        cidade: enderecoPartidaDados?.cidade || '',
+        logradouro: enderecoPartidaDados?.logradouro || '',
+        numero: enderecoPartidaDados?.numero || '',
+        bairro: enderecoPartidaDados?.bairro || '',
+        cep: enderecoPartidaDados?.cep || '',
+      },
+      destinationDTO: {
+        cidade: enderecoFinalDados?.cidade || '',
+        logradouro: enderecoFinalDados?.logradouro || '',
+        numero: enderecoFinalDados?.numero || '',
+        bairro: enderecoFinalDados?.bairro || '',
+        cep: enderecoFinalDados?.cep || '',
+      },
+      vagas_disponiveis: Number(vagas),
+      id_veiculo: idVeiculo,
+    });
 
     if (!pontoPartida || !pontoFinal || !vagas || !idVeiculo) {
       alert('Preencha todos os campos e aguarde o carregamento do veículo.');
       return;
     }
 
+    if (
+      !enderecoPartidaDados?.cidade ||
+      !enderecoFinalDados?.cidade ||
+      !enderecoPartidaDados?.logradouro ||
+      !enderecoFinalDados?.logradouro
+    ) {
+      alert('Endereços incompletos. Gere a rota para atualizar os dados de endereço.');
+      return;
+    }
+
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('http://localhost:8080/caronas', {
+
+      const response = await fetch('http://localhost:8080/rides', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -180,18 +198,18 @@ const MotoristaPage = () => {
         },
         body: JSON.stringify({
           originDTO: {
-            cidade: enderecoPartidaDados?.cidade || "",
-            logradouro: enderecoPartidaDados?.logradouro || "",
-            numero: enderecoPartidaDados?.numero || "",
-            bairro: enderecoPartidaDados?.bairro || "",
-            cep: enderecoPartidaDados?.cep || "",
+            cidade: enderecoPartidaDados.cidade,
+            logradouro: enderecoPartidaDados.logradouro,
+            numero: enderecoPartidaDados.numero,
+            bairro: enderecoPartidaDados.bairro,
+            cep: enderecoPartidaDados.cep,
           },
           destinationDTO: {
-            cidade: enderecoFinalDados?.cidade || "",
-            logradouro: enderecoFinalDados?.logradouro || "",
-            numero: enderecoFinalDados?.numero || "",
-            bairro: enderecoFinalDados?.bairro || "",
-            cep: enderecoFinalDados?.cep || "",
+            cidade: enderecoFinalDados.cidade,
+            logradouro: enderecoFinalDados.logradouro,
+            numero: enderecoFinalDados.numero,
+            bairro: enderecoFinalDados.bairro,
+            cep: enderecoFinalDados.cep,
           },
           vagas_disponiveis: Number(vagas),
           id_veiculo: idVeiculo,
@@ -199,22 +217,24 @@ const MotoristaPage = () => {
       });
 
       if (!response.ok) {
-        const errorData = await response.json();
-        alert('Erro ao criar carona: ' + (errorData.message || response.statusText));
+        const errorText = await response.text();
+        console.error('❌ Erro completo do backend:', errorText);
+        alert('Erro ao criar carona: ' + errorText);
         return;
       }
 
-      alert('Carona criada com sucesso!');
+      alert('✅ Carona criada com sucesso!');
       navigate('/confirmarcarona', {
         state: {
           origem: pontoPartida,
           destino: pontoFinal,
-          vagas: vagas,
+          vagas,
         },
       });
+
     } catch (error) {
-      console.error('❌ Erro ao criar carona:', error);
-      alert('Erro ao criar carona. Tente novamente mais tarde.');
+      console.error('❌ Erro ao criar carona (exception):', error);
+      alert('Erro inesperado ao criar carona. Verifique o console para detalhes.');
     }
   };
 
@@ -224,6 +244,7 @@ const MotoristaPage = () => {
 
       <div className="motorista-page">
         <div className="motorista-conteudo">
+          {/* Mapa */}
           <div className="mapa-container" style={{ height: '100%', width: '100%' }}>
             <MapContainer center={[-23.6009, -46.8805]} zoom={13} style={{ height: '100%', width: '100%' }}>
               <TileLayer
@@ -249,6 +270,7 @@ const MotoristaPage = () => {
             </MapContainer>
           </div>
 
+          {/* Formulário */}
           <div className="formulario-container">
             <h1>Para onde vamos?</h1>
             <input
@@ -306,11 +328,15 @@ const MotoristaPage = () => {
             <button className="enviar-btn" onClick={criarCarona} disabled={loading}>
               Criar Carona
             </button>
+          </div>
 
+          {/* Cards de endereço */}
+          <div className="cards-container">
             {enderecoPartidaDados && (
               <div className="card-endereco">
                 <h3>Endereço de Partida</h3>
-                <p><strong>Rua:</strong> {enderecoPartidaDados.logradouro || '-'}, <strong>Número:</strong> {enderecoPartidaDados.numero || '-'}</p>
+                <p><strong>Rua:</strong> {enderecoPartidaDados.logradouro || '-'}</p>
+                <p> <strong>Número:</strong> {enderecoPartidaDados.numero || '-'}</p>
                 <p><strong>Bairro:</strong> {enderecoPartidaDados.bairro || '-'}</p>
                 <p><strong>Cidade:</strong> {enderecoPartidaDados.cidade || '-'}</p>
                 <p><strong>CEP:</strong> {enderecoPartidaDados.cep || '-'}</p>
@@ -320,7 +346,8 @@ const MotoristaPage = () => {
             {enderecoFinalDados && (
               <div className="card-endereco">
                 <h3>Endereço de Destino</h3>
-                <p><strong>Rua:</strong> {enderecoFinalDados.logradouro || '-'}, <strong>Número:</strong> {enderecoFinalDados.numero || '-'}</p>
+                <p><strong>Rua:</strong> {enderecoFinalDados.logradouro || '-'} </p>
+                <p> <strong>Número:</strong> {enderecoFinalDados.numero || '-'}</p>
                 <p><strong>Bairro:</strong> {enderecoFinalDados.bairro || '-'}</p>
                 <p><strong>Cidade:</strong> {enderecoFinalDados.cidade || '-'}</p>
                 <p><strong>CEP:</strong> {enderecoFinalDados.cep || '-'}</p>

@@ -1,106 +1,133 @@
-import React, { useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';  // <-- Importar useLocation aqui
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { FaArrowLeft } from 'react-icons/fa';
-import logo from '../assets/images/Logo.png';
-import UserMenu from '../components/UserMenu/UserMenu';
 import '../css/ConfirmarCaronaMotorista.css';
+import HeaderMenu from '../components/Header/HeaderMenu.jsx';
 
 const ConfirmarCarona = () => {
     const navigate = useNavigate();
-    const location = useLocation();
+    const [carona, setCarona] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [erro, setErro] = useState('');
+    const [cancelando, setCancelando] = useState(false);
 
-    // Pega os dados enviados pela navegação
-    const { origem, destino, vagas } = location.state || {
-        origem: '',
-        destino: '',
-        vagas: 0,
+    const buscarCaronaAtiva = async () => {
+        try {
+            const token = localStorage.getItem('token');
+            console.log('[DEBUG] Token:', token);
+
+            const response = await fetch('http://localhost:8080/rides/corridasAtivas', {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+
+            console.log('[DEBUG] Status da resposta:', response.status);
+            if (!response.ok) {
+                const errorText = await response.text();
+                console.error('[DEBUG] Erro na resposta:', errorText);
+                throw new Error(errorText || 'Erro ao buscar carona ativa');
+            }
+
+            const data = await response.json();
+            console.log('[DEBUG] Dados recebidos:', data);
+
+            if (Array.isArray(data) && data.length > 0) {
+                setCarona(data[0]);
+            } else {
+                setErro('Nenhuma carona ativa encontrada.');
+            }
+        } catch (error) {
+            console.error('Erro ao buscar carona ativa:', error);
+            setErro('Erro ao buscar carona ativa.');
+        } finally {
+            setLoading(false);
+        }
     };
 
-    // Solicitações simuladas
-    const [solicitacoes, setSolicitacoes] = useState([
-        { id: 1, nome: 'João Silva', status: 'pendente' },
-        { id: 2, nome: 'Maria Oliveira', status: 'pendente' },
-        { id: 3, nome: 'Carlos Pereira', status: 'pendente' },
-    ]);
+    const cancelarCarona = async () => {
+        const idDaCarona = carona?.id;
+        if (!idDaCarona) {
+            alert('ID da carona inválido.');
+            return;
+        }
 
-    // Função para confirmar uma solicitação
-    const confirmarSolicitacao = (id) => {
-        setSolicitacoes((prev) =>
-            prev.map((sol) =>
-                sol.id === id ? { ...sol, status: 'confirmado' } : sol
-            )
-        );
+        if (!window.confirm('Deseja realmente cancelar a carona?')) return;
+
+        try {
+            setCancelando(true);
+            const token = localStorage.getItem('token');
+            const response = await fetch(`http://localhost:8080/rides/cancelar/${idDaCarona}`, {
+                method: 'PUT',
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+
+            console.log('[DEBUG] Status do cancelamento:', response.status);
+            if (!response.ok) {
+                const errorText = await response.text();
+                console.error('[DEBUG] Erro no cancelamento:', errorText);
+                throw new Error(errorText || 'Erro ao cancelar carona');
+            }
+
+            alert('Carona cancelada com sucesso!');
+            setCarona(null);
+        } catch (error) {
+            console.error('Erro ao cancelar carona:', error);
+            alert('Erro ao cancelar carona. Veja o console para detalhes.');
+        } finally {
+            setCancelando(false);
+        }
     };
+
+    useEffect(() => {
+        buscarCaronaAtiva();
+    }, []);
 
     return (
         <div className="confirmar-carona-page">
-            {/* Header igual da MotoristaPage */}
-            <header className="confirmar-carona-header">
-                <div className="header-section">
-                    <button
-                        className="voltar-btn"
-                        onClick={() => navigate('/motorista')}
-                        aria-label="Voltar"
-                    >
-                        <FaArrowLeft />
-                    </button>
-                </div>
-                <div className="header-section logo-nome">
-                    <img src={logo} alt="Logo" className="logo-header" />
-                    <h2>FatecRide</h2>
-                </div>
-                <div className="header-section usuario-menu-container">
-                    <UserMenu />
-                </div>
-            </header>
+            <HeaderMenu />
 
             <main className="confirmar-carona-conteudo">
-                {/* Detalhes da carona - topo */}
-                <section className="detalhes-carona">
-                    <h1>Carona Criada</h1>
-                    <div className="detalhes-info">
-                        <p><strong>Origem:</strong> {origem}</p> {/* Usar origem direto */}
-                        <p><strong>Destino:</strong> {destino}</p> {/* Usar destino direto */}
-                        <p><strong>Vagas disponíveis:</strong> {vagas}</p> {/* Usar vagas direto */}
-                    </div>
-                </section>
+                <button className="voltar-btn" onClick={() => navigate(-1)} aria-label="Voltar">
+                    <FaArrowLeft /> Voltar
+                </button>
 
-                {/* Solicitações */}
-                <section className="solicitacoes-container">
-                    <h2>Solicitações</h2>
-                    {solicitacoes.length === 0 && (
-                        <p className="sem-solicitacoes">Nenhuma solicitação no momento.</p>
-                    )}
-
-                    {solicitacoes.map(({ id, nome, status }) => (
-                        <div
-                            key={id}
-                            className={`solicitacao-card ${status === 'confirmado' ? 'confirmado-card' : 'pendente-card'}`}
-                            tabIndex={0}
-                            aria-label={`Solicitação de ${nome} está ${status}`}
-                        >
-                            <div className="solicitacao-info">
-                                <strong>{nome}</strong>
-                                <span className={`status-badge ${status === 'confirmado' ? 'confirmado' : 'pendente'}`}>
-                                    {status}
-                                </span>
-                            </div>
-
-                            {status === 'pendente' ? (
-                                <button
-                                    className="btn-confirmar"
-                                    onClick={() => confirmarSolicitacao(id)}
-                                >
-                                    Confirmar
-                                </button>
-                            ) : (
-                                <button className="btn-confirmado" disabled>
-                                    Confirmado
-                                </button>
-                            )}
+                {loading ? (
+                    <p className="info-msg">Carregando carona ativa...</p>
+                ) : erro ? (
+                    <p className="erro-msg">{erro}</p>
+                ) : carona ? (
+                    <section className="detalhes-carona">
+                        <h1>Carona Ativa</h1>
+                        <div className="detalhes-info">
+                            <p>
+                                <strong>Origem:</strong>{' '}
+                                {carona.origin?.logradouro || 'N/A'}, {carona.origin?.numero || '-'}
+                            </p>
+                            <p>
+                                <strong>Destino:</strong>{' '}
+                                {carona.destination?.logradouro || 'N/A'}, {carona.destination?.numero || '-'}
+                            </p>
+                            <p>
+                                <strong>Vagas disponíveis:</strong> {carona.vagas_disponiveis || 0}
+                            </p>
+                            <p>
+                                <strong>Status:</strong> {carona.status || 'Desconhecido'}
+                            </p>
                         </div>
-                    ))}
-                </section>
+                        <button
+                            className="btn-cancelar"
+                            onClick={cancelarCarona}
+                            disabled={cancelando}
+                        >
+                            {cancelando ? 'Cancelando...' : 'Cancelar Carona'}
+                        </button>
+                    </section>
+                ) : (
+                    <p className="info-msg">Nenhuma carona ativa no momento.</p>
+                )}
             </main>
         </div>
     );
