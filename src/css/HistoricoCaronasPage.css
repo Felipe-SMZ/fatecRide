@@ -2,10 +2,11 @@
 .historico-container {
   max-width: 900px;
   margin: 25px auto 50px;
-  padding: 0 20px;
+  padding: 20px 20px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   color: #222;
   background: #fefefe;
+  border-radius: 1%;
 }
 
 /* Título */
