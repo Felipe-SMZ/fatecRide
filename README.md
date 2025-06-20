@@ -130,5 +130,13 @@ Desenvolvido por [Felipe SMZ](https://github.com/Felipe-SMZ)
 
 ## 📄 Licença
 
-Este projeto está licenciado sob os termos da licença **MIT**.  
-Consulte o arquivo `LICENSE` para mais informações.
+Este projeto está protegido por direitos autorais e **não possui uma licença de uso livre**.
+
+É **estritamente proibido**:
+
+- Utilizar este código para fins comerciais
+- Copiar, modificar ou distribuir total ou parcialmente este projeto
+- Reutilizar partes do código em outros projetos sem autorização
+
+Este software foi desenvolvido exclusivamente para fins educacionais e acadêmicos.  
+Para obter permissão de uso, entre em contato com o autor.
