@@ -101,7 +101,7 @@ const CadastroPage = () => {
         <form onSubmit={handleSubmit}>
           <input name="nome" placeholder="Nome" value={usuarioData.nome} onChange={handleChange} required />
           <input name="sobrenome" placeholder="Sobrenome" value={usuarioData.sobrenome} onChange={handleChange} required />
-          
+
           <select name="courseId" value={usuarioData.courseId} onChange={handleChange} required>
             <option value="">Selecione o curso</option>
             {cursos.map(curso => (
@@ -115,6 +115,15 @@ const CadastroPage = () => {
               <option key={gender.id} value={gender.id}>{gender.name}</option>
             ))}
           </select>
+
+          <input
+            name="foto"
+            placeholder="URL da imagem de perfil (opcional)"
+            type="url"
+            value={usuarioData.foto}
+            onChange={handleChange}
+          />
+
 
           <input name="telefone" placeholder="Telefone" value={usuarioData.telefone} onChange={handleChange} required />
           <input name="email" placeholder="E-mail" type="email" value={usuarioData.email} onChange={handleChange} required />
