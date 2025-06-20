@@ -23,10 +23,9 @@ A seguir estão as principais tecnologias empregadas neste frontend:
 - **React Router** – Navegação entre as páginas do sistema
 - **Leaflet.js** – Exibição e manipulação de mapas interativos
 - **React-Leaflet** – Integração do Leaflet com React
-- **HTML5 + CSS3** – Estrutura e estilo visual das páginas
+- **CSS3** – Estilo visual das páginas
 - **Fetch API (JavaScript)** – Comunicação com o backend via requisições HTTP
 
-> ⚠️ **Importante:** não utilizamos bibliotecas como Axios ou Tailwind neste projeto.
 
 ---
 
@@ -123,8 +122,7 @@ fatecRide/
 ## 📬 Contato
 
 Desenvolvido por [Felipe SMZ](https://github.com/Felipe-SMZ)  
-📧 Email: felipe@exemplo.com  
-🔗 LinkedIn: [linkedin.com/in/seudominio](https://linkedin.com/in/seudominio)
+🔗 LinkedIn: www.linkedin.com/in/felipe-simões-shimizu-a3bb11321
 
 ---
 
