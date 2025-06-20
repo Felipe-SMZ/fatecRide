@@ -1,62 +1,134 @@
-# 🚗 App de Caronas FATEC - Frontend
+# 🚗 FatecRide - Sistema de Caronas para Estudantes da FATEC Cotia
 
-Este é o frontend do aplicativo de caronas desenvolvido para estudantes da FATEC Cotia.  
-Permite que motoristas e passageiros se conectem para compartilhar caronas com praticidade, utilizando um mapa interativo e rotas calculadas em tempo real.
+**FatecRide** é uma aplicação web desenvolvida para facilitar o transporte de alunos da FATEC Cotia. A plataforma permite que estudantes se cadastrem como **motoristas** ou **passageiros**, combinem caronas com base em seus trajetos e utilizem um mapa interativo com rotas em tempo real para facilitar o encontro.
+
+---
 
 ## 🎯 Objetivo
 
-Facilitar o transporte de alunos da FATEC por meio de um sistema seguro, intuitivo e acessível, reduzindo custos e promovendo a sustentabilidade.
+O projeto tem como objetivo oferecer uma solução acessível e sustentável para o deslocamento de estudantes até a faculdade, promovendo:
 
-## 🧪 Tecnologias utilizadas
+- Compartilhamento de caronas seguras
+- Redução de custos com transporte
+- Diminuição da emissão de poluentes
+- Integração entre alunos de diferentes cursos
 
-- [React.js](https://reactjs.org/) — Biblioteca JavaScript para construção de interfaces
-- [React Router](https://reactrouter.com/) — Navegação entre páginas
-- [Leaflet.js](https://leafletjs.com/) — Biblioteca de mapas
-- [React-Leaflet](https://react-leaflet.js.org/) — Integração do Leaflet com React
-- [Axios](https://axios-http.com/) — Requisições HTTP
-- [Tailwind CSS](https://tailwindcss.com/) — Estilização responsiva e moderna
+---
 
-## 📸 Funcionalidades
+## 🧰 Tecnologias Utilizadas
 
-- Tela de login
-- Cadastro de usuário (nome, curso, telefone, etc.)
-- Cadastro de veículo e endereço
-- Escolha de perfil (passageiro ou motorista)
-- Mapa interativo com seleção de ponto de partida e destino
-- Envio de carona com número de vagas
-- Interface responsiva com identidade visual azul e branca
+A seguir estão as principais tecnologias empregadas neste frontend:
 
-## 🛠️ Instalação e execução
+- **React.js** – Construção da interface de usuário
+- **React Router** – Navegação entre as páginas do sistema
+- **Leaflet.js** – Exibição e manipulação de mapas interativos
+- **React-Leaflet** – Integração do Leaflet com React
+- **HTML5 + CSS3** – Estrutura e estilo visual das páginas
+- **Fetch API (JavaScript)** – Comunicação com o backend via requisições HTTP
 
-### Pré-requisitos
+> ⚠️ **Importante:** não utilizamos bibliotecas como Axios ou Tailwind neste projeto.
 
-- Node.js (v16+)
-- npm ou yarn
-- Git
+---
 
-### Passos:
+## ⚙️ Dependências Externas (Backend e Banco de Dados)
+
+> ⚠️ **ATENÇÃO:** Para que o sistema frontend funcione corretamente, é **obrigatório que o backend em Java (Spring Boot)** e o **banco de dados (ex: PostgreSQL)** estejam devidamente iniciados e configurados.
+
+As instruções completas para execução do backend e do banco de dados estão disponíveis no repositório backend correspondente ao projeto. O frontend depende de endpoints que devem estar acessíveis na porta `8080` por padrão.
+
+---
+
+## 🚀 Como Executar o Frontend
+
+### 1. Pré-requisitos
+
+Antes de iniciar o projeto, você precisa ter instalado em sua máquina:
+
+- [Node.js](https://nodejs.org/) (recomendado v16+)
+- [npm](https://www.npmjs.com/) ou [yarn](https://yarnpkg.com/)
+- [Git](https://git-scm.com/)
+
+---
+
+### 2. Clonando o Projeto
 
 ```bash
-# Clone o repositório
+# Clonar o repositório
 git clone https://github.com/Felipe-SMZ/fatecRide.git
-cd seu-repo-frontend
 
-# Instale as dependências
+# Acessar o diretório do projeto
+cd fatecRide
+```
+
+---
+
+### 3. Instalando as Dependências
+
+```bash
+# Usando npm
 npm install
 
-# Inicie o projeto
-npm start
-
-# A aplicação será aberta no navegador em http://localhost:3000
-
+# ou usando yarn
+yarn install
 ```
-## Estrutura de Pastas
+
+---
+
+### 4. Iniciando o Projeto
+
 ```bash
-src/
-├── components/         # Componentes reutilizáveis (ex: botão, cabeçalho)
-├── pages/              # Páginas principais (Login, Cadastro, Motorista, Passageiro)
-├──css                  # Estilos por paginas
-├── App.js              # Componente principal
-├── App.css             # Estilos globais
-└── index.js            # Ponto de entrada
+# Iniciar o servidor de desenvolvimento
+npm start
 ```
+
+> A aplicação será automaticamente aberta no navegador no endereço:  
+📍 http://localhost:3000
+
+Caso não abra automaticamente, acesse esse endereço manualmente.
+
+---
+
+## 🗂️ Estrutura do Projeto
+
+```
+fatecRide/
+├── public/                  # Arquivos públicos e estáticos
+├── src/
+│   ├── components/          # Componentes reutilizáveis (Ex: cabeçalho, botões, cards)
+│   ├── pages/               # Páginas principais (Login, Cadastro, Motorista, Passageiro etc.)
+│   ├── css/                 # Estilizações separadas por página
+│   ├── App.js               # Componente principal da aplicação
+│   ├── App.css              # Estilos globais
+│   └── index.js             # Ponto de entrada do React
+├── package.json             # Dependências e scripts
+└── README.md                # Documentação do projeto
+```
+
+---
+
+## 🧪 Funcionalidades Principais
+
+- Cadastro de usuários com dados pessoais, endereço e veículo
+- Escolha de perfil como **motorista** ou **passageiro**
+- Exibição de mapa interativo com **Leaflet**
+- Seleção de ponto de partida e destino
+- Cálculo de rota e exibição no mapa
+- Envio de carona (motorista)
+- Solicitação de carona (passageiro)
+- Interface responsiva e amigável
+
+
+---
+
+## 📬 Contato
+
+Desenvolvido por [Felipe SMZ](https://github.com/Felipe-SMZ)  
+📧 Email: felipe@exemplo.com  
+🔗 LinkedIn: [linkedin.com/in/seudominio](https://linkedin.com/in/seudominio)
+
+---
+
+## 📄 Licença
+
+Este projeto está licenciado sob os termos da licença **MIT**.  
+Consulte o arquivo `LICENSE` para mais informações.
