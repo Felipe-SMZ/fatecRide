@@ -97,3 +97,47 @@
   text-align: center;
   margin-top: 2rem;
 }
+
+
+
+
+.pagina-vazia {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 80vh;
+  text-align: center;
+  background-color: #f0f4f8;
+  border-radius: 12px;
+  margin: 20px;
+  padding: 30px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.imagem-vazia {
+  width: 120px;
+  height: 120px;
+  margin-bottom: 20px;
+  opacity: 0.9;
+}
+
+.titulo-vazio {
+  font-size: 28px;
+  font-weight: 600;
+  color: #1e3a8a;
+  margin-bottom: 12px;
+}
+
+.texto-vazio {
+  font-size: 16px;
+  color: #4b5563;
+  line-height: 1.6;
+}
+
+.carregando {
+  text-align: center;
+  margin-top: 40px;
+  font-size: 18px;
+  color: #4b5563;
+}

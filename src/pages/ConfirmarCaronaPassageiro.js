@@ -26,11 +26,15 @@ const ConfirmarCaronaPassageiro = () => {
       })
       .then((data) => {
         console.log('Resposta da solicitação pendente:', data);
-        setSolicitacao(data);
+        if (!data || Object.keys(data).length === 0) {
+          setErro('Nenhuma solicitação no momento.');
+        } else {
+          setSolicitacao(data);
+        }
       })
       .catch((err) => {
         console.error('Erro ao carregar solicitação pendente:', err);
-        setErro('Erro ao carregar informações da solicitação.');
+        setErro('Nenhuma solicitação no momento.');
       });
   }, []);
 
@@ -63,7 +67,18 @@ const ConfirmarCaronaPassageiro = () => {
     return (
       <>
         <HeaderMenu />
-        <p className="erro">{erro}</p>
+        <div className="pagina-vazia">
+          <img
+            src="https://cdn-icons-png.flaticon.com/512/5538/5538300.png"
+            alt="Sem solicitações"
+            className="imagem-vazia"
+          />
+          <h2 className="titulo-vazio">🚗 Nenhuma solicitação no momento</h2>
+          <p className="texto-vazio">
+            Você ainda não enviou nenhuma solicitação de carona. <br />
+            Volte mais tarde ou explore caronas disponíveis!
+          </p>
+        </div>
       </>
     );
   }
@@ -72,7 +87,7 @@ const ConfirmarCaronaPassageiro = () => {
     return (
       <>
         <HeaderMenu />
-        <p>Carregando informações da solicitação...</p>
+        <p className="carregando">Carregando informações da solicitação...</p>
       </>
     );
   }

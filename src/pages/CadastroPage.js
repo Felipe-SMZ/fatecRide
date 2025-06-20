@@ -28,7 +28,7 @@ const CadastroPage = () => {
     telefone: '',
     courseId: '',
     genderId: '',
-    foto: 'https://example.com/foto'
+    foto: ''
   });
 
   useEffect(() => {
