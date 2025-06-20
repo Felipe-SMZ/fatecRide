@@ -1,89 +1,99 @@
-/* Container geral */
 .confirmar-carona-container {
   max-width: 600px;
   margin: 2rem auto;
-  background: #f9faff;
-  border-radius: 12px;
-  padding: 2rem 2.5rem;
-  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  color: #333;
+  padding: 1.5rem;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.titulo-solicitacao {
   text-align: center;
-}
-
-/* Título */
-.confirmar-carona-container h2 {
+  font-size: 1.6rem;
   color: #2c3e50;
-  margin-bottom: 1rem;
-  font-weight: 700;
-  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
 }
 
-/* Status */
+
+.motorista-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.nome-e-infos {
+  flex: 1;
+}
+
+.nome-e-infos h2 {
+  font-size: 1.4rem;
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+.foto-container {
+  width: 90px;
+  height: 90px;
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f1f1f1;
+  margin-left: 1rem;
+}
+
+.motorista-foto {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.default-icon {
+  font-size: 2rem;
+  color: #888;
+}
+
 .status {
-  font-size: 1.2rem;
-  margin-bottom: 2rem;
-  font-weight: 600;
-  transition: color 0.3s ease;
+  font-weight: bold;
+  font-size: 1.1rem;
+  color: #555;
+  margin-bottom: 1rem;
 }
 
-/* Status pendente - cor laranja */
 .status.pendente {
-  color: #e67e22;
+  color: #ffc107;
 }
 
-/* Status confirmado - cor verde */
-.status.confirmado {
-  color: #27ae60;
+.status.confirmada {
+  color: #28a745;
 }
 
-/* Detalhes da carona */
 .carona-detalhes {
-  text-align: left;
-  margin-bottom: 2rem;
-  background: #fff;
-  padding: 1.5rem 2rem;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.07);
+  line-height: 1.6;
 }
 
-.carona-detalhes p {
-  margin: 0.5rem 0;
-  font-size: 1.05rem;
-}
-
-.carona-detalhes strong {
-  color: #34495e;
-}
-
-/* Botões */
-button {
-  cursor: pointer;
+.cancelar-btn {
+  margin-top: 1.5rem;
+  padding: 10px 20px;
+  background-color: #dc3545;
+  color: white;
   border: none;
   border-radius: 8px;
-  font-weight: 600;
-  font-size: 1rem;
-  padding: 0.65rem 1.5rem;
-  margin: 0.3rem 0.5rem;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.2s ease;
 }
 
-/* Botão voltar */
-.btn-voltar {
-  background-color: #3498db;
-  color: white;
+.cancelar-btn:hover {
+  background-color: #c82333;
 }
 
-.btn-voltar:hover {
-  background-color: #2980b9;
-}
-
-/* Botão toggle status */
-.btn-toggle-status {
-  background-color: #e67e22;
-  color: white;
-}
-
-.btn-toggle-status:hover {
-  background-color: #d35400;
+.erro {
+  color: red;
+  text-align: center;
+  margin-top: 2rem;
 }

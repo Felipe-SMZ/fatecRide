@@ -146,54 +146,56 @@ const PassageiroPage = () => {
   };
 
   const solicitarCarona = async (carona) => {
-  if (!enderecoPartidaDados || !enderecoFinalDados) {
-    alert('Endereços de partida e destino não encontrados.');
-    return;
-  }
-
-  try {
-    const response = await fetch('http://localhost:8080/solicitacao', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({
-        id_carona: carona.idCarona,
-        originDTO: {
-          cidade: enderecoPartidaDados.address.city || '',
-          logradouro: enderecoPartidaDados.address.road || '',
-          numero: enderecoPartidaDados.address.house_number || '',
-          bairro: enderecoPartidaDados.address.suburb || '',
-          cep: enderecoPartidaDados.address.postcode || '',
-        },
-        destinationDTO: {
-          cidade: enderecoFinalDados.address.city || '',
-          logradouro: enderecoFinalDados.address.road || '',
-          numero: enderecoFinalDados.address.house_number || '',
-          bairro: enderecoFinalDados.address.suburb || '',
-          cep: enderecoFinalDados.address.postcode || '',
-        }
-      }),
-    });
-
-    if (!response.ok) {
-      throw new Error('Erro ao criar solicitação');
+    if (!enderecoPartidaDados || !enderecoFinalDados) {
+      alert('Endereços de partida e destino não encontrados.');
+      return;
     }
 
-    const data = await response.json();
+    try {
+      const response = await fetch('http://localhost:8080/solicitacao', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          id_carona: carona.idCarona,
+          originDTO: {
+            cidade: enderecoPartidaDados.address.city || '',
+            logradouro: enderecoPartidaDados.address.road || '',
+            numero: enderecoPartidaDados.address.house_number || '',
+            bairro: enderecoPartidaDados.address.suburb || '',
+            cep: enderecoPartidaDados.address.postcode || '',
+          },
+          destinationDTO: {
+            cidade: enderecoFinalDados.address.city || '',
+            logradouro: enderecoFinalDados.address.road || '',
+            numero: enderecoFinalDados.address.house_number || '',
+            bairro: enderecoFinalDados.address.suburb || '',
+            cep: enderecoFinalDados.address.postcode || '',
+          }
+        }),
+      });
 
-    navigate('/confirmarcaronapassageiro', {
-      state: {
-        caronaSelecionada: carona,
-        solicitacao: data,
+      if (!response.ok) {
+        throw new Error('Erro ao criar solicitação');
       }
-    });
-  } catch (error) {
-    console.error('Erro ao solicitar carona:', error);
-    alert('Erro ao solicitar carona');
-  }
-};
+
+      const data = await response.json();
+      console.log('Resposta da solicitação:', data);
+      localStorage.setItem('id_solicitacao', data.id);
+
+      navigate('/confirmarcaronapassageiro', {
+        state: {
+          caronaSelecionada: carona,
+          solicitacao: data,
+        }
+      });
+    } catch (error) {
+      console.error('Erro ao solicitar carona:', error);
+      alert('Erro ao solicitar carona');
+    }
+  };
 
 
   return (
