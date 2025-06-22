@@ -152,40 +152,55 @@ fatecRide/
 
 ---
 
+Claro! Aqui está uma versão **organizada, clara e bonita** da seção com observações importantes e o exemplo de inserção no banco, formatada para o `README.md` com emojis, destaques e organização visual agradável:
+
+---
+
 ## ⚠️ Observações Importantes
 
-* **Busca de origem e destino:**
-  As buscas devem ser feitas apenas pelo **nome da rua/avenida e cidade**, para garantir melhor precisão na geolocalização.
+### 📍 **Busca de Origem e Destino**
 
-* **Fotos:**
-  A inserção de fotos é feita apenas para o perfil do usuário via URL de imagem. 
+As **buscas de endereço** (origem e destino) no sistema devem ser realizadas **apenas com o nome da rua ou avenida e o nome da cidade**.
 
-* **Teste do histórico:**
-[⚠️ Suspicious Content] 🧪 Inserção Manual de Caronas Concluídas no Banco de Dados
-Para testar a exibição do histórico de caronas (motorista e passageiro) no sistema, é necessário que existam caronas com status "concluída" no banco de dados, assim como solicitações vinculadas a essas caronas.
+> Isso garante uma melhor precisão na **geolocalização** através da API utilizada.
 
-⚠️ ATENÇÃO — Adapte os IDs!
-Os exemplos abaixo são ilustrativos. É fundamental que você:
+---
 
-Use IDs válidos já existentes em sua base para:
+### 🖼️ **Fotos de Perfil**
 
-id_motorista (usuário com tipo "motorista")
+A inserção de **fotos de perfil** dos usuários é feita **exclusivamente via URL de imagem**.
 
-id_origem e id_destino (endereços previamente cadastrados nas tabelas origens e destinos)
+> Recomenda-se o uso de links de imagens livres de direitos autorais ou hospedadas externamente (ex: Unsplash, ImgBB etc.).
 
-id_status_carona com valor correspondente a "concluída"
+---
 
-id_veiculo (veículo do motorista)
+### 🧪 **Testando o Histórico de Caronas**
 
-id_passageiro (usuário do tipo "passageiro")
+Para que a **rota `/historico`** exiba corretamente os dados, é necessário **povoar o banco de dados** com caronas e solicitações que estejam no status **"concluída"**.
 
-Não use os mesmos valores se já estiverem ocupados no seu banco
+---
 
-📌 Etapas da Inserção
-1. Inserir uma Carona com Status “Concluída”
-sql
-Copiar
-Editar
+### ⚠️ **ATENÇÃO — Adapte os IDs!**
+
+Os exemplos abaixo são apenas ilustrativos.
+Você deve garantir que os **IDs usados realmente existam** no seu banco de dados:
+
+* `id_motorista` → ID de um **usuário do tipo "motorista"**
+* `id_origem`, `id_destino` → IDs válidos nas tabelas `origens` e `destinos`
+* `id_veiculo` → ID de um veículo já cadastrado para o motorista
+* `id_status_carona` = `2` (status "concluída")
+* `id_passageiro` → ID de um usuário do tipo "passageiro"
+* `id_status_solicitacao` = `5` (status "concluída")
+
+> **Nunca insira valores duplicados ou que não existam no seu banco.**
+
+---
+
+### 🧾 **Etapas de Inserção (Exemplo)**
+
+#### 🚗 Inserir uma Carona com Status “Concluída”
+
+```sql
 INSERT INTO caronas (
   id_motorista, 
   id_origem, 
@@ -195,18 +210,19 @@ INSERT INTO caronas (
   id_status_carona, 
   id_veiculo
 ) VALUES (
-  1,       -- ID do motorista (usuarios)
-  1,       -- ID da origem (origens)
-  1,       -- ID do destino (destinos)
-  '2025-06-04 08:00:00', 
-  2, 
-  2,       -- 2 = 'concluída' (status_carona)
-  1        -- ID do veículo (veiculos)
+  1,  -- ID do motorista
+  1,  -- ID da origem
+  1,  -- ID do destino
+  '2025-06-04 08:00:00',
+  2,
+  2,  -- 2 = "concluída"
+  1   -- ID do veículo
 );
-2. Inserir uma Solicitação Relacionada com Status “Concluída”
-sql
-Copiar
-Editar
+```
+
+#### 👤 Inserir uma Solicitação Relacionada com Status “Concluída”
+
+```sql
 INSERT INTO solicitacoes (
   id_carona, 
   id_passageiro, 
@@ -215,21 +231,28 @@ INSERT INTO solicitacoes (
   data_solicitacao, 
   id_status_solicitacao
 ) VALUES (
-  1,       -- ID da carona inserida acima
-  2,       -- ID do passageiro (usuarios)
-  1,       -- ID da origem
-  1,       -- ID do destino
-  NOW(), 
-  5        -- 5 = 'concluída' (status_solicitacao)
+  1,  -- ID da carona inserida acima
+  2,  -- ID do passageiro
+  1,  -- ID da origem
+  1,  -- ID do destino
+  NOW(),
+  5   -- 5 = "concluída"
 );
-✅ Exibição no Sistema
-Depois de inserir os dados corretamente, acesse a rota /historico no frontend e selecione:
+```
 
-Caronas Oferecidas para ver o histórico como motorista
-
-Solicitações Feitas para ver o histórico como passageiro
 ---
 
+### ✅ **Como Ver no Sistema**
+
+Após inserir os dados corretamente:
+
+1. Acesse a rota `/historico` no frontend
+2. Escolha:
+
+   * 🧍‍♂️ **Caronas Oferecidas** → Histórico do motorista
+   * 🧍‍♀️ **Solicitações Feitas** → Histórico do passageiro
+
+---
 ## 👥 Equipe Desenvolvedora
 
 * Felipe SMZ - [GitHub](https://github.com/Felipe-SMZ) - [LinkedIn](https://www.linkedin.com/in/felipe-sim%C3%B5es-shimizu-a3bb11321)
