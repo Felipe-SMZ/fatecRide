@@ -234,7 +234,7 @@ INSERT INTO caronas (
   1,  -- ID do motorista
   1,  -- ID da origem
   1,  -- ID do destino
-  '2025-06-04 08:00:00',
+  NOW(),
   2,
   2,  -- 2 = "concluída"
   1   -- ID do veículo
