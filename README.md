@@ -1,10 +1,3 @@
-Claro! Aqui está o README completo, já corrigido para usar **MySQL** no backend e informando que **a foto é apenas do usuário via URL**, não do veículo.
-
-Você pode copiar e colar direto no arquivo `README.md` do seu projeto.
-
----
-
-````markdown
 # 🚗 FatecRide - Sistema de Caronas para Estudantes da FATEC Cotia
 
 ![Banner FatecRide](https://user-images.githubusercontent.com/your-image-url/banner.png)  
