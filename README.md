@@ -142,6 +142,7 @@ Clone o repositório do backend do projeto:
 
 > 📌 Todas as instruções detalhadas de instalação, configuração e testes estão disponíveis no `README.md` do repositório do backend.
 
+---
 
 ## 🗂 Estrutura do Projeto Frontend
 
