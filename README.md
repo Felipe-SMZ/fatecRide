@@ -92,32 +92,56 @@ Não-Funcionais
 
 ## 🚀 Como Executar o Projeto
 
-### Pré-requisitos
+## ⚙️ Pré-requisitos
 
-- Node.js (v16+ recomendado)  
-- npm ou yarn  
-- Java 17+ (para backend)  
-- MySQL instalado ou via Docker  
-- Git  
+Antes de iniciar o projeto, é necessário ter os seguintes softwares instalados na sua máquina:
 
-### Frontend
+- ✅ [Node.js](https://nodejs.org/) (versão 16 ou superior recomendada)
+- ✅ [npm](https://www.npmjs.com/) ou [yarn](https://yarnpkg.com/)
+- ✅ [Java 17+](https://adoptium.net/) (necessário para executar o backend com Spring Boot)
+- ✅ [MySQL](https://www.mysql.com/) (local ou via Docker)
+- ✅ [Git](https://git-scm.com/) (para clonar os repositórios)
+
+---
+
+## 📦 Instalação do Projeto
+
+### 📁 Clonando os Repositórios
+
+#### Frontend
 
 ```bash
 git clone https://github.com/Felipe-SMZ/fatecRide.git
 cd fatecRide
 npm install
 npm start
-````
+```
 
 A aplicação frontend estará disponível em: [http://localhost:3000](http://localhost:3000)
 
-### Backend
+## 🖥️ Backend
 
-Clone o repositório backend (inserir link do repositório backend)
+Para que o frontend funcione corretamente, é **essencial** que o backend esteja configurado e em execução.
 
-Configure o banco MySQL e rode a aplicação Spring Boot.
+### 📥 Clonando o Backend
 
----
+Clone o repositório do backend do projeto:  
+🔗 [Acesse o repositório do backend](INSIRA_AQUI_O_LINK_DO_REPOSITÓRIO)
+
+### ⚙️ Configuração do Banco de Dados
+
+- Certifique-se de ter o **MySQL** instalado e em execução.
+- Crie um banco de dados com o nome definido nas propriedades da aplicação.
+- Atualize as credenciais de acesso no arquivo `application.properties` ou `application.yml`.
+
+### ▶️ Executando o Backend
+
+- Importe o projeto no **Spring Tool Suite**, **IntelliJ** ou outro IDE compatível.
+- Certifique-se de que todas as dependências estão instaladas.
+- Rode a aplicação Spring Boot (`FatecRideApplication.java` ou equivalente).
+
+> 📌 Todas as instruções detalhadas de instalação, configuração e testes estão disponíveis no `README.md` do repositório do backend.
+
 
 ## 🗂 Estrutura do Projeto Frontend
 
