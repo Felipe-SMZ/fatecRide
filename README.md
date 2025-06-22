@@ -1,6 +1,6 @@
 # 🚗 FatecRide - Sistema de Caronas para Estudantes da FATEC Cotia
 
-![Banner FatecRide](https://user-images.githubusercontent.com/your-image-url/banner.png)  
+![Banner FatecRide](../assets/images/Logo.png)  
 *Facilitando o transporte sustentável e colaborativo entre estudantes.*
 
 ---
