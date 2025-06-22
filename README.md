@@ -63,7 +63,7 @@ Facilitando o transporte sustentável e colaborativo entre estudantes.
 - Backend estruturado com Spring Boot, Hibernate e Spring Data JPA  
 - Frontend construído em React.js separado do backend  
 - Segurança com autenticação via JWT  
-- Banco de dados MySQL (pode ser via Docker)  
+- Banco de dados MySQL 
 
 ---
 
@@ -183,7 +183,3 @@ Este projeto está protegido por direitos autorais e **não possui licença de u
 * Reutilização de partes do código sem autorização
 
 Projeto para fins exclusivamente educacionais. Para uso ou permissão, contate os autores.
-
-```
-
-
