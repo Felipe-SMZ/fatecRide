@@ -122,6 +122,7 @@ fatecRide/
 ## 📬 Contato
 
 Desenvolvido por [Felipe SMZ](https://github.com/Felipe-SMZ) e [MarcosVVSantos](https://github.com/MarcosVVSantos) 
+
 🔗 LinkedIn: www.linkedin.com/in/felipe-simões-shimizu-a3bb11321
 
 
