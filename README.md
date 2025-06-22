@@ -68,11 +68,25 @@ Facilitando o transporte sustentável e colaborativo entre estudantes.
 ---
 
 ## ✨ Requisitos Extras Implementados
+Funcionais
+| Requisito Extra                      | Descrição                                                                                                                       |
+| ------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------- |
+| 📧 Confirmação de e-mail             | Durante o cadastro, o sistema valida o formato do e-mail antes do envio. *(Opcional: pode incluir envio de e-mail futuramente)* |
+| 🗺️ Exibição de mapa com localização | Utiliza Leaflet para mostrar mapa com rotas entre origem e destino                                                              |
+| 📍 Marcação de origem e destino      | O usuário escolhe a rua e cidade para definir origem e destino no mapa                                                          |
+| 🖼️ Foto de perfil via URL           | O usuário pode adicionar sua foto de perfil informando uma URL válida                                                           |
+| 🔄 Atualização e exclusão de veículo | O usuário pode cadastrar mais de um veículo, editar ou excluir quando quiser                                                    |
+| 🔐 Perfis distintos                  | O sistema reconhece perfis de motorista e passageiro com funcionalidades diferentes                                             |
 
-| Requisito                        | Descrição                                            |
-|---------------------------------|-----------------------------------------------------|
-| Exibição de mapa com localização atual | Mapas com marcação dinâmica da localização do usuário usando Leaflet.js  |
-| Upload de foto de perfil por URL | Usuário pode informar URL para foto de perfil, exibida no sistema |
+Não-Funcionais
+| Requisito Extra                        | Descrição                                           |
+| -------------------------------------- | --------------------------------------------------- |
+| 🛡️ Autenticação via JWT               | Segurança garantida via token                       |
+| 🔑 Criptografia de senha (BCrypt)      | As senhas são armazenadas com criptografia segura   |
+| 🚀 Frontend com React                  | Utilização de um framework moderno de UI (React.js) |
+| 🧱 Backend com Spring Boot + Hibernate | Uso de frameworks robustos para criação da API REST |
+| 🐬 Banco de dados com MySQL            | Sistema persistente baseado em banco relacional     |
+| 🔗 Separação entre backend e frontend  | Os projetos são separados e se comunicam via REST   |
 
 ---
 
