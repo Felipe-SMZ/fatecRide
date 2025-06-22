@@ -71,12 +71,12 @@ Facilitando o transporte sustentável e colaborativo entre estudantes.
 Funcionais
 | Requisito Extra                      | Descrição                                                                                                                       |
 | ------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------- |
-| 📧 Confirmação de e-mail             | Durante o cadastro, o sistema valida o formato do e-mail antes do envio. *(Opcional: pode incluir envio de e-mail futuramente)* |
+| 📧 Confirmação de e-mail             | Durante o cadastro, o sistema valida o formato do e-mail antes do envio. 
+                                              |
 | 🗺️ Exibição de mapa com localização | Utiliza Leaflet para mostrar mapa com rotas entre origem e destino                                                              |
 | 📍 Marcação de origem e destino      | O usuário escolhe a rua e cidade para definir origem e destino no mapa                                                          |
 | 🖼️ Foto de perfil via URL           | O usuário pode adicionar sua foto de perfil informando uma URL válida                                                           |
 | 🔄 Atualização e exclusão de veículo | O usuário pode cadastrar mais de um veículo, editar ou excluir quando quiser                                                    |
-| 🔐 Perfis distintos                  | O sistema reconhece perfis de motorista e passageiro com funcionalidades diferentes                                             |
 
 Não-Funcionais
 | Requisito Extra                        | Descrição                                           |
@@ -158,11 +158,76 @@ fatecRide/
   As buscas devem ser feitas apenas pelo **nome da rua/avenida e cidade**, para garantir melhor precisão na geolocalização.
 
 * **Fotos:**
-  A inserção de fotos é feita apenas para o **perfil do usuário via URL de imagem**. Veículos não possuem fotos.
+  A inserção de fotos é feita apenas para o perfil do usuário via URL de imagem. 
 
 * **Teste do histórico:**
-  Para testar o histórico de caronas e solicitações, é necessário que o banco esteja **povoado com dados reais** — caso contrário, a lista aparecerá vazia.
+[⚠️ Suspicious Content] 🧪 Inserção Manual de Caronas Concluídas no Banco de Dados
+Para testar a exibição do histórico de caronas (motorista e passageiro) no sistema, é necessário que existam caronas com status "concluída" no banco de dados, assim como solicitações vinculadas a essas caronas.
 
+⚠️ ATENÇÃO — Adapte os IDs!
+Os exemplos abaixo são ilustrativos. É fundamental que você:
+
+Use IDs válidos já existentes em sua base para:
+
+id_motorista (usuário com tipo "motorista")
+
+id_origem e id_destino (endereços previamente cadastrados nas tabelas origens e destinos)
+
+id_status_carona com valor correspondente a "concluída"
+
+id_veiculo (veículo do motorista)
+
+id_passageiro (usuário do tipo "passageiro")
+
+Não use os mesmos valores se já estiverem ocupados no seu banco
+
+📌 Etapas da Inserção
+1. Inserir uma Carona com Status “Concluída”
+sql
+Copiar
+Editar
+INSERT INTO caronas (
+  id_motorista, 
+  id_origem, 
+  id_destino, 
+  data_hora, 
+  vagas_disponiveis, 
+  id_status_carona, 
+  id_veiculo
+) VALUES (
+  1,       -- ID do motorista (usuarios)
+  1,       -- ID da origem (origens)
+  1,       -- ID do destino (destinos)
+  '2025-06-04 08:00:00', 
+  2, 
+  2,       -- 2 = 'concluída' (status_carona)
+  1        -- ID do veículo (veiculos)
+);
+2. Inserir uma Solicitação Relacionada com Status “Concluída”
+sql
+Copiar
+Editar
+INSERT INTO solicitacoes (
+  id_carona, 
+  id_passageiro, 
+  id_origem, 
+  id_destino, 
+  data_solicitacao, 
+  id_status_solicitacao
+) VALUES (
+  1,       -- ID da carona inserida acima
+  2,       -- ID do passageiro (usuarios)
+  1,       -- ID da origem
+  1,       -- ID do destino
+  NOW(), 
+  5        -- 5 = 'concluída' (status_solicitacao)
+);
+✅ Exibição no Sistema
+Depois de inserir os dados corretamente, acesse a rota /historico no frontend e selecione:
+
+Caronas Oferecidas para ver o histórico como motorista
+
+Solicitações Feitas para ver o histórico como passageiro
 ---
 
 ## 👥 Equipe Desenvolvedora
