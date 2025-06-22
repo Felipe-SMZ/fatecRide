@@ -1,143 +1,185 @@
+Claro! Aqui está o README completo, já corrigido para usar **MySQL** no backend e informando que **a foto é apenas do usuário via URL**, não do veículo.
+
+Você pode copiar e colar direto no arquivo `README.md` do seu projeto.
+
+---
+
+````markdown
 # 🚗 FatecRide - Sistema de Caronas para Estudantes da FATEC Cotia
 
-**FatecRide** é uma aplicação web desenvolvida para facilitar o transporte de alunos da FATEC Cotia. A plataforma permite que estudantes se cadastrem como **motoristas** ou **passageiros**, combinem caronas com base em seus trajetos e utilizem um mapa interativo com rotas em tempo real para facilitar o encontro.
+![Banner FatecRide](https://user-images.githubusercontent.com/your-image-url/banner.png)  
+*Facilitando o transporte sustentável e colaborativo entre estudantes.*
 
 ---
 
-## 🎯 Objetivo
+## 📌 Sobre o Projeto
 
-O projeto tem como objetivo oferecer uma solução acessível e sustentável para o deslocamento de estudantes até a faculdade, promovendo:
-
-- Compartilhamento de caronas seguras
-- Redução de custos com transporte
-- Diminuição da emissão de poluentes
-- Integração entre alunos de diferentes cursos
+**FatecRide** é uma aplicação web que conecta estudantes da FATEC Cotia, possibilitando o compartilhamento de caronas de forma simples, segura e eficiente. A plataforma permite que alunos cadastrem-se como motoristas ou passageiros, escolham rotas, e visualizem mapas interativos para facilitar os encontros.
 
 ---
 
-## 🧰 Tecnologias Utilizadas
+## 🎯 Objetivos
 
-A seguir estão as principais tecnologias empregadas neste frontend:
-
-- **React.js** – Construção da interface de usuário
-- **React Router** – Navegação entre as páginas do sistema
-- **Leaflet.js** – Exibição e manipulação de mapas interativos
-- **React-Leaflet** – Integração do Leaflet com React
-- **CSS3** – Estilo visual das páginas
-- **Fetch API (JavaScript)** – Comunicação com o backend via requisições HTTP
-
+- Promover o transporte sustentável entre alunos  
+- Reduzir custos com deslocamento  
+- Incentivar a integração entre estudantes  
+- Facilitar a organização e confirmação de caronas
 
 ---
 
-## ⚙️ Dependências Externas (Backend e Banco de Dados)
+## 🛠 Tecnologias Utilizadas
 
-> ⚠️ **ATENÇÃO:** Para que o sistema frontend funcione corretamente, é **obrigatório que o backend em Java (Spring Boot)** e o **banco de dados (ex: PostgreSQL)** estejam devidamente iniciados e configurados.
+### Frontend
 
-As instruções completas para execução do backend e do banco de dados estão disponíveis no repositório backend correspondente ao projeto. O frontend depende de endpoints que devem estar acessíveis na porta `8080` por padrão.
+| Tecnologia           | Descrição                                      |
+|---------------------|------------------------------------------------|
+| React.js            | Biblioteca para construção da interface UI     |
+| React Router        | Navegação SPA entre páginas                     |
+| Leaflet.js          | Mapas interativos e rotas                       |
+| React-Leaflet       | Integração do Leaflet com React                 |
+| CSS3                | Estilização visual                              |
+| Fetch API           | Comunicação HTTP com backend                     |
+
+### Backend
+
+| Tecnologia           | Descrição                                      |
+|---------------------|------------------------------------------------|
+| Java Spring Boot    | Framework para criação de APIs RESTful         |
+| Hibernate           | Framework ORM para mapeamento objeto-relacional|
+| Spring Data JPA     | Abstração para facilitar o uso do Hibernate    |
+| **MySQL**           | Banco de dados relacional                       |
+| JWT                 | Autenticação baseada em tokens                  |
 
 ---
 
-## 🚀 Como Executar o Frontend
+## ⚙️ Requisitos Funcionais
 
-### 1. Pré-requisitos
-
-Antes de iniciar o projeto, você precisa ter instalado em sua máquina:
-
-- [Node.js](https://nodejs.org/) (recomendado v16+)
-- [npm](https://www.npmjs.com/) ou [yarn](https://yarnpkg.com/)
-- [Git](https://git-scm.com/)
+| Requisito                         | Descrição                                          | Implementação                                    |
+|----------------------------------|--------------------------------------------------|-------------------------------------------------|
+| Cadastro de usuários             | Inclusão de novos usuários com dados pessoais, endereço e veículo | Páginas: CadastroPage, CadastroEnderecoPage, CadastroVeiculoPage |
+| Autenticação e perfis           | Login com autenticação JWT e perfis distintos (motorista, passageiro) | Página: LoginPage                                 |
+| CRUD completo                   | Inclusão, edição e exclusão para usuários, veículos, caronas e solicitações | Páginas: InformacoesUsuarioPage, InformacoesCarroPage, MotoristaPage, PassageiroPage |
+| Atualização e exclusão de veículos | Permite cadastrar mais de um veículo, atualizar dados e excluir veículos | Páginas: CadastroVeiculoPage, InformacoesCarroPage |
+| Paginação                      | Paginação no histórico de caronas e solicitações | Página: HistoricoCaronasPage                      |
 
 ---
 
-### 2. Clonando o Projeto
+## 🧩 Requisitos Não-Funcionais
+
+- Utilização do padrão REST para comunicação entre frontend e backend  
+- Backend estruturado com Spring Boot, Hibernate e Spring Data JPA  
+- Frontend construído em React.js separado do backend  
+- Segurança com autenticação via JWT  
+- Banco de dados MySQL (pode ser via Docker)  
+
+---
+
+## ✨ Requisitos Extras Implementados
+
+| Requisito                        | Descrição                                            |
+|---------------------------------|-----------------------------------------------------|
+| Exibição de mapa com localização atual | Mapas com marcação dinâmica da localização do usuário usando Leaflet.js  |
+| Upload de foto de perfil por URL | Usuário pode informar URL para foto de perfil, exibida no sistema |
+
+---
+
+## 🚀 Como Executar o Projeto
+
+### Pré-requisitos
+
+- Node.js (v16+ recomendado)  
+- npm ou yarn  
+- Java 17+ (para backend)  
+- MySQL instalado ou via Docker  
+- Git  
+
+### Frontend
 
 ```bash
-# Clonar o repositório
 git clone https://github.com/Felipe-SMZ/fatecRide.git
-
-# Acessar o diretório do projeto
 cd fatecRide
-```
-
----
-
-### 3. Instalando as Dependências
-
-```bash
-# Usando npm
 npm install
-
-# ou usando yarn
-yarn install
-```
-
----
-
-### 4. Iniciando o Projeto
-
-```bash
-# Iniciar o servidor de desenvolvimento
 npm start
-```
+````
 
-> A aplicação será automaticamente aberta no navegador no endereço:  
-📍 http://localhost:3000
+A aplicação frontend estará disponível em: [http://localhost:3000](http://localhost:3000)
 
-Caso não abra automaticamente, acesse esse endereço manualmente.
+### Backend
+
+Clone o repositório backend (inserir link do repositório backend)
+
+Configure o banco MySQL e rode a aplicação Spring Boot.
 
 ---
 
-## 🗂️ Estrutura do Projeto
+## 🗂 Estrutura do Projeto Frontend
 
 ```
 fatecRide/
-├── public/                  # Arquivos públicos e estáticos
+├── public/                   # Arquivos públicos e estáticos
 ├── src/
-│   ├── components/          # Componentes reutilizáveis (Ex: cabeçalho, botões, cards)
-│   ├── pages/               # Páginas principais (Login, Cadastro, Motorista, Passageiro etc.)
-│   ├── css/                 # Estilizações separadas por página
-│   ├── App.js               # Componente principal da aplicação
-│   ├── App.css              # Estilos globais
-│   └── index.js             # Ponto de entrada do React
-├── package.json             # Dependências e scripts
-└── README.md                # Documentação do projeto
+│   ├── components/           # Componentes reutilizáveis
+│   ├── pages/                # Páginas do sistema
+│   ├── css/                  # Estilos CSS separados
+│   ├── App.js                # Componente raiz React
+│   ├── index.js              # Entrada da aplicação React
+├── package.json              # Dependências e scripts
+└── README.md                 # Documentação do projeto
 ```
 
 ---
 
-## 🧪 Funcionalidades Principais
+## 📄 Rotas Principais Frontend
 
-- Cadastro de usuários com dados pessoais, endereço e veículo
-- Escolha de perfil como **motorista** ou **passageiro**
-- Exibição de mapa interativo com **Leaflet**
-- Seleção de ponto de partida e destino
-- Cálculo de rota e exibição no mapa
-- Envio de carona (motorista)
-- Solicitação de carona (passageiro)
-- Interface responsiva e amigável
-
-
----
-
-## 📬 Contato
-
-Desenvolvido por [Felipe SMZ](https://github.com/Felipe-SMZ) e [MarcosVVSantos](https://github.com/MarcosVVSantos) 
-
-🔗 LinkedIn: www.linkedin.com/in/felipe-simões-shimizu-a3bb11321
-
-
+| Rota                 | Componente             | Descrição                                |
+| -------------------- | ---------------------- | ---------------------------------------- |
+| `/`                  | LoginPage              | Tela de login                            |
+| `/cadastro`          | CadastroPage           | Cadastro de usuário                      |
+| `/cadastro-endereco` | CadastroEnderecoPage   | Cadastro de endereço                     |
+| `/cadastro-veiculo`  | CadastroVeiculoPage    | Cadastro de veículo                      |
+| `/motorista`         | MotoristaPage          | Criar e gerenciar caronas como motorista |
+| `/passageiro`        | PassageiroPage         | Solicitar caronas                        |
+| `/historico`         | HistoricoCaronasPage   | Histórico paginado de caronas            |
+| `/info-usuario`      | InformacoesUsuarioPage | Atualizar dados pessoais                 |
+| `/info-carro`        | InformacoesCarroPage   | Atualizar dados do veículo               |
 
 ---
 
-## 📄 Licença
+## ⚠️ Observações Importantes
 
-Este projeto está protegido por direitos autorais e **não possui uma licença de uso livre**.
+* **Busca de origem e destino:**
+  As buscas devem ser feitas apenas pelo **nome da rua/avenida e cidade**, para garantir melhor precisão na geolocalização.
 
-É **estritamente proibido**:
+* **Fotos:**
+  A inserção de fotos é feita apenas para o **perfil do usuário via URL de imagem**. Veículos não possuem fotos.
 
-- Utilizar este código para fins comerciais
-- Copiar, modificar ou distribuir total ou parcialmente este projeto
-- Reutilizar partes do código em outros projetos sem autorização
+* **Teste do histórico:**
+  Para testar o histórico de caronas e solicitações, é necessário que o banco esteja **povoado com dados reais** — caso contrário, a lista aparecerá vazia.
 
-Este software foi desenvolvido exclusivamente para fins educacionais e acadêmicos.  
-Para obter permissão de uso, entre em contato com o autor.
+---
+
+## 👥 Equipe Desenvolvedora
+
+* Felipe SMZ - [GitHub](https://github.com/Felipe-SMZ) - [LinkedIn](https://www.linkedin.com/in/felipe-sim%C3%B5es-shimizu-a3bb11321)
+* MarcosVVSantos - [GitHub](https://github.com/MarcosVVSantos)
+
+---
+
+## 📜 Licença
+
+Este projeto está protegido por direitos autorais e **não possui licença de uso livre**.
+
+**É proibido:**
+
+* Uso comercial sem autorização
+* Cópia, modificação e distribuição sem permissão
+* Reutilização de partes do código sem autorização
+
+Projeto para fins exclusivamente educacionais. Para uso ou permissão, contate os autores.
+
+```
+
+---
+
+Se precisar de ajuda para colocar imagens, badges ou qualquer outro detalhe, só avisar!
+```
