@@ -276,8 +276,9 @@ Após inserir os dados corretamente:
 ---
 ## 👥 Equipe Desenvolvedora
 
-* Felipe SMZ - [GitHub](https://github.com/Felipe-SMZ) - [LinkedIn](https://www.linkedin.com/in/felipe-sim%C3%B5es-shimizu-a3bb11321)
-* MarcosVVSantos - [GitHub](https://github.com/MarcosVVSantos)
+* Felipe Shimizu - [GitHub](https://github.com/Felipe-SMZ) - [LinkedIn](https://www.linkedin.com/in/felipe-sim%C3%B5es-shimizu-a3bb11321)
+* Guilherme Rufino - [GitHub](https://github.com/rufinoguilherme633)
+* Marcos Santos - [GitHub](https://github.com/MarcosVVSantos)
 
 ---
 
