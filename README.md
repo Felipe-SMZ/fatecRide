@@ -126,7 +126,7 @@ Para que o frontend funcione corretamente, é **essencial** que o backend esteja
 ### 📥 Clonando o Backend
 
 Clone o repositório do backend do projeto:  
-🔗 [Acesse o repositório do backend](INSIRA_AQUI_O_LINK_DO_REPOSITÓRIO)
+🔗 [Acesse o repositório do backend](https://github.com/rufinoguilherme633/BackendCarona.git)
 
 ### ⚙️ Configuração do Banco de Dados
 
