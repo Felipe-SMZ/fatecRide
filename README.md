@@ -47,13 +47,14 @@ Facilitando o transporte sustentável e colaborativo entre estudantes.
 
 ## ⚙️ Requisitos Funcionais
 
-| Requisito                         | Descrição                                          | Implementação                                    |
-|----------------------------------|--------------------------------------------------|-------------------------------------------------|
-| Cadastro de usuários             | Inclusão de novos usuários com dados pessoais, endereço e veículo | Páginas: CadastroPage, CadastroEnderecoPage, CadastroVeiculoPage |
-| Autenticação e perfis           | Login com autenticação JWT e perfis distintos (motorista, passageiro) | Página: LoginPage                                 |
-| CRUD completo                   | Inclusão, edição e exclusão para usuários, veículos, caronas e solicitações | Páginas: InformacoesUsuarioPage, InformacoesCarroPage, MotoristaPage, PassageiroPage |
-| Atualização e exclusão de veículos | Permite cadastrar mais de um veículo, atualizar dados e excluir veículos | Páginas: CadastroVeiculoPage, InformacoesCarroPage |
-| Paginação                      | Paginação no histórico de caronas e solicitações | Página: HistoricoCaronasPage                      |
+| Requisito                        | Descrição                                                                 | Implementação                                                                 |
+|----------------------------------|---------------------------------------------------------------------------|-------------------------------------------------------------------------------|
+| Cadastro de usuários             | Inclusão de novos usuários com dados pessoais, endereço e veículo         | Páginas: `CadastroPage`, `CadastroEnderecoPage`, `CadastroVeiculoPage`       |
+| Autenticação e perfis            | Login com autenticação JWT e perfis distintos (motorista, passageiro)     | Página: `LoginPage`                                                           |
+| CRUD completo                    | Inclusão, edição e exclusão de usuários, veículos, caronas e solicitações | Páginas: `InformacoesUsuarioPage`, `InformacoesCarroPage`, `MotoristaPage`, `PassageiroPage` |
+| Atualização e exclusão de veículos | Permite cadastrar mais de um veículo, atualizar dados e excluir veículos  | Páginas: `CadastroVeiculoPage`, `InformacoesCarroPage`                        |
+| Paginação                        | Paginação no histórico de caronas e solicitações                          | Página: `HistoricoCaronasPage`                                                |
+
 
 ---
 
@@ -69,14 +70,13 @@ Facilitando o transporte sustentável e colaborativo entre estudantes.
 
 ## ✨ Requisitos Extras Implementados
 Funcionais
-| Requisito Extra                      | Descrição                                                                                                                       |
-| ------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------- |
-| 📧 Confirmação de e-mail             | Durante o cadastro, o sistema valida o formato do e-mail antes do envio. 
-                                              |
-| 🗺️ Exibição de mapa com localização | Utiliza Leaflet para mostrar mapa com rotas entre origem e destino                                                              |
-| 📍 Marcação de origem e destino      | O usuário escolhe a rua e cidade para definir origem e destino no mapa                                                          |
-| 🖼️ Foto de perfil via URL           | O usuário pode adicionar sua foto de perfil informando uma URL válida                                                           |
-| 🔄 Atualização e exclusão de veículo | O usuário pode cadastrar mais de um veículo, editar ou excluir quando quiser                                                    |
+| Requisito Extra                      | Descrição                                                                                              |
+|-------------------------------------|----------------------------------------------------------------------------------------------------------|
+| 📧 Confirmação de e-mail             | Durante o cadastro, o sistema valida o formato do e-mail antes do envio                                |
+| 🗺️ Exibição de mapa com localização | Utiliza Leaflet para mostrar mapa com rotas entre origem e destino                                     |
+| 📍 Marcação de origem e destino      | O usuário escolhe a rua e cidade para definir origem e destino no mapa                                 |
+| 🖼️ Foto de perfil via URL           | O usuário pode adicionar sua foto de perfil informando uma URL válida                                  |
+| 🔄 Atualização e exclusão de veículo | O usuário pode cadastrar mais de um veículo, editar ou excluir quando quiser                           |
 
 Não-Funcionais
 | Requisito Extra                        | Descrição                                           |
@@ -149,10 +149,6 @@ fatecRide/
 | `/historico`         | HistoricoCaronasPage   | Histórico paginado de caronas            |
 | `/info-usuario`      | InformacoesUsuarioPage | Atualizar dados pessoais                 |
 | `/info-carro`        | InformacoesCarroPage   | Atualizar dados do veículo               |
-
----
-
-Claro! Aqui está uma versão **organizada, clara e bonita** da seção com observações importantes e o exemplo de inserção no banco, formatada para o `README.md` com emojis, destaques e organização visual agradável:
 
 ---
 
